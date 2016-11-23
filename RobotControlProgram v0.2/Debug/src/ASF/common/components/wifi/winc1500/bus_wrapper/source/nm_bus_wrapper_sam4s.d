@@ -153,14 +153,33 @@ src/ASF/common/components/wifi/winc1500/bus_wrapper/source/nm_bus_wrapper_sam4s.
  ../src/ASF/sam/drivers/pio/pio.h \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/sam/ioport_pio.h \
+ ../src/ASF/sam/drivers/matrix/matrix.h \
+ ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h \
+ ../src/config/conf_access.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_common.h \
+ ../src/config/conf_nf.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_ecc.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_raw.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_model.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_spare_scheme.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_common.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_management.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_mem.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_model.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_raw.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_spare_scheme.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_translation.h \
+ ../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_management.h \
  ../src/ASF/sam/drivers/pdc/pdc.h ../src/ASF/sam/drivers/pmc/sleep.h \
+ ../src/ASF/sam/drivers/pwm/pwm.h \
  ../src/ASF/sam/boards/sam4s_xplained_pro/led.h \
- ../src/ASF/sam/drivers/spi/spi.h \
+ ../src/ASF/sam/drivers/ebi/smc/smc.h ../src/ASF/sam/drivers/spi/spi.h \
  ../src/ASF/common/utils/stdio/stdio_serial/stdio_serial.h \
  ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/sam_uart/uart_serial.h \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
- ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/wdt/wdt.h \
+ ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
+ ../src/ASF/sam/drivers/wdt/wdt.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h:
@@ -477,11 +496,49 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/common/services/ioport/sam/ioport_pio.h:
 
+../src/ASF/sam/drivers/matrix/matrix.h:
+
+../src/ASF/common/services/storage/ctrl_access/ctrl_access.h:
+
+../src/config/conf_access.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_common.h:
+
+../src/config/conf_nf.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_ecc.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_raw.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_model.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_spare_scheme.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_common.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_management.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_mem.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_model.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_raw.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/nand_flash_spare_scheme.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_translation.h:
+
+../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib/nand_flash_management.h:
+
 ../src/ASF/sam/drivers/pdc/pdc.h:
 
 ../src/ASF/sam/drivers/pmc/sleep.h:
 
+../src/ASF/sam/drivers/pwm/pwm.h:
+
 ../src/ASF/sam/boards/sam4s_xplained_pro/led.h:
+
+../src/ASF/sam/drivers/ebi/smc/smc.h:
 
 ../src/ASF/sam/drivers/spi/spi.h:
 
@@ -496,6 +553,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam/drivers/usart/usart.h:
 
 ../src/config/conf_uart_serial.h:
+
+../src/ASF/sam/drivers/tc/tc.h:
 
 ../src/ASF/sam/drivers/wdt/wdt.h:
 

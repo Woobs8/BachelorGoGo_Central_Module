@@ -110,7 +110,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 				{
 					printf("udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
 					//xQueueSendToFront(xControl_Msg_Queue_handle, UDPCommandRxBuffer, 0);
-					network_message_parser(UDPCommandRxBuffer);
+					network_message_handler(UDPCommandRxBuffer);
 				}
 			}
 		}
@@ -186,7 +186,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 				// for now just return ACK
 				s_msg_ack msg;
 				strncpy(msg.ack,CMD_ACK,CMD_SPECIFIER_SIZE);
-				network_message_parser(TCPSettingsRxBuffer);
+				network_message_handler(TCPSettingsRxBuffer);
 				printf("tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
 				send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
 				

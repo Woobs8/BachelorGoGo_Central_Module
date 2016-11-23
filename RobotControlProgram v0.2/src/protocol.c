@@ -4,9 +4,10 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "freertos_tasks.h"
+#include "nand_flash_storage/nand_flash_storage.h"
 
 /** Event handler for network messages */
-void network_message_parser(char *msg)
+void network_message_handler(char *msg)
 {
 	char cmd[PACKET_SIZE];
 	memcpy( cmd, msg, PACKET_SIZE );
@@ -71,7 +72,7 @@ void network_message_parser(char *msg)
 					}
 					else if((xStatus == errQUEUE_FULL))
 					{
-						printf("FUCK\r\n");
+						printf("Queue full\r\n");
 					}
 				}
 			}	
@@ -83,7 +84,8 @@ void network_message_parser(char *msg)
 	else if(strstr(cmd, CMD_SETTINGS) != NULL)
 	{
 		char *token;
-		
+		uint8_t settings_parsed = 0;	// Validates that all settings have been set
+			
 		/* get the first token */
 		token = strtok(cmd, TAG_SEPARATOR);
 		
@@ -97,8 +99,15 @@ void network_message_parser(char *msg)
 				/** Robot name setting */
 				if(strstr(token, TAG_SETTINGS_NAME) != NULL)
 				{
+					uint8_t size = strlen(value);			
 					char* name = value;
-					printf("Name: %s\r\n",name);
+					int8_t ret = wifi_set_device_name(name, size+1);	// include NUL-terminator
+					if(ret) {
+						printf("Could not set device name\r\n");
+					} else {
+						printf("Name: %s\r\n",name);
+						settings_parsed++;
+					}
 				}
 				/** Assisted Driving Mode setting */
 				else if(strstr(token, TAG_SETTINGS_ASSISTED_DRIVE_MODE) != NULL)
@@ -106,6 +115,7 @@ void network_message_parser(char *msg)
 					char* ptr;
 					uint8_t assisted_drive_mode = strtol(value,ptr,10);
 					printf("Assisted Drive Mode: %d\r\n",assisted_drive_mode);
+					settings_parsed++;
 				}
 				/** Power Save Mode setting */
 				else if(strstr(token, TAG_SETTINGS_POWER_SAVE_MODE) != NULL)
@@ -113,6 +123,7 @@ void network_message_parser(char *msg)
 					char* ptr;
 					uint8_t power_save_mode = strtol(value,ptr,10);
 					printf("Power Save Mode: %d\r\n",power_save_mode);
+					settings_parsed++;
 				}
 				/** Video Quality setting*/
 				else if(strstr(token, TAG_SETTINGS_VIDEO_QUALITY) != NULL)
@@ -120,12 +131,16 @@ void network_message_parser(char *msg)
 					char* ptr;
 					uint8_t video_quality = strtol(value,ptr,10);
 					printf("Video Quality: %d\r\n",video_quality);
+					settings_parsed++;
 				}
 			}
 			
 			// Read next token
 			token = strtok(NULL, TAG_SEPARATOR);
 		}
+		// Only store in flash if all settings have been set
+		if(settings_parsed == 4)
+			nand_flash_storage_write(msg,PACKET_SIZE);
 	}
 }
 

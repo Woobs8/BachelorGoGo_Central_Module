@@ -142,7 +142,6 @@ int main (void)
 	vTaskStartScheduler();	
 #endif
 
-	/* This skeleton code simply sets the LED to the state of the button. */
 	while (1) {
 		
 		#ifdef ONLY_NETWORK_MODULE

@@ -50,4 +50,7 @@
 
 #define CONF_BOARD_TWI0
 
+/** Support NAND */
+#define CONF_BOARD_NAND
+
 #endif /* CONF_BOARD_H */

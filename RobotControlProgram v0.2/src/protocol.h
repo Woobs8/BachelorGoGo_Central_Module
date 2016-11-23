@@ -41,10 +41,9 @@
 /** Values */
 #define VALUE_TRUE							"1"
 #define VALUE_FALSE							"0"
-
 	
 /** Event handler for network messages */
-void network_message_parser(char *msg);
+void network_message_handler(char *msg);
 
 /** Generate a status packet formatted according to the transfer protocol */
 int8_t network_generate_status_packet(char* packet,

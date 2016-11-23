@@ -38,6 +38,9 @@
 #include "semphr.h"
 #include "driver/include/m2m_wifi.h"
 #include "network_module/WiFi_P2P.h"
+#include "nand_flash_storage/nand_flash_storage.h"
+#include "protocol.h"
+#include <string.h>
 
 #define STRING_EOL    "\r\n"
 #define STRING_HEADER "-- Robo GOGO Robot Control MCU Program --"STRING_EOL \
@@ -66,11 +69,12 @@ int main (void)
 	board_init();
 
 	/* Insert application code here, after the board has been initialized. */
-
 	
 	configure_console();
 	printf(STRING_HEADER);
 	
+	/* Initialize non-volatile memory */
+	nand_flash_storage_init();
 	
 #ifdef FREE_RTOS_LED_BLINKER_TASK
 	/* Create LED task */
@@ -87,6 +91,19 @@ int main (void)
 
 	/* Initialize Wi-Fi parameters structure. */
 	wifi_init();
+	
+	/* Read persisted settings from non-volatile memory */
+	printf("Restoring settings from non-volatile memory...\r\n");
+	uint8_t buf[PAGE_SIZE];
+	int16_t ret = nand_flash_storage_read(buf);
+	if(ret > 0)
+	{
+		/* Clear non-data bits */
+		memset(buf+ret,0,PAGE_SIZE-ret);
+		network_message_handler(buf);
+	} else {
+		printf("Error restoring settings. Default settings applied\r\n");
+	}
 	
 	/* Start Wi-Fi P2P mode */
 	wifi_p2p_start();

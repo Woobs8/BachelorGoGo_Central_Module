@@ -2,11 +2,39 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\ASF\common\components\memory\nand_flash\nand_flash_ebi\ftl_lib\nand_flash_mem.c
+
+src\ASF\common\components\memory\nand_flash\nand_flash_ebi\nand_flash_ecc_sw.c
+
+src\ASF\common\components\memory\nand_flash\nand_flash_ebi\nand_flash_model.c
+
+src\ASF\common\components\memory\nand_flash\nand_flash_ebi\nand_flash_raw_smc.c
+
+src\ASF\common\components\memory\nand_flash\nand_flash_ebi\nand_flash_spare_scheme.c
+
+src\ASF\common\services\storage\ctrl_access\ctrl_access.c
+
+src\ASF\common\services\storage\ecc_hamming\ecc-sw.c
+
+src\ASF\sam\drivers\ebi\smc\smc.c
+
+src\ASF\sam\drivers\matrix\matrix.c
+
+src\ASF\sam\drivers\pwm\pwm.c
+
+src\ASF\sam\drivers\tc\tc.c
+
+src\nand_flash_storage\nand_flash_storage.c
+
 src\network_module\Networking.c
 
 src\network_module\WiFi_P2P.c
 
 src\protocol.c
+
+src\pwm_generator\pwm_generator.c
+
+src\servos\servos.c
 
 src\ASF\common\components\wifi\winc1500\bsp\source\nm_bsp_sam4s.c
 

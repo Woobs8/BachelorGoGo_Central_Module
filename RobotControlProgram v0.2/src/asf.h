@@ -85,6 +85,22 @@
 // From module: Interrupt management - SAM implementation
 #include <interrupt.h>
 
+// From module: MATRIX - Bus Matrix
+#include <matrix.h>
+
+// From module: Memory Control Access Interface
+#include <ctrl_access.h>
+
+// From module: NAND Flash on EBI
+#include <nand_flash_common.h>
+#include <nand_flash_ecc.h>
+#include <nand_flash_management.h>
+#include <nand_flash_mem.h>
+#include <nand_flash_model.h>
+#include <nand_flash_raw.h>
+#include <nand_flash_spare_scheme.h>
+#include <nand_flash_translation.h>
+
 // From module: PDC - Peripheral DMA Controller Example
 #include <pdc.h>
 
@@ -95,11 +111,17 @@
 #include <pmc.h>
 #include <sleep.h>
 
+// From module: PWM - Pulse Width Modulation
+#include <pwm.h>
+
 // From module: Part identification macros
 #include <parts.h>
 
 // From module: SAM4S Xplained Pro LED support enabled
 #include <led.h>
+
+// From module: SMC - Static Memory Controller
+#include <smc.h>
 
 // From module: SPI - Serial Peripheral Interface
 #include <spi.h>
@@ -109,6 +131,9 @@
 
 // From module: System Clock Control - SAM4S implementation
 #include <sysclk.h>
+
+// From module: TC - Timer Counter
+#include <tc.h>
 
 // From module: UART - Univ. Async Rec/Trans
 #include <uart.h>

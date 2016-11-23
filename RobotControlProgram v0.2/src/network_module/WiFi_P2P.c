@@ -27,8 +27,8 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 				m2m_wifi_request_dhcp_client();
 			} else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
 				WIFI_CONNECTION_STATE = 0;
-				network_disconnected();
 				printf("Wi-Fi disconnected\r\n");
+				network_disconnected();
 			}
 
 			break;
@@ -48,7 +48,6 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 			peer_address = pu8IPAddress[4]<<24 | pu8IPAddress[5]<<16 | pu8IPAddress[6]<<8 | pu8IPAddress[7];
 			delay_ms(100);	// Delay necessary to allow app to open socket
 			network_establish_connection(peer_address);
-			//network_test = 1;
 			break;
 		}
 
@@ -65,8 +64,6 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
  */
 void wifi_init(void)
 {
-		network_is_connected = -1;
-		//network_test = -1;
 		tstrWifiInitParam param;
 		int8_t ret;
 
@@ -83,12 +80,7 @@ void wifi_init(void)
 		}
 
 		/* Set device name to be shown in peer device. */
-		ret = m2m_wifi_set_device_name((uint8_t *)MAIN_WLAN_DEVICE_NAME, strlen(MAIN_WLAN_DEVICE_NAME));
-		if (M2M_SUCCESS != ret) {
-			printf("WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
-			while (1) {
-			}
-		}
+		wifi_set_device_name(DEFAULT_WLAN_DEVICE_NAME,strlen(DEFAULT_WLAN_DEVICE_NAME)+1);
 }
 
 /**
@@ -104,5 +96,32 @@ void wifi_p2p_start(void)
 			printf("WiFi_P2P: m2m_wifi_p2p call error!\r\n");
 		}
 
-		printf("P2P mode started. %s is awaiting connection.\r\n", (char *)MAIN_WLAN_DEVICE_NAME);
+		printf("P2P mode started. %s is awaiting connection.\r\n", (char *)device_name);
+}
+
+/*
+ * Set the peer device name
+*/
+int8_t wifi_set_device_name(char* name, uint8_t size)
+{
+	int8_t ret = 0;
+	if(strcmp(name, device_name) != 0)
+	{
+		volatile char tmp[strlen(SYSTEM_IDENTIFIER)+size];
+		memcpy(tmp,SYSTEM_IDENTIFIER,strlen(SYSTEM_IDENTIFIER));
+		memcpy(tmp+strlen(SYSTEM_IDENTIFIER),name,size);
+						
+		/* Set device name to be shown in peer device. */
+		ret = m2m_wifi_set_device_name((uint8_t *)tmp, strlen(tmp));
+		if (M2M_SUCCESS != ret) {
+			printf("WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
+			while (1) {
+			}
+		} else {
+			free(device_name);
+			device_name = malloc(size);
+			memcpy(device_name,name,size);
+		}
+	}
+	return ret;
 }

@@ -135,3 +135,16 @@ int16_t nand_flash_storage_read(uint8_t* buf)
 	}
 	return ret;
 }
+
+/* Erases all data in the NAND flash */
+int8_t nand_flash_storage_erase(void)
+{
+	/* Erase all used blocks */
+	for (i = 0; i < BLOCK_USAGE; i++) {
+		error = nand_flash_raw_erase_block(&nf_raw, i);
+
+		if (error == NAND_COMMON_ERROR_BADBLOCK) {
+			printf("-E- Block %u is BAD block. \n\r", i);
+		}
+	}
+}

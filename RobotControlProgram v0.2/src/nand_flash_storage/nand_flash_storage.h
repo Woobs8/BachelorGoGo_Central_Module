@@ -9,6 +9,7 @@
 int8_t nand_flash_storage_init(void);
 int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size);
 int16_t nand_flash_storage_read(uint8_t* buf);
+int8_t nand_flash_storage_erase(void);
 
 
 #endif /* NAND_FLASH_STORAGE_H_ */

@@ -102,7 +102,7 @@ int main (void)
 		memset(buf+ret,0,PAGE_SIZE-ret);
 		network_message_handler(buf);
 	} else {
-		printf("Error restoring settings. Default settings applied\r\n");
+		printf("Error restoring settings. Default settings applied.\r\n");
 	}
 	
 	/* Start Wi-Fi P2P mode */

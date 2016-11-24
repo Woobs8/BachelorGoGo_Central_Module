@@ -7,8 +7,9 @@
 #include "nand_flash_storage/nand_flash_storage.h"
 
 /** Event handler for network messages */
-void network_message_handler(char *msg)
+int8_t network_message_handler(char *msg)
 {
+	int8_t error = PARSER_ERROR;
 	char cmd[PACKET_SIZE];
 	memcpy( cmd, msg, PACKET_SIZE );
 	
@@ -21,8 +22,10 @@ void network_message_handler(char *msg)
 		token = strtok(cmd, TAG_SEPARATOR);
 		
 		int8_t coords[2];
+		int8_t power_ang[2];
 		portBASE_TYPE xStatus;
-		volatile int8_t iValidCount = 0;
+		uint8_t uValidCoords = 0;
+		uint8_t uValidPowerAng = 0;
 		
 		/* walk through other tokens */
 		while(token != NULL)
@@ -38,7 +41,7 @@ void network_message_handler(char *msg)
 					printf("X: %s (%d)\r\n",value,(int)x_coord);
 					int8_t iX_coord = (int8_t)x_coord;
 					coords[0] = iX_coord;
-					iValidCount++;
+					uValidCoords++;
 				}
 				/** Y coordinate */
 				else if(strstr(token, TAG_CONTROL_STEERING_Y) != NULL)
@@ -47,33 +50,52 @@ void network_message_handler(char *msg)
 					printf("Y: %s (%d)\r\n",value,(int)y_coord);
 					int8_t iY_coord = (int8_t)y_coord;
 					coords[1] = iY_coord;
-					iValidCount++;
+					uValidCoords++;
 				}
 				/** Power */
 				else if(strstr(token, TAG_CONTROL_STEERING_POWER) != NULL)
 				{
 					float power = strtof(value,NULL);
 					printf("Pwr: %s (%d)\r\n",value,(int)power);
+					int8_t iPow = (int8_t)power;
+					power_ang[0] = iPow;
+					uValidPowerAng++;
 				}
 				/** Angle */
 				else if(strstr(token, TAG_CONTROL_STEERING_ANGLE) != NULL)
 				{
 					float angle = strtof(value,NULL);
 					printf("Ang: %s (%d)\r\n",value,(int)angle);
+					int8_t iAng = (int8_t)angle;
+					power_ang[1] = iAng;
+					uValidPowerAng++;
 				}
 				
 				/* Write to queue */
-				if (iValidCount == 2)
-				{
+				if (uValidCoords == 2) {
 					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
 					if ((xStatus == pdPASS))
 					{
 						printf("Queue write OK\r\n");
+						error = PARSER_SUCCESS;
 					}
 					else if((xStatus == errQUEUE_FULL))
 					{
 						printf("Queue full\r\n");
 					}
+				}  else if (uValidPowerAng == 2) {
+					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
+					if ((xStatus == pdPASS))
+					{
+						printf("Queue write OK\r\n");
+						error = PARSER_SUCCESS;
+					}
+					else if((xStatus == errQUEUE_FULL))
+					{
+						printf("Queue full\r\n");
+					}
+				} else {
+					error = CONTROL_INPUT_ERROR;
 				}
 			}	
 			// Read next token
@@ -84,7 +106,10 @@ void network_message_handler(char *msg)
 	else if(strstr(cmd, CMD_SETTINGS) != NULL)
 	{
 		char *token;
-		uint8_t settings_parsed = 0;	// Validates that all settings have been set
+		char* name = NULL;
+		int8_t assisted_drive_mode = -1;
+		int8_t power_save_mode = -1;
+		int8_t video_quality = -1;
 			
 		/* get the first token */
 		token = strtok(cmd, TAG_SEPARATOR);
@@ -98,50 +123,68 @@ void network_message_handler(char *msg)
 			{
 				/** Robot name setting */
 				if(strstr(token, TAG_SETTINGS_NAME) != NULL)
-				{
-					uint8_t size = strlen(value);			
-					char* name = value;
-					int8_t ret = wifi_set_device_name(name, size+1);	// include NUL-terminator
-					if(ret) {
-						printf("Could not set device name\r\n");
-					} else {
-						printf("Name: %s\r\n",name);
-						settings_parsed++;
-					}
+				{	
+					name = value;
 				}
 				/** Assisted Driving Mode setting */
 				else if(strstr(token, TAG_SETTINGS_ASSISTED_DRIVE_MODE) != NULL)
 				{
 					char* ptr;
-					uint8_t assisted_drive_mode = strtol(value,ptr,10);
-					printf("Assisted Drive Mode: %d\r\n",assisted_drive_mode);
-					settings_parsed++;
+					assisted_drive_mode = strtol(value,ptr,10);
 				}
 				/** Power Save Mode setting */
 				else if(strstr(token, TAG_SETTINGS_POWER_SAVE_MODE) != NULL)
 				{
 					char* ptr;
-					uint8_t power_save_mode = strtol(value,ptr,10);
-					printf("Power Save Mode: %d\r\n",power_save_mode);
-					settings_parsed++;
+					power_save_mode = strtol(value,ptr,10);
 				}
 				/** Video Quality setting*/
 				else if(strstr(token, TAG_SETTINGS_VIDEO_QUALITY) != NULL)
 				{
 					char* ptr;
-					uint8_t video_quality = strtol(value,ptr,10);
-					printf("Video Quality: %d\r\n",video_quality);
-					settings_parsed++;
+					video_quality = strtol(value,ptr,10);
 				}
 			}
 			
 			// Read next token
 			token = strtok(NULL, TAG_SEPARATOR);
 		}
-		// Only store in flash if all settings have been set
-		if(settings_parsed == 4)
+		// Only configure robot if all settings have been parsed
+		if(name && assisted_drive_mode >= 0 && power_save_mode >= 0 && video_quality >= 0)
+		{
+			/* Store settings in non-volatile memory */
 			nand_flash_storage_write(msg,PACKET_SIZE);
+			
+			/* Configure device name */
+			uint8_t size = strlen(name);	
+			int8_t ret = wifi_set_device_name(name, size+1);	// include NUL-terminator
+			if(ret) {
+				printf("-E- Could not set device name\r\n");
+				error = SETTINGS_ERROR;
+			} else {
+				printf("-I- Name: %s\r\n",name);
+				error = PARSER_SUCCESS;
+			}
+			
+			if(error != SETTINGS_ERROR) {
+				/* Configure Assisted Drive Mode */
+				printf("-I- Assisted Drive Mode: %d\r\n",assisted_drive_mode);				
+			}
+			
+			if(error != SETTINGS_ERROR) {
+				/* Configure Power Save Mode */
+				printf("-I- Power Save Mode: %d\r\n",power_save_mode);
+			}
+			
+			if(error != SETTINGS_ERROR) {
+				/* Configure Video Quality */
+				printf("-I- Video Quality: %d\r\n",video_quality);
+			}
+		} else {
+			error = SETTINGS_ERROR;
+		}
 	}
+	return error;
 }
 
 /** Generate a status packet formatted according to the transfer protocol

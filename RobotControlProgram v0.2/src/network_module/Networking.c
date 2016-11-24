@@ -181,14 +181,16 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			{			
 				// Process the received message
 				printf("tcp_settings_data_socket: settings received: %s\r\n",TCPSettingsRxBuffer);
-				
-				//TODO: set settings and parse return to determine success or failure
-				// for now just return ACK
 				s_msg_ack msg;
-				strncpy(msg.ack,CMD_ACK,CMD_SPECIFIER_SIZE);
-				network_message_handler(TCPSettingsRxBuffer);
-				printf("tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
-				send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
+				if(network_message_handler(TCPSettingsRxBuffer) == PARSER_SUCCESS) {
+					strncpy(msg.ack,CMD_ACK,CMD_SPECIFIER_SIZE);
+					printf("tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
+					send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
+				} else {
+					strncpy(msg.ack,CMD_NACK,CMD_SPECIFIER_SIZE);
+					printf("tcp_settings_data_socket: configuration was not successful. Sending NACK...\r\n");
+					send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
+				}
 				
 				// Close the accepted socket when finished.
 				close(tcp_settings_data_socket);

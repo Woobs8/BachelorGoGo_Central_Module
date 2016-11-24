@@ -11,6 +11,7 @@
 #define CMD_STATUS							"CMD*ST"
 #define CMD_SETTINGS						"CMD*SE"
 #define CMD_ACK								"CMD*OK"
+#define CMD_NACK							"CMD*NO"
 
 /** Tag type specifiers */
 // Settings tags
@@ -38,12 +39,18 @@
 #define DATA_TAG_SPACING					":"
 #define TAG_SEPARATOR						";"
 
-/** Values */
+// Values
 #define VALUE_TRUE							"1"
 #define VALUE_FALSE							"0"
+
+// Returns
+#define PARSER_SUCCESS						(0)
+#define PARSER_ERROR						(-1)
+#define CONTROL_INPUT_ERROR					(-2)
+#define SETTINGS_ERROR						(-3)
 	
 /** Event handler for network messages */
-void network_message_handler(char *msg);
+int8_t network_message_handler(char *msg);
 
 /** Generate a status packet formatted according to the transfer protocol */
 int8_t network_generate_status_packet(char* packet,

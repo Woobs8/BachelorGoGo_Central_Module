@@ -40,6 +40,7 @@
 #include "network_module/WiFi_P2P.h"
 #include "nand_flash_storage/nand_flash_storage.h"
 #include "protocol.h"
+#include "servos/servos.h"
 #include <string.h>
 
 #define STRING_EOL    "\r\n"
@@ -79,9 +80,9 @@ int main (void)
 #ifdef FREE_RTOS_LED_BLINKER_TASK
 	/* Create LED task */
 	if(xTaskCreate(task_led, "LED Task", TASK_LED_STACK_SIZE, NULL, TASK_LED_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create LED Task"STRING_EOL);
+		printf("-E- Failed to create LED Task"STRING_EOL);
 	} else {
-		printf("Created LED Task"STRING_EOL);
+		printf("-I- Created LED Task"STRING_EOL);
 	}
 #endif
 
@@ -93,16 +94,23 @@ int main (void)
 	wifi_init();
 	
 	/* Read persisted settings from non-volatile memory */
-	printf("Restoring settings from non-volatile memory...\r\n");
+	printf("-I- Restoring settings from non-volatile memory...\r\n");
 	uint8_t buf[PAGE_SIZE];
 	int16_t ret = nand_flash_storage_read(buf);
 	if(ret > 0)
 	{
 		/* Clear non-data bits */
 		memset(buf+ret,0,PAGE_SIZE-ret);
-		network_message_handler(buf);
+		int8_t ret = network_message_handler(buf);
+		if(ret == PARSER_SUCCESS) {
+			printf("-I- Settings successfully restored\r\n");
+		} else if (ret == PARSER_ERROR) {
+			printf("-I- No settings found. Default settings applied.\r\n");	
+		} else {
+			printf("-E- Error restoring settings. Default settings applied.\r\n");
+		}
 	} else {
-		printf("Error restoring settings. Default settings applied.\r\n");
+		printf("-E- Error retrieving settings. Default settings applied.\r\n");
 	}
 	
 	/* Start Wi-Fi P2P mode */
@@ -114,44 +122,44 @@ int main (void)
 	/* Create WINC task */
 	if (xTaskCreate(task_winc, "WINC Task", TASK_WINC_STACK_SIZE, NULL, TASK_LED_STACK_PRIORITY, NULL) != pdPASS )
 	{
-		printf("Failed to create WINC Task"STRING_EOL);
+		printf("-E- Failed to create WINC Task"STRING_EOL);
 	} 
 	else
 	{
-		printf("Created WINC Task"STRING_EOL);
+		printf("-I- Created WINC Task"STRING_EOL);
 	}
 #endif
 
 #ifdef FREE_RTOS_CONTROL_LOOP_TASK
 	if (xTaskCreate(task_control_loop, "Control Loop Task", TASK_CONTROL_LOOP_STACK_SIZE, NULL, TASK_CONTROL_LOOP_PRIORITY, NULL) != pdPASS )
 	{
-		printf("Failed to create Control Loop Task"STRING_EOL);
+		printf("-E- Failed to create Control Loop Task"STRING_EOL);
 	} 
 	else
 	{
-		printf("Created Control Loop Task"STRING_EOL);
+		printf("-E- Created Control Loop Task"STRING_EOL);
 	}
 #endif
 
 #ifdef FREE_RTOS_SENDER_TASK
 	if (xTaskCreate(task_sender, "Sender Task", TASK_CONTROL_LOOP_STACK_SIZE, NULL, TASK_CONTROL_LOOP_PRIORITY, NULL) != pdPASS)
 	{
-		printf("Failed to create Sender Task"STRING_EOL);
+		printf("-E- Failed to create Sender Task"STRING_EOL);
 	} 
 	else
 	{
-		printf("Created Sender Task"STRING_EOL);
+		printf("-I- Created Sender Task"STRING_EOL);
 	}
 #endif
 
 #ifdef FREE_RTOS_SEND_STATUS_TASK
 	if (xTaskCreate(task_send_status, "Send Status Task", TASK_SEND_STATUS_SIZE, NULL, TASK_SEND_STATUS_PRIORITY, NULL) != pdPASS )
 	{
-		printf("Failed to create Send Status Task"STRING_EOL);
+		printf("-E- Failed to create Send Status Task"STRING_EOL);
 	}
 	else
 	{
-		printf("Created Send Status Task"STRING_EOL);
+		printf("-I- Created Send Status Task"STRING_EOL);
 	}
 #endif
 

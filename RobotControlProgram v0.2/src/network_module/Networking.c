@@ -35,7 +35,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketConnectMsg *pstrConnect = (tstrSocketConnectMsg *)pvMsg;
 			if (pstrConnect && pstrConnect->s8Error >= 0) {
-				printf("tcp_port_exchange_socket: connect success!\r\n");
+				printf("-I- tcp_port_exchange_socket: connect success!\r\n");
 				// Perform data exchange.
 				s_msg_port port_msg;
 			
@@ -55,7 +55,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 				recv(sock, TCPPortExchangeRxBuffer, sizeof(TCPPortExchangeRxBuffer), 0);
 		
 			} else {
-				printf("tcp_port_exchange_socket: connect error!\r\n");
+				printf("-E- tcp_port_exchange_socket: connect error!\r\n");
 				close(tcp_port_exchange_socket);
 				tcp_port_exchange_socket = -1;
 				m2m_wifi_disconnect();
@@ -66,15 +66,15 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketRecvMsg *pstrRecv = (tstrSocketRecvMsg *)pvMsg;
 			if (pstrRecv && pstrRecv->s16BufferSize > 0) {
-				printf("tcp_port_exchange_socket: recv success!\r\n");
+				printf("-I- tcp_port_exchange_socket: recv success!\r\n");
 				char *ptr;
 				host_udp_port = strtol(TCPPortExchangeRxBuffer,ptr,10);
-				printf("Host port resolved to: (%d)\r\n",host_udp_port);
+				printf("-I- Host port resolved to: (%d)\r\n",host_udp_port);
 				close(tcp_port_exchange_socket);
 				tcp_port_exchange_socket = -1;
 				network_connected();
 			} else {
-				printf("tcp_port_exchange_socket: recv error!\r\n");
+				printf("-E- tcp_port_exchange_socket: recv error!\r\n");
 				close(tcp_port_exchange_socket);
 				tcp_port_exchange_socket = -1;
 				m2m_wifi_disconnect();
@@ -95,7 +95,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			}
 			else
 			{
-				printf("udp_command_socket: Bind Failed\n");
+				printf("-E- udp_command_socket: Bind Failed\n");
 			}
 		}
 		/** Command received */
@@ -104,11 +104,11 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			tstrSocketRecvMsg *pstrRecvMsg = (tstrSocketRecvMsg*)pvMsg;
 			if((pstrRecvMsg->pu8Buffer != NULL) && (pstrRecvMsg->s16BufferSize > 0))
 			{
-				printf("udp_command_socket: recvfrom success!\r\n");
+				printf("-I- udp_command_socket: recvfrom success!\r\n");
 				
 				if(pstrRecvMsg->s16BufferSize == UDP_COMMAND_BUFFER_SIZE)
 				{
-					printf("udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
+					printf("-I- udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
 					//xQueueSendToFront(xControl_Msg_Queue_handle, UDPCommandRxBuffer, 0);
 					network_message_handler(UDPCommandRxBuffer);
 				}
@@ -129,7 +129,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			}
 			else
 			{
-				printf("tcp_settings_listen_socket: Bind Failed\n");
+				printf("-E- tcp_settings_listen_socket: Bind Failed\n");
 				close(tcp_settings_listen_socket);
 				tcp_settings_listen_socket = -1;
 			}
@@ -139,14 +139,14 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketListenMsg *pstrListen = (tstrSocketListenMsg*)pvMsg;
 			if (pstrListen && pstrListen->status == 0) {
-				printf("tcp_settings_listen_socket: listen success!\r\n");
+				printf("-I- tcp_settings_listen_socket: listen success!\r\n");
 				accept(tcp_settings_listen_socket, NULL, NULL);
 			}
 			else
 			{
 				close(tcp_settings_listen_socket);
 				tcp_settings_listen_socket = -1;
-				printf("tcp_settings_listen_socket: listen Failed. Restarting...\n");
+				printf("-E- tcp_settings_listen_socket: listen Failed. Restarting...\n");
 				network_listen_for_settings();
 			}
 		}
@@ -157,7 +157,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			tstrSocketAcceptMsg *pstrAccept = (tstrSocketAcceptMsg *)pvMsg;
 			if(pstrAccept)
 			{
-				printf("tcp_settings_listen_socket: accept success!\r\n");
+				printf("-I- tcp_settings_listen_socket: accept success!\r\n");
 				accept(tcp_settings_listen_socket, NULL, NULL);
 				tcp_settings_data_socket = pstrAccept->sock;
 				recv(tcp_settings_data_socket, TCPSettingsRxBuffer, sizeof(TCPSettingsRxBuffer), 0);
@@ -166,7 +166,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			{
 				close(tcp_settings_listen_socket);
 				tcp_settings_listen_socket = -1;
-				printf("tcp_settings_listen_socket: Accept Failed\n");
+				printf("-E- tcp_settings_listen_socket: Accept Failed\n");
 				network_listen_for_settings();
 			}
 		}
@@ -180,15 +180,15 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			if((pstrRecvMsg->pu8Buffer != NULL) && (pstrRecvMsg->s16BufferSize > 0))
 			{			
 				// Process the received message
-				printf("tcp_settings_data_socket: settings received: %s\r\n",TCPSettingsRxBuffer);
+				printf("-I- tcp_settings_data_socket: settings received: %s\r\n",TCPSettingsRxBuffer);
 				s_msg_ack msg;
 				if(network_message_handler(TCPSettingsRxBuffer) == PARSER_SUCCESS) {
 					strncpy(msg.ack,CMD_ACK,CMD_SPECIFIER_SIZE);
-					printf("tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
+					printf("-I- tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
 					send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
 				} else {
 					strncpy(msg.ack,CMD_NACK,CMD_SPECIFIER_SIZE);
-					printf("tcp_settings_data_socket: configuration was not successful. Sending NACK...\r\n");
+					printf("-I- tcp_settings_data_socket: configuration was not successful. Sending NACK...\r\n");
 					send(tcp_settings_data_socket, &msg, sizeof(s_msg_ack), 0);
 				}
 				
@@ -202,7 +202,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 	{
 		if(u8Msg == SOCKET_MSG_SENDTO)
 		{
-			printf("udp_status_socket: Status sent!\r\n");
+			printf("-I- udp_status_socket: Status sent!\r\n");
 			if(udp_status_socket > 0) {
 				close(udp_status_socket);
 				udp_status_socket = -1;
@@ -228,7 +228,7 @@ void network_establish_connection(uint32_t address)
 	/* Open client socket. */
 	if (tcp_port_exchange_socket < 0) {
 		if ((tcp_port_exchange_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-			printf("Networking: failed to create TCP client socket error!\r\n");
+			printf("-E- Networking: failed to create TCP client socket error!\r\n");
 			m2m_wifi_disconnect();
 		}
 
@@ -236,7 +236,7 @@ void network_establish_connection(uint32_t address)
 		ret = connect(tcp_port_exchange_socket, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
 
 		if (ret < 0) {
-			printf("Networking: failed to connect TCP client socket error!\r\n");
+			printf("-E- Networking: failed to connect TCP client socket error!\r\n");
 			close(tcp_port_exchange_socket);
 			tcp_port_exchange_socket = -1;
 			m2m_wifi_disconnect();

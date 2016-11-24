@@ -3,15 +3,15 @@ RobotControlProgram v0.2.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00011a50  00400000  00400000  00010000  2**6
+  0 .text         00011ae0  00400000  00400000  00010000  2**6
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .ARM.exidx    00000008  00411a50  00411a50  00021a50  2**2
+  1 .ARM.exidx    00000008  00411ae0  00411ae0  00021ae0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .relocate     000008d0  20000000  00411a58  00030000  2**3
+  2 .relocate     000008d0  20000000  00411ae8  00030000  2**3
                   CONTENTS, ALLOC, LOAD, CODE
-  3 .bss          0000b5c8  200008d0  00412328  000308d0  2**3
+  3 .bss          0000b5c8  200008d0  004123b8  000308d0  2**3
                   ALLOC
-  4 .stack        00003000  2000be98  0041d8f0  000308d0  2**0
+  4 .stack        00003000  2000be98  0041d980  000308d0  2**0
                   ALLOC
   5 .ARM.attributes 0000002a  00000000  00000000  000308d0  2**0
                   CONTENTS, READONLY
@@ -101,7 +101,7 @@ Disassembly of section .text:
   4000e2:	bd10      	pop	{r4, pc}
   4000e4:	200008d0 	.word	0x200008d0
   4000e8:	00000000 	.word	0x00000000
-  4000ec:	00411a58 	.word	0x00411a58
+  4000ec:	00411ae8 	.word	0x00411ae8
 
 004000f0 <frame_dummy>:
   4000f0:	4b08      	ldr	r3, [pc, #32]	; (400114 <frame_dummy+0x24>)
@@ -122,8 +122,8 @@ Disassembly of section .text:
   400112:	bf00      	nop
   400114:	00000000 	.word	0x00000000
   400118:	200008d4 	.word	0x200008d4
-  40011c:	00411a58 	.word	0x00411a58
-  400120:	00411a58 	.word	0x00411a58
+  40011c:	00411ae8 	.word	0x00411ae8
+  400120:	00411ae8 	.word	0x00411ae8
   400124:	00000000 	.word	0x00000000
 
 00400128 <nand_flash_model_find>:
@@ -1767,7 +1767,7 @@ int8_t nand_flash_storage_init(void)
   40083a:	b128      	cbz	r0, 400848 <nand_flash_storage_init+0x38>
 	addr_address, data_address)) {
 
-		printf("-E- Device Unknown\n\r");
+		printf("-E- Device Unknown\r\n");
   40083c:	4824      	ldr	r0, [pc, #144]	; (4008d0 <nand_flash_storage_init+0xc0>)
   40083e:	4b25      	ldr	r3, [pc, #148]	; (4008d4 <nand_flash_storage_init+0xc4>)
   400840:	4798      	blx	r3
@@ -1775,7 +1775,7 @@ int8_t nand_flash_storage_init(void)
   400842:	f04f 3aff 	mov.w	sl, #4294967295
   400846:	e004      	b.n	400852 <nand_flash_storage_init+0x42>
 	} else {
-		printf("-I- NAND Flash driver initialized\n\r");
+		printf("-I- NAND Flash driver initialized\r\n");
   400848:	4823      	ldr	r0, [pc, #140]	; (4008d8 <nand_flash_storage_init+0xc8>)
   40084a:	4b22      	ldr	r3, [pc, #136]	; (4008d4 <nand_flash_storage_init+0xc4>)
   40084c:	4798      	blx	r3
@@ -1787,7 +1787,7 @@ int8_t nand_flash_storage_init(void)
 	int8_t ret = 0;
   40084e:	f04f 0a00 	mov.w	sl, #0
 	} else {
-		printf("-I- NAND Flash driver initialized\n\r");
+		printf("-I- NAND Flash driver initialized\r\n");
 	}
 
 	/* Get device parameters */
@@ -1823,28 +1823,28 @@ int8_t nand_flash_storage_init(void)
   40088a:	4d1b      	ldr	r5, [pc, #108]	; (4008f8 <nand_flash_storage_init+0xe8>)
   40088c:	6028      	str	r0, [r5, #0]
 
-	printf("-I- Size of the whole device in bytes : 0x%x \n\r", mem_size);
+	printf("-I- Size of the whole device in bytes : 0x%x \r\n", mem_size);
   40088e:	f8d9 1000 	ldr.w	r1, [r9]
   400892:	481a      	ldr	r0, [pc, #104]	; (4008fc <nand_flash_storage_init+0xec>)
   400894:	4c0f      	ldr	r4, [pc, #60]	; (4008d4 <nand_flash_storage_init+0xc4>)
   400896:	47a0      	blx	r4
-	printf("-I- Size in bytes of one single block of a device : 0x%x \n\r",	block_size);
+	printf("-I- Size in bytes of one single block of a device : 0x%x \r\n",	block_size);
   400898:	f8d8 1000 	ldr.w	r1, [r8]
   40089c:	4818      	ldr	r0, [pc, #96]	; (400900 <nand_flash_storage_init+0xf0>)
   40089e:	47a0      	blx	r4
-	printf("-I- Number of blocks in the entire device : 0x%x \n\r",	num_block);
+	printf("-I- Number of blocks in the entire device : 0x%x \r\n",	num_block);
   4008a0:	6839      	ldr	r1, [r7, #0]
   4008a2:	4818      	ldr	r0, [pc, #96]	; (400904 <nand_flash_storage_init+0xf4>)
   4008a4:	47a0      	blx	r4
-	printf("-I- Number of blocks used by the application : 0x%x \n\r", BLOCK_USAGE);
+	printf("-I- Number of blocks used by the application : 0x%x \r\n", BLOCK_USAGE);
   4008a6:	210a      	movs	r1, #10
   4008a8:	4817      	ldr	r0, [pc, #92]	; (400908 <nand_flash_storage_init+0xf8>)
   4008aa:	47a0      	blx	r4
-	printf("-I- Size of the data area of a page in bytes : 0x%x \n\r", page_size);
+	printf("-I- Size of the data area of a page in bytes : 0x%x \r\n", page_size);
   4008ac:	6831      	ldr	r1, [r6, #0]
   4008ae:	4817      	ldr	r0, [pc, #92]	; (40090c <nand_flash_storage_init+0xfc>)
   4008b0:	47a0      	blx	r4
-	printf("-I- Number of pages in the entire device : 0x%x \n\r", pages_per_block);
+	printf("-I- Number of pages in the entire device : 0x%x \r\n", pages_per_block);
   4008b2:	6829      	ldr	r1, [r5, #0]
   4008b4:	4816      	ldr	r0, [pc, #88]	; (400910 <nand_flash_storage_init+0x100>)
   4008b6:	47a0      	blx	r4
@@ -1898,7 +1898,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
   40092a:	4b27      	ldr	r3, [pc, #156]	; (4009c8 <nand_flash_storage_write+0xac>)
   40092c:	601a      	str	r2, [r3, #0]
 	/* Prepare buffer in SRAM. */
-	printf("-I- Preparing buffer in SRAM ...\n\r");
+	printf("-I- Preparing buffer in SRAM ...\r\n");
   40092e:	4827      	ldr	r0, [pc, #156]	; (4009cc <nand_flash_storage_write+0xb0>)
   400930:	4b27      	ldr	r3, [pc, #156]	; (4009d0 <nand_flash_storage_write+0xb4>)
   400932:	4798      	blx	r3
@@ -1935,7 +1935,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 		if (error == NAND_COMMON_ERROR_BADBLOCK) {
   40095e:	280c      	cmp	r0, #12
   400960:	d105      	bne.n	40096e <nand_flash_storage_write+0x52>
-			printf("-E- Block %u is BAD block. \n\r", i);
+			printf("-E- Block %u is BAD block.\r\n", i);
   400962:	4b1f      	ldr	r3, [pc, #124]	; (4009e0 <nand_flash_storage_write+0xc4>)
   400964:	6819      	ldr	r1, [r3, #0]
   400966:	4821      	ldr	r0, [pc, #132]	; (4009ec <nand_flash_storage_write+0xd0>)
@@ -1945,7 +1945,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 			ret = -1;
 		} else {
 			/* Write a page to the NAND Flash. */
-			printf("-I- Writing the buffer in page %d of block %d without ECC\n\r", page, i);
+			printf("-I- Writing the buffer in page %d of block %d without ECC\r\n", page, i);
   40096e:	4f1c      	ldr	r7, [pc, #112]	; (4009e0 <nand_flash_storage_write+0xc4>)
   400970:	f8df 9068 	ldr.w	r9, [pc, #104]	; 4009dc <nand_flash_storage_write+0xc0>
   400974:	683a      	ldr	r2, [r7, #0]
@@ -1973,7 +1973,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 				break;
   40099e:	e00e      	b.n	4009be <nand_flash_storage_write+0xa2>
 			}
-			printf("-E- Cannot write page %d of block %d. Trying next block...\n\r", page, i);
+			printf("-E- Cannot write page %d of block %d. Trying next block...\r\n", page, i);
   4009a0:	4b0f      	ldr	r3, [pc, #60]	; (4009e0 <nand_flash_storage_write+0xc4>)
   4009a2:	681a      	ldr	r2, [r3, #0]
   4009a4:	4b0d      	ldr	r3, [pc, #52]	; (4009dc <nand_flash_storage_write+0xc0>)
@@ -1994,7 +1994,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
   4009b6:	f04f 08ff 	mov.w	r8, #255	; 0xff
   4009ba:	2909      	cmp	r1, #9
   4009bc:	d9cb      	bls.n	400956 <nand_flash_storage_write+0x3a>
-			printf("-E- Cannot write page %d of block %d. Trying next block...\n\r", page, i);
+			printf("-E- Cannot write page %d of block %d. Trying next block...\r\n", page, i);
 			ret = -1;
 		}
 	}
@@ -2044,7 +2044,7 @@ int16_t nand_flash_storage_read(uint8_t* buf)
   400a1a:	2a09      	cmp	r2, #9
   400a1c:	d825      	bhi.n	400a6a <nand_flash_storage_read+0x6a>
 		/* Read a page from the NAND Flash. */
-		printf("-I- Reading page %d of block %d\n\r", page, i);
+		printf("-I- Reading page %d of block %d\r\n", page, i);
   400a1e:	4d19      	ldr	r5, [pc, #100]	; (400a84 <nand_flash_storage_read+0x84>)
   400a20:	f8df 9088 	ldr.w	r9, [pc, #136]	; 400aac <nand_flash_storage_read+0xac>
   400a24:	4e1a      	ldr	r6, [pc, #104]	; (400a90 <nand_flash_storage_read+0x90>)
@@ -2077,7 +2077,7 @@ int16_t nand_flash_storage_read(uint8_t* buf)
   400a4e:	f04f 32ff 	mov.w	r2, #4294967295
   400a52:	4b0b      	ldr	r3, [pc, #44]	; (400a80 <nand_flash_storage_read+0x80>)
   400a54:	601a      	str	r2, [r3, #0]
-		printf("-E- Cannot read page %d of block %d. Trying next block...\n\r", page, i);
+		printf("-E- Cannot read page %d of block %d. Trying next block...\r\n", page, i);
   400a56:	4c0d      	ldr	r4, [pc, #52]	; (400a8c <nand_flash_storage_read+0x8c>)
   400a58:	6822      	ldr	r2, [r4, #0]
   400a5a:	8829      	ldrh	r1, [r5, #0]
@@ -2096,7 +2096,7 @@ int16_t nand_flash_storage_read(uint8_t* buf)
   400a68:	d9dd      	bls.n	400a26 <nand_flash_storage_read+0x26>
 	
 	if(error < 0) {
-		printf("-E- Could not read any blocks\n\r");
+		printf("-E- Could not read any blocks\r\n");
 		ret = error;
 	} else {
 		uint8_t data_size = read_buffer[0];
@@ -2183,7 +2183,7 @@ void network_establish_connection(uint32_t address)
   400afc:	7018      	strb	r0, [r3, #0]
   400afe:	2800      	cmp	r0, #0
   400b00:	da04      	bge.n	400b0c <network_establish_connection+0x5c>
-			printf("Networking: failed to create TCP client socket error!\r\n");
+			printf("-E- Networking: failed to create TCP client socket error!\r\n");
   400b02:	4813      	ldr	r0, [pc, #76]	; (400b50 <network_establish_connection+0xa0>)
   400b04:	4b13      	ldr	r3, [pc, #76]	; (400b54 <network_establish_connection+0xa4>)
   400b06:	4798      	blx	r3
@@ -2204,7 +2204,7 @@ void network_establish_connection(uint32_t address)
 		if (ret < 0) {
   400b1a:	2800      	cmp	r0, #0
   400b1c:	da0b      	bge.n	400b36 <network_establish_connection+0x86>
-			printf("Networking: failed to connect TCP client socket error!\r\n");
+			printf("-E- Networking: failed to connect TCP client socket error!\r\n");
   400b1e:	4810      	ldr	r0, [pc, #64]	; (400b60 <network_establish_connection+0xb0>)
   400b20:	4b0c      	ldr	r3, [pc, #48]	; (400b54 <network_establish_connection+0xa4>)
   400b22:	4798      	blx	r3
@@ -2230,11 +2230,11 @@ void network_establish_connection(uint32_t address)
   400b44:	00403bfd 	.word	0x00403bfd
   400b48:	2000000d 	.word	0x2000000d
   400b4c:	00403c11 	.word	0x00403c11
-  400b50:	0040fe10 	.word	0x0040fe10
+  400b50:	0040fe30 	.word	0x0040fe30
   400b54:	00407269 	.word	0x00407269
   400b58:	004026e9 	.word	0x004026e9
   400b5c:	00403ded 	.word	0x00403ded
-  400b60:	0040fe48 	.word	0x0040fe48
+  400b60:	0040fe6c 	.word	0x0040fe6c
   400b64:	00404089 	.word	0x00404089
 
 00400b68 <network_listen_for_commands>:
@@ -2487,7 +2487,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400cee:	f992 3001 	ldrsb.w	r3, [r2, #1]
   400cf2:	2b00      	cmp	r3, #0
   400cf4:	db2f      	blt.n	400d56 <socket_event_handler_cb+0x82>
-				printf("tcp_port_exchange_socket: connect success!\r\n");
+				printf("-I- tcp_port_exchange_socket: connect success!\r\n");
   400cf6:	4893      	ldr	r0, [pc, #588]	; (400f44 <socket_event_handler_cb+0x270>)
   400cf8:	4b93      	ldr	r3, [pc, #588]	; (400f48 <socket_event_handler_cb+0x274>)
   400cfa:	4798      	blx	r3
@@ -2557,7 +2557,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 				recv(sock, TCPPortExchangeRxBuffer, sizeof(TCPPortExchangeRxBuffer), 0);
 		
 			} else {
-				printf("tcp_port_exchange_socket: connect error!\r\n");
+				printf("-E- tcp_port_exchange_socket: connect error!\r\n");
   400d56:	4881      	ldr	r0, [pc, #516]	; (400f5c <socket_event_handler_cb+0x288>)
   400d58:	4b7b      	ldr	r3, [pc, #492]	; (400f48 <socket_event_handler_cb+0x274>)
   400d5a:	4798      	blx	r3
@@ -2586,7 +2586,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400d78:	f9b2 3004 	ldrsh.w	r3, [r2, #4]
   400d7c:	2b00      	cmp	r3, #0
   400d7e:	dd16      	ble.n	400dae <socket_event_handler_cb+0xda>
-				printf("tcp_port_exchange_socket: recv success!\r\n");
+				printf("-I- tcp_port_exchange_socket: recv success!\r\n");
   400d80:	4879      	ldr	r0, [pc, #484]	; (400f68 <socket_event_handler_cb+0x294>)
   400d82:	4c71      	ldr	r4, [pc, #452]	; (400f48 <socket_event_handler_cb+0x274>)
   400d84:	47a0      	blx	r4
@@ -2599,7 +2599,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400d8e:	4798      	blx	r3
   400d90:	4b77      	ldr	r3, [pc, #476]	; (400f70 <socket_event_handler_cb+0x29c>)
   400d92:	8018      	strh	r0, [r3, #0]
-				printf("Host port resolved to: (%d)\r\n",host_udp_port);
+				printf("-I- Host port resolved to: (%d)\r\n",host_udp_port);
   400d94:	b281      	uxth	r1, r0
   400d96:	4877      	ldr	r0, [pc, #476]	; (400f74 <socket_event_handler_cb+0x2a0>)
   400d98:	47a0      	blx	r4
@@ -2621,12 +2621,12 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			tstrSocketRecvMsg *pstrRecv = (tstrSocketRecvMsg *)pvMsg;
 			if (pstrRecv && pstrRecv->s16BufferSize > 0) {
   400dac:	e141      	b.n	401032 <socket_event_handler_cb+0x35e>
-				printf("Host port resolved to: (%d)\r\n",host_udp_port);
+				printf("-I- Host port resolved to: (%d)\r\n",host_udp_port);
 				close(tcp_port_exchange_socket);
 				tcp_port_exchange_socket = -1;
 				network_connected();
 			} else {
-				printf("tcp_port_exchange_socket: recv error!\r\n");
+				printf("-E- tcp_port_exchange_socket: recv error!\r\n");
   400dae:	4873      	ldr	r0, [pc, #460]	; (400f7c <socket_event_handler_cb+0x2a8>)
   400db0:	4b65      	ldr	r3, [pc, #404]	; (400f48 <socket_event_handler_cb+0x274>)
   400db2:	4798      	blx	r3
@@ -2672,7 +2672,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			}
 			else
 			{
-				printf("udp_command_socket: Bind Failed\n");
+				printf("-E- udp_command_socket: Bind Failed\n");
   400de6:	4869      	ldr	r0, [pc, #420]	; (400f8c <socket_event_handler_cb+0x2b8>)
   400de8:	4b57      	ldr	r3, [pc, #348]	; (400f48 <socket_event_handler_cb+0x274>)
   400dea:	4798      	blx	r3
@@ -2694,7 +2694,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400dfe:	2b00      	cmp	r3, #0
   400e00:	dd0e      	ble.n	400e20 <socket_event_handler_cb+0x14c>
 			{
-				printf("udp_command_socket: recvfrom success!\r\n");
+				printf("-I- udp_command_socket: recvfrom success!\r\n");
   400e02:	4863      	ldr	r0, [pc, #396]	; (400f90 <socket_event_handler_cb+0x2bc>)
   400e04:	4b50      	ldr	r3, [pc, #320]	; (400f48 <socket_event_handler_cb+0x274>)
   400e06:	4798      	blx	r3
@@ -2704,7 +2704,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400e0c:	2bff      	cmp	r3, #255	; 0xff
   400e0e:	d107      	bne.n	400e20 <socket_event_handler_cb+0x14c>
 				{
-					printf("udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
+					printf("-I- udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
   400e10:	4c5c      	ldr	r4, [pc, #368]	; (400f84 <socket_event_handler_cb+0x2b0>)
   400e12:	4621      	mov	r1, r4
   400e14:	485f      	ldr	r0, [pc, #380]	; (400f94 <socket_event_handler_cb+0x2c0>)
@@ -2753,7 +2753,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			}
 			else
 			{
-				printf("tcp_settings_listen_socket: Bind Failed\n");
+				printf("-E- tcp_settings_listen_socket: Bind Failed\n");
   400e4e:	4855      	ldr	r0, [pc, #340]	; (400fa4 <socket_event_handler_cb+0x2d0>)
   400e50:	4b3d      	ldr	r3, [pc, #244]	; (400f48 <socket_event_handler_cb+0x274>)
   400e52:	4798      	blx	r3
@@ -2778,7 +2778,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400e68:	b16a      	cbz	r2, 400e86 <socket_event_handler_cb+0x1b2>
   400e6a:	f992 3000 	ldrsb.w	r3, [r2]
   400e6e:	b953      	cbnz	r3, 400e86 <socket_event_handler_cb+0x1b2>
-				printf("tcp_settings_listen_socket: listen success!\r\n");
+				printf("-I- tcp_settings_listen_socket: listen success!\r\n");
   400e70:	484d      	ldr	r0, [pc, #308]	; (400fa8 <socket_event_handler_cb+0x2d4>)
   400e72:	4b35      	ldr	r3, [pc, #212]	; (400f48 <socket_event_handler_cb+0x274>)
   400e74:	4798      	blx	r3
@@ -2800,7 +2800,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400e8a:	22ff      	movs	r2, #255	; 0xff
   400e8c:	4b43      	ldr	r3, [pc, #268]	; (400f9c <socket_event_handler_cb+0x2c8>)
   400e8e:	701a      	strb	r2, [r3, #0]
-				printf("tcp_settings_listen_socket: listen Failed. Restarting...\n");
+				printf("-E- tcp_settings_listen_socket: listen Failed. Restarting...\n");
   400e90:	4847      	ldr	r0, [pc, #284]	; (400fb0 <socket_event_handler_cb+0x2dc>)
   400e92:	4b2d      	ldr	r3, [pc, #180]	; (400f48 <socket_event_handler_cb+0x274>)
   400e94:	4798      	blx	r3
@@ -2820,7 +2820,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			if(pstrAccept)
   400ea2:	b19a      	cbz	r2, 400ecc <socket_event_handler_cb+0x1f8>
 			{
-				printf("tcp_settings_listen_socket: accept success!\r\n");
+				printf("-I- tcp_settings_listen_socket: accept success!\r\n");
   400ea4:	4844      	ldr	r0, [pc, #272]	; (400fb8 <socket_event_handler_cb+0x2e4>)
   400ea6:	4b28      	ldr	r3, [pc, #160]	; (400f48 <socket_event_handler_cb+0x274>)
   400ea8:	4798      	blx	r3
@@ -2852,7 +2852,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400ed0:	22ff      	movs	r2, #255	; 0xff
   400ed2:	4b32      	ldr	r3, [pc, #200]	; (400f9c <socket_event_handler_cb+0x2c8>)
   400ed4:	701a      	strb	r2, [r3, #0]
-				printf("tcp_settings_listen_socket: Accept Failed\n");
+				printf("-E- tcp_settings_listen_socket: Accept Failed\n");
   400ed6:	483b      	ldr	r0, [pc, #236]	; (400fc4 <socket_event_handler_cb+0x2f0>)
   400ed8:	4b1b      	ldr	r3, [pc, #108]	; (400f48 <socket_event_handler_cb+0x274>)
   400eda:	4798      	blx	r3
@@ -2884,7 +2884,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400f02:	f340 8096 	ble.w	401032 <socket_event_handler_cb+0x35e>
 			{			
 				// Process the received message
-				printf("tcp_settings_data_socket: settings received: %s\r\n",TCPSettingsRxBuffer);
+				printf("-I- tcp_settings_data_socket: settings received: %s\r\n",TCPSettingsRxBuffer);
   400f06:	4c2e      	ldr	r4, [pc, #184]	; (400fc0 <socket_event_handler_cb+0x2ec>)
   400f08:	4621      	mov	r1, r4
   400f0a:	482f      	ldr	r0, [pc, #188]	; (400fc8 <socket_event_handler_cb+0x2f4>)
@@ -2902,7 +2902,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400f1c:	e893 0003 	ldmia.w	r3, {r0, r1}
   400f20:	9000      	str	r0, [sp, #0]
   400f22:	f8ad 1004 	strh.w	r1, [sp, #4]
-					printf("tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
+					printf("-I- tcp_settings_data_socket: configuration successful. Sending ACK...\r\n");
   400f26:	482a      	ldr	r0, [pc, #168]	; (400fd0 <socket_event_handler_cb+0x2fc>)
   400f28:	4b07      	ldr	r3, [pc, #28]	; (400f48 <socket_event_handler_cb+0x274>)
   400f2a:	4798      	blx	r3
@@ -2917,50 +2917,50 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   400f3c:	e05d      	b.n	400ffa <socket_event_handler_cb+0x326>
   400f3e:	bf00      	nop
   400f40:	2000000d 	.word	0x2000000d
-  400f44:	0040fe84 	.word	0x0040fe84
+  400f44:	0040feac 	.word	0x0040feac
   400f48:	00407269 	.word	0x00407269
   400f4c:	00407b7d 	.word	0x00407b7d
   400f50:	00403e8d 	.word	0x00403e8d
   400f54:	20000b18 	.word	0x20000b18
   400f58:	00403fe5 	.word	0x00403fe5
-  400f5c:	0040feb8 	.word	0x0040feb8
+  400f5c:	0040fee4 	.word	0x0040fee4
   400f60:	00404089 	.word	0x00404089
   400f64:	004026e9 	.word	0x004026e9
-  400f68:	0040fee4 	.word	0x0040fee4
+  400f68:	0040ff14 	.word	0x0040ff14
   400f6c:	0040971d 	.word	0x0040971d
   400f70:	2000bdbc 	.word	0x2000bdbc
-  400f74:	0040ff10 	.word	0x0040ff10
+  400f74:	0040ff44 	.word	0x0040ff44
   400f78:	00400cb5 	.word	0x00400cb5
-  400f7c:	0040ff30 	.word	0x0040ff30
+  400f7c:	0040ff68 	.word	0x0040ff68
   400f80:	2000000e 	.word	0x2000000e
   400f84:	20000a18 	.word	0x20000a18
   400f88:	0040410d 	.word	0x0040410d
-  400f8c:	0040ff58 	.word	0x0040ff58
-  400f90:	0040ff7c 	.word	0x0040ff7c
-  400f94:	0040ffa4 	.word	0x0040ffa4
+  400f8c:	0040ff94 	.word	0x0040ff94
+  400f90:	0040ffbc 	.word	0x0040ffbc
+  400f94:	0040ffe8 	.word	0x0040ffe8
   400f98:	004012a1 	.word	0x004012a1
   400f9c:	2000000f 	.word	0x2000000f
   400fa0:	00403d69 	.word	0x00403d69
-  400fa4:	0040ffd0 	.word	0x0040ffd0
-  400fa8:	0040fffc 	.word	0x0040fffc
+  400fa4:	00410018 	.word	0x00410018
+  400fa8:	00410048 	.word	0x00410048
   400fac:	00403dc9 	.word	0x00403dc9
-  400fb0:	0041002c 	.word	0x0041002c
+  400fb0:	0041007c 	.word	0x0041007c
   400fb4:	00400bc1 	.word	0x00400bc1
-  400fb8:	00410068 	.word	0x00410068
+  400fb8:	004100bc 	.word	0x004100bc
   400fbc:	20000010 	.word	0x20000010
   400fc0:	20000918 	.word	0x20000918
-  400fc4:	00410098 	.word	0x00410098
-  400fc8:	004100c4 	.word	0x004100c4
-  400fcc:	004100f8 	.word	0x004100f8
-  400fd0:	00410100 	.word	0x00410100
-  400fd4:	0040feb4 	.word	0x0040feb4
+  400fc4:	004100f0 	.word	0x004100f0
+  400fc8:	00410120 	.word	0x00410120
+  400fcc:	00410158 	.word	0x00410158
+  400fd0:	00410160 	.word	0x00410160
+  400fd4:	0040fee0 	.word	0x0040fee0
 				} else {
 					strncpy(msg.ack,CMD_NACK,CMD_SPECIFIER_SIZE);
   400fd8:	4b17      	ldr	r3, [pc, #92]	; (401038 <socket_event_handler_cb+0x364>)
   400fda:	e893 0003 	ldmia.w	r3, {r0, r1}
   400fde:	9000      	str	r0, [sp, #0]
   400fe0:	f8ad 1004 	strh.w	r1, [sp, #4]
-					printf("tcp_settings_data_socket: configuration was not successful. Sending NACK...\r\n");
+					printf("-I- tcp_settings_data_socket: configuration was not successful. Sending NACK...\r\n");
   400fe4:	4815      	ldr	r0, [pc, #84]	; (40103c <socket_event_handler_cb+0x368>)
   400fe6:	4b16      	ldr	r3, [pc, #88]	; (401040 <socket_event_handler_cb+0x36c>)
   400fe8:	4798      	blx	r3
@@ -2997,7 +2997,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
   401014:	2908      	cmp	r1, #8
   401016:	d10c      	bne.n	401032 <socket_event_handler_cb+0x35e>
 		{
-			printf("udp_status_socket: Status sent!\r\n");
+			printf("-I- udp_status_socket: Status sent!\r\n");
   401018:	480e      	ldr	r0, [pc, #56]	; (401054 <socket_event_handler_cb+0x380>)
   40101a:	4b09      	ldr	r3, [pc, #36]	; (401040 <socket_event_handler_cb+0x36c>)
   40101c:	4798      	blx	r3
@@ -3019,14 +3019,14 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 }
   401032:	b002      	add	sp, #8
   401034:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-  401038:	00410148 	.word	0x00410148
-  40103c:	00410150 	.word	0x00410150
+  401038:	004101ac 	.word	0x004101ac
+  40103c:	004101b4 	.word	0x004101b4
   401040:	00407269 	.word	0x00407269
   401044:	20000010 	.word	0x20000010
   401048:	00403e8d 	.word	0x00403e8d
   40104c:	00404089 	.word	0x00404089
   401050:	2000000c 	.word	0x2000000c
-  401054:	004101a0 	.word	0x004101a0
+  401054:	00410208 	.word	0x00410208
 
 00401058 <network_disconnected>:
 	network_listen_for_commands();
@@ -3138,7 +3138,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
   4010ec:	2200      	movs	r2, #0
   4010ee:	4b19      	ldr	r3, [pc, #100]	; (401154 <wifi_cb+0x88>)
   4010f0:	701a      	strb	r2, [r3, #0]
-				printf("Wi-Fi disconnected\r\n");
+				printf("-I- Wi-Fi disconnected\r\n");
   4010f2:	4819      	ldr	r0, [pc, #100]	; (401158 <wifi_cb+0x8c>)
   4010f4:	4b19      	ldr	r3, [pc, #100]	; (40115c <wifi_cb+0x90>)
   4010f6:	4798      	blx	r3
@@ -3156,11 +3156,11 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
   401100:	4b14      	ldr	r3, [pc, #80]	; (401154 <wifi_cb+0x88>)
   401102:	701a      	strb	r2, [r3, #0]
 			uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
-			printf("Wi-Fi connected\r\n");
+			printf("-I- Wi-Fi connected\r\n");
   401104:	4817      	ldr	r0, [pc, #92]	; (401164 <wifi_cb+0x98>)
   401106:	4d15      	ldr	r5, [pc, #84]	; (40115c <wifi_cb+0x90>)
   401108:	47a8      	blx	r5
-			printf("Wi-Fi IP is %u.%u.%u.%u\r\n",
+			printf("-I- Wi-Fi IP is %u.%u.%u.%u\r\n",
   40110a:	78a3      	ldrb	r3, [r4, #2]
   40110c:	7862      	ldrb	r2, [r4, #1]
   40110e:	7821      	ldrb	r1, [r4, #0]
@@ -3169,7 +3169,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
   401114:	4814      	ldr	r0, [pc, #80]	; (401168 <wifi_cb+0x9c>)
   401116:	47a8      	blx	r5
 			pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
-			printf("Wi-Fi Group owner IP is %u.%u.%u.%u\r\n",
+			printf("-I- Wi-Fi Group owner IP is %u.%u.%u.%u\r\n",
   401118:	79a3      	ldrb	r3, [r4, #6]
   40111a:	7962      	ldrb	r2, [r4, #5]
   40111c:	7921      	ldrb	r1, [r4, #4]
@@ -3210,12 +3210,12 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
   40114e:	bf00      	nop
   401150:	00402709 	.word	0x00402709
   401154:	20000b1c 	.word	0x20000b1c
-  401158:	004101c4 	.word	0x004101c4
+  401158:	00410230 	.word	0x00410230
   40115c:	00407269 	.word	0x00407269
   401160:	00401059 	.word	0x00401059
-  401164:	004101dc 	.word	0x004101dc
-  401168:	004101f0 	.word	0x004101f0
-  40116c:	0041020c 	.word	0x0041020c
+  401164:	0041024c 	.word	0x0041024c
+  401168:	00410264 	.word	0x00410264
+  40116c:	00410284 	.word	0x00410284
   401170:	2000bdac 	.word	0x2000bdac
   401174:	000d1437 	.word	0x000d1437
   401178:	20000001 	.word	0x20000001
@@ -3238,13 +3238,13 @@ void wifi_p2p_start(void)
   401186:	4798      	blx	r3
 		if (M2M_SUCCESS != ret) {
   401188:	b110      	cbz	r0, 401190 <wifi_p2p_start+0x10>
-			printf("WiFi_P2P: m2m_wifi_p2p call error!\r\n");
+			printf("-E- WiFi_P2P: m2m_wifi_p2p call error!\r\n");
   40118a:	4805      	ldr	r0, [pc, #20]	; (4011a0 <wifi_p2p_start+0x20>)
   40118c:	4b05      	ldr	r3, [pc, #20]	; (4011a4 <wifi_p2p_start+0x24>)
   40118e:	4798      	blx	r3
 		}
 
-		printf("P2P mode started. %s is awaiting connection.\r\n", (char *)device_name);
+		printf("-I- P2P mode started. %s is awaiting connection.\r\n", (char *)device_name);
   401190:	4b05      	ldr	r3, [pc, #20]	; (4011a8 <wifi_p2p_start+0x28>)
   401192:	6819      	ldr	r1, [r3, #0]
   401194:	4805      	ldr	r0, [pc, #20]	; (4011ac <wifi_p2p_start+0x2c>)
@@ -3252,10 +3252,10 @@ void wifi_p2p_start(void)
   401198:	4798      	blx	r3
   40119a:	bd08      	pop	{r3, pc}
   40119c:	0040270d 	.word	0x0040270d
-  4011a0:	00410234 	.word	0x00410234
+  4011a0:	004102b0 	.word	0x004102b0
   4011a4:	00407269 	.word	0x00407269
   4011a8:	2000bdb8 	.word	0x2000bdb8
-  4011ac:	0041025c 	.word	0x0041025c
+  4011ac:	004102dc 	.word	0x004102dc
 
 004011b0 <wifi_set_device_name>:
 
@@ -3308,7 +3308,7 @@ int8_t wifi_set_device_name(char* name, uint8_t size)
   4011fc:	4798      	blx	r3
 		if (M2M_SUCCESS != ret) {
   4011fe:	b118      	cbz	r0, 401208 <wifi_set_device_name+0x58>
-			printf("WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
+			printf("-E- WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
   401200:	4810      	ldr	r0, [pc, #64]	; (401244 <wifi_set_device_name+0x94>)
   401202:	4b11      	ldr	r3, [pc, #68]	; (401248 <wifi_set_device_name+0x98>)
   401204:	4798      	blx	r3
@@ -3341,11 +3341,11 @@ int8_t wifi_set_device_name(char* name, uint8_t size)
   40122a:	bf00      	nop
   40122c:	2000bdb8 	.word	0x2000bdb8
   401230:	00407ca9 	.word	0x00407ca9
-  401234:	0041028c 	.word	0x0041028c
+  401234:	00410310 	.word	0x00410310
   401238:	00407821 	.word	0x00407821
   40123c:	00407f81 	.word	0x00407f81
   401240:	00402771 	.word	0x00402771
-  401244:	0041029c 	.word	0x0041029c
+  401244:	00410320 	.word	0x00410320
   401248:	00407269 	.word	0x00407269
   40124c:	004072a1 	.word	0x004072a1
   401250:	00407291 	.word	0x00407291
@@ -3402,9 +3402,9 @@ void wifi_init(void)
   401284:	f85d fb04 	ldr.w	pc, [sp], #4
   401288:	004010cd 	.word	0x004010cd
   40128c:	004025e1 	.word	0x004025e1
-  401290:	004102d0 	.word	0x004102d0
+  401290:	00410358 	.word	0x00410358
   401294:	00407269 	.word	0x00407269
-  401298:	004102fc 	.word	0x004102fc
+  401298:	00410384 	.word	0x00410384
   40129c:	004011b1 	.word	0x004011b1
 
 004012a0 <network_message_handler>:
@@ -3927,37 +3927,37 @@ int8_t network_message_handler(char *msg)
   401516:	f06f 0a02 	mvn.w	sl, #2
   40151a:	e043      	b.n	4015a4 <network_message_handler+0x304>
   40151c:	00407821 	.word	0x00407821
-  401520:	00410308 	.word	0x00410308
+  401520:	00410390 	.word	0x00410390
   401524:	0040841d 	.word	0x0040841d
-  401528:	00410310 	.word	0x00410310
+  401528:	00410398 	.word	0x00410398
   40152c:	00409581 	.word	0x00409581
   401530:	00407bc9 	.word	0x00407bc9
   401534:	0040954d 	.word	0x0040954d
   401538:	004071cd 	.word	0x004071cd
-  40153c:	00410314 	.word	0x00410314
+  40153c:	0041039c 	.word	0x0041039c
   401540:	00407269 	.word	0x00407269
-  401544:	00410324 	.word	0x00410324
-  401548:	00410334 	.word	0x00410334
-  40154c:	00410338 	.word	0x00410338
-  401550:	00410348 	.word	0x00410348
-  401554:	0041034c 	.word	0x0041034c
+  401544:	004103ac 	.word	0x004103ac
+  401548:	004103bc 	.word	0x004103bc
+  40154c:	004103c0 	.word	0x004103c0
+  401550:	004103d0 	.word	0x004103d0
+  401554:	004103d4 	.word	0x004103d4
   401558:	00405511 	.word	0x00405511
-  40155c:	0041035c 	.word	0x0041035c
-  401560:	00410370 	.word	0x00410370
-  401564:	00410380 	.word	0x00410380
-  401568:	00410388 	.word	0x00410388
-  40156c:	00410390 	.word	0x00410390
+  40155c:	004103e4 	.word	0x004103e4
+  401560:	004103f8 	.word	0x004103f8
+  401564:	00410408 	.word	0x00410408
+  401568:	00410410 	.word	0x00410410
+  40156c:	00410418 	.word	0x00410418
   401570:	0040971d 	.word	0x0040971d
-  401574:	0041039c 	.word	0x0041039c
-  401578:	004103a8 	.word	0x004103a8
+  401574:	00410424 	.word	0x00410424
+  401578:	00410430 	.word	0x00410430
   40157c:	0040091d 	.word	0x0040091d
   401580:	00407f81 	.word	0x00407f81
   401584:	004011b1 	.word	0x004011b1
-  401588:	004103b8 	.word	0x004103b8
-  40158c:	004103d8 	.word	0x004103d8
-  401590:	004103e8 	.word	0x004103e8
-  401594:	00410408 	.word	0x00410408
-  401598:	00410424 	.word	0x00410424
+  401588:	00410440 	.word	0x00410440
+  40158c:	00410460 	.word	0x00410460
+  401590:	00410470 	.word	0x00410470
+  401594:	00410490 	.word	0x00410490
+  401598:	004104ac 	.word	0x004104ac
   40159c:	2000bdb4 	.word	0x2000bdb4
   4015a0:	f06f 0a02 	mvn.w	sl, #2
 		}
@@ -4471,15 +4471,15 @@ int8_t network_message_handler(char *msg)
   4017c2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
   4017c6:	bf00      	nop
   4017c8:	00407955 	.word	0x00407955
-  4017cc:	0041043c 	.word	0x0041043c
-  4017d0:	00410388 	.word	0x00410388
-  4017d4:	00410444 	.word	0x00410444
-  4017d8:	0040feb4 	.word	0x0040feb4
+  4017cc:	004104c4 	.word	0x004104c4
+  4017d0:	00410410 	.word	0x00410410
+  4017d4:	004104cc 	.word	0x004104cc
+  4017d8:	0040fee0 	.word	0x0040fee0
   4017dc:	00407b7d 	.word	0x00407b7d
   4017e0:	00407821 	.word	0x00407821
-  4017e4:	0041044c 	.word	0x0041044c
-  4017e8:	00410454 	.word	0x00410454
-  4017ec:	0041045c 	.word	0x0041045c
+  4017e4:	004104d4 	.word	0x004104d4
+  4017e8:	004104dc 	.word	0x004104dc
+  4017ec:	004104e4 	.word	0x004104e4
 
 004017f0 <chip_isr>:
 
@@ -5064,11 +5064,11 @@ static sint8 spi_rw(uint8 *pu8Mosi, uint8 *pu8Miso, uint16 u16Sz)
   401ac0:	004042dd 	.word	0x004042dd
   401ac4:	004042f5 	.word	0x004042f5
   401ac8:	40008000 	.word	0x40008000
-  401acc:	00410490 	.word	0x00410490
-  401ad0:	00410468 	.word	0x00410468
+  401acc:	0041051c 	.word	0x0041051c
+  401ad0:	004104f0 	.word	0x004104f0
   401ad4:	00407269 	.word	0x00407269
-  401ad8:	0041047c 	.word	0x0041047c
-  401adc:	0040fd30 	.word	0x0040fd30
+  401ad8:	00410504 	.word	0x00410504
+  401adc:	00410518 	.word	0x00410518
 
 00401ae0 <nm_bus_deinit>:
 *	@brief	De-initialize the bus wrapper
@@ -5696,11 +5696,11 @@ ERR1:
   401e2c:	00402c5d 	.word	0x00402c5d
   401e30:	00150400 	.word	0x00150400
   401e34:	00402cd5 	.word	0x00402cd5
-  401e38:	00410708 	.word	0x00410708
-  401e3c:	00410468 	.word	0x00410468
+  401e38:	00410794 	.word	0x00410794
+  401e3c:	004104f0 	.word	0x004104f0
   401e40:	00407269 	.word	0x00407269
-  401e44:	004104c4 	.word	0x004104c4
-  401e48:	0040fd30 	.word	0x0040fd30
+  401e44:	00410550 	.word	0x00410550
+  401e48:	00410518 	.word	0x00410518
   401e4c:	00401bed 	.word	0x00401bed
 
 00401e50 <hif_handle_isr>:
@@ -6158,34 +6158,34 @@ sint8 hif_handle_isr(void)
   4020e4:	e6c4      	b.n	401e70 <hif_handle_isr+0x20>
   4020e6:	bf00      	nop
   4020e8:	00401b95 	.word	0x00401b95
-  4020ec:	00410468 	.word	0x00410468
+  4020ec:	004104f0 	.word	0x004104f0
   4020f0:	00402c5d 	.word	0x00402c5d
   4020f4:	00401925 	.word	0x00401925
   4020f8:	00402c69 	.word	0x00402c69
   4020fc:	20000b44 	.word	0x20000b44
   402100:	00407269 	.word	0x00407269
-  402104:	004104e4 	.word	0x004104e4
-  402108:	0040fd30 	.word	0x0040fd30
+  402104:	00410570 	.word	0x00410570
+  402108:	00410518 	.word	0x00410518
   40210c:	00402c75 	.word	0x00402c75
-  402110:	0041050c 	.word	0x0041050c
-  402114:	00410524 	.word	0x00410524
+  402110:	00410598 	.word	0x00410598
+  402114:	004105b0 	.word	0x004105b0
   402118:	20000b2c 	.word	0x20000b2c
   40211c:	20000b40 	.word	0x20000b40
   402120:	20000b4c 	.word	0x20000b4c
   402124:	20000b28 	.word	0x20000b28
   402128:	20000b38 	.word	0x20000b38
-  40212c:	00410564 	.word	0x00410564
-  402130:	0041057c 	.word	0x0041057c
+  40212c:	004105f0 	.word	0x004105f0
+  402130:	00410608 	.word	0x00410608
   402134:	00401b0d 	.word	0x00401b0d
-  402138:	004105a0 	.word	0x004105a0
-  40213c:	004105b4 	.word	0x004105b4
-  402140:	004105d0 	.word	0x004105d0
-  402144:	004105f4 	.word	0x004105f4
+  402138:	0041062c 	.word	0x0041062c
+  40213c:	00410640 	.word	0x00410640
+  402140:	0041065c 	.word	0x0041065c
+  402144:	00410680 	.word	0x00410680
   402148:	00401bed 	.word	0x00401bed
-  40214c:	004106f8 	.word	0x004106f8
-  402150:	00410614 	.word	0x00410614
+  40214c:	00410784 	.word	0x00410784
+  402150:	004106a0 	.word	0x004106a0
   402154:	20000b30 	.word	0x20000b30
-  402158:	004104ac 	.word	0x004104ac
+  402158:	00410538 	.word	0x00410538
 
 sint8 hif_handle_isr(void)
 {
@@ -6402,14 +6402,14 @@ ERR1:
   40224e:	bf00      	nop
   402250:	20000b44 	.word	0x20000b44
   402254:	00401b0d 	.word	0x00401b0d
-  402258:	004104a0 	.word	0x004104a0
-  40225c:	00410468 	.word	0x00410468
+  402258:	0041052c 	.word	0x0041052c
+  40225c:	004104f0 	.word	0x004104f0
   402260:	00407269 	.word	0x00407269
-  402264:	00410644 	.word	0x00410644
-  402268:	0040fd30 	.word	0x0040fd30
+  402264:	004106d0 	.word	0x004106d0
+  402268:	00410518 	.word	0x00410518
   40226c:	00402c5d 	.word	0x00402c5d
-  402270:	00410664 	.word	0x00410664
-  402274:	004106a8 	.word	0x004106a8
+  402270:	004106f0 	.word	0x004106f0
+  402274:	00410734 	.word	0x00410734
   402278:	00402c75 	.word	0x00402c75
 
 0040227c <hif_register_cb>:
@@ -6565,11 +6565,11 @@ sint8 hif_register_cb(uint8 u8Grp,tpfHifCallBack fn)
   4022ec:	20000b34 	.word	0x20000b34
   4022f0:	20000b28 	.word	0x20000b28
   4022f4:	20000b38 	.word	0x20000b38
-  4022f8:	004104b4 	.word	0x004104b4
-  4022fc:	00410468 	.word	0x00410468
+  4022f8:	00410540 	.word	0x00410540
+  4022fc:	004104f0 	.word	0x004104f0
   402300:	00407269 	.word	0x00407269
-  402304:	004106ec 	.word	0x004106ec
-  402308:	0040fd30 	.word	0x0040fd30
+  402304:	00410778 	.word	0x00410778
+  402308:	00410518 	.word	0x00410518
 
 0040230c <hif_init>:
 *				Pointer to the arguments.
@@ -7048,15 +7048,15 @@ static void m2m_wifi_cb(uint8 u8OpCode, uint16 u16DataSize, uint32 u32Addr)
   4025b0:	00402171 	.word	0x00402171
   4025b4:	20000b54 	.word	0x20000b54
   4025b8:	00401af9 	.word	0x00401af9
-  4025bc:	00410740 	.word	0x00410740
+  4025bc:	004107cc 	.word	0x004107cc
   4025c0:	00407269 	.word	0x00407269
-  4025c4:	0041074c 	.word	0x0041074c
-  4025c8:	0040fd30 	.word	0x0040fd30
+  4025c4:	004107d8 	.word	0x004107d8
+  4025c8:	00410518 	.word	0x00410518
   4025cc:	20000b58 	.word	0x20000b58
   4025d0:	20000b59 	.word	0x20000b59
-  4025d4:	00410714 	.word	0x00410714
-  4025d8:	00410468 	.word	0x00410468
-  4025dc:	0041076c 	.word	0x0041076c
+  4025d4:	004107a0 	.word	0x004107a0
+  4025d8:	004104f0 	.word	0x004104f0
+  4025dc:	004107f8 	.word	0x004107f8
 
 004025e0 <m2m_wifi_init>:
 	}	
@@ -7204,15 +7204,15 @@ _EXIT0:
   4026a8:	0040235d 	.word	0x0040235d
   4026ac:	0040227d 	.word	0x0040227d
   4026b0:	00402d35 	.word	0x00402d35
-  4026b4:	00410740 	.word	0x00410740
+  4026b4:	004107cc 	.word	0x004107cc
   4026b8:	00407269 	.word	0x00407269
-  4026bc:	00410824 	.word	0x00410824
-  4026c0:	0040fd30 	.word	0x0040fd30
-  4026c4:	00410840 	.word	0x00410840
-  4026c8:	0041085c 	.word	0x0041085c
-  4026cc:	00410730 	.word	0x00410730
-  4026d0:	00410468 	.word	0x00410468
-  4026d4:	00410878 	.word	0x00410878
+  4026bc:	004108b0 	.word	0x004108b0
+  4026c0:	00410518 	.word	0x00410518
+  4026c4:	004108cc 	.word	0x004108cc
+  4026c8:	004108e8 	.word	0x004108e8
+  4026cc:	004107bc 	.word	0x004107bc
+  4026d0:	004104f0 	.word	0x004104f0
+  4026d4:	00410904 	.word	0x00410904
   4026d8:	00402ea9 	.word	0x00402ea9
 
 004026dc <m2m_wifi_handle_events>:
@@ -7328,11 +7328,11 @@ sint8 m2m_wifi_p2p(uint8 u8Channel)
   402754:	bd10      	pop	{r4, pc}
   402756:	bf00      	nop
   402758:	00401c79 	.word	0x00401c79
-  40275c:	00410720 	.word	0x00410720
-  402760:	00410468 	.word	0x00410468
+  40275c:	004107ac 	.word	0x004107ac
+  402760:	004104f0 	.word	0x004104f0
   402764:	00407269 	.word	0x00407269
-  402768:	004109dc 	.word	0x004109dc
-  40276c:	0040fd30 	.word	0x0040fd30
+  402768:	00410a68 	.word	0x00410a68
+  40276c:	00410518 	.word	0x00410518
 
 00402770 <m2m_wifi_set_device_name>:
 			Length of the device name.
@@ -7666,15 +7666,15 @@ _WAKE_EXIT:
   4028e2:	bf00      	nop
   4028e4:	0040180d 	.word	0x0040180d
   4028e8:	00402c5d 	.word	0x00402c5d
-  4028ec:	00410a68 	.word	0x00410a68
-  4028f0:	00410468 	.word	0x00410468
+  4028ec:	00410af4 	.word	0x00410af4
+  4028f0:	004104f0 	.word	0x004104f0
   4028f4:	00407269 	.word	0x00407269
-  4028f8:	00410a78 	.word	0x00410a78
-  4028fc:	0040fd30 	.word	0x0040fd30
+  4028f8:	00410b04 	.word	0x00410b04
+  4028fc:	00410518 	.word	0x00410518
   402900:	aaaaaaab 	.word	0xaaaaaaab
   402904:	20000018 	.word	0x20000018
-  402908:	00410a98 	.word	0x00410a98
-  40290c:	00410ab8 	.word	0x00410ab8
+  402908:	00410b24 	.word	0x00410b24
+  40290c:	00410b44 	.word	0x00410b44
   402910:	00402c69 	.word	0x00402c69
 
 00402914 <enable_interrupts>:
@@ -8358,14 +8358,14 @@ sint8 chip_deinit(void)
   402c10:	b003      	add	sp, #12
   402c12:	bdf0      	pop	{r4, r5, r6, r7, pc}
   402c14:	00402c5d 	.word	0x00402c5d
-  402c18:	00410b98 	.word	0x00410b98
-  402c1c:	00410468 	.word	0x00410468
+  402c18:	00410c24 	.word	0x00410c24
+  402c1c:	004104f0 	.word	0x004104f0
   402c20:	00407269 	.word	0x00407269
-  402c24:	00410b04 	.word	0x00410b04
-  402c28:	0040fd30 	.word	0x0040fd30
+  402c24:	00410b90 	.word	0x00410b90
+  402c28:	00410518 	.word	0x00410518
   402c2c:	00402c69 	.word	0x00402c69
-  402c30:	00410b20 	.word	0x00410b20
-  402c34:	00410b3c 	.word	0x00410b3c
+  402c30:	00410bac 	.word	0x00410bac
+  402c34:	00410bc8 	.word	0x00410bc8
 
 00402c38 <nm_bus_iface_init>:
 *	@author	M. Abdelmawla
@@ -8923,19 +8923,19 @@ ERR1:
   402e68:	4628      	mov	r0, r5
   402e6a:	bd38      	pop	{r3, r4, r5, pc}
   402e6c:	00402c39 	.word	0x00402c39
-  402e70:	00410c50 	.word	0x00410c50
-  402e74:	00410468 	.word	0x00410468
+  402e70:	00410cdc 	.word	0x00410cdc
+  402e74:	004104f0 	.word	0x004104f0
   402e78:	00407269 	.word	0x00407269
-  402e7c:	00410ba4 	.word	0x00410ba4
-  402e80:	0040fd30 	.word	0x0040fd30
-  402e84:	00410740 	.word	0x00410740
+  402e7c:	00410c30 	.word	0x00410c30
+  402e80:	00410518 	.word	0x00410518
+  402e84:	004107cc 	.word	0x004107cc
   402e88:	0040297d 	.word	0x0040297d
-  402e8c:	00410bc0 	.word	0x00410bc0
+  402e8c:	00410c4c 	.word	0x00410c4c
   402e90:	004034e9 	.word	0x004034e9
   402e94:	00402a2d 	.word	0x00402a2d
   402e98:	00402af1 	.word	0x00402af1
   402e9c:	00402915 	.word	0x00402915
-  402ea0:	00410bd0 	.word	0x00410bd0
+  402ea0:	00410c5c 	.word	0x00410c5c
   402ea4:	00402c45 	.word	0x00402c45
 
 00402ea8 <nm_drv_deinit>:
@@ -9023,15 +9023,15 @@ ERR1:
   402f0c:	bd38      	pop	{r3, r4, r5, pc}
   402f0e:	bf00      	nop
   402f10:	00402b71 	.word	0x00402b71
-  402f14:	00410c5c 	.word	0x00410c5c
-  402f18:	00410468 	.word	0x00410468
+  402f14:	00410ce8 	.word	0x00410ce8
+  402f18:	004104f0 	.word	0x004104f0
   402f1c:	00407269 	.word	0x00407269
-  402f20:	00410bf0 	.word	0x00410bf0
-  402f24:	0040fd30 	.word	0x0040fd30
+  402f20:	00410c7c 	.word	0x00410c7c
+  402f24:	00410518 	.word	0x00410518
   402f28:	004041b9 	.word	0x004041b9
-  402f2c:	00410c10 	.word	0x00410c10
+  402f2c:	00410c9c 	.word	0x00410c9c
   402f30:	00402c45 	.word	0x00402c45
-  402f34:	00410c34 	.word	0x00410c34
+  402f34:	00410cc0 	.word	0x00410cc0
   402f38:	00403495 	.word	0x00403495
 
 00402f3c <nmi_spi_read>:
@@ -9202,11 +9202,11 @@ _fail_:
   402ffc:	bdf0      	pop	{r4, r5, r6, r7, pc}
   402ffe:	bf00      	nop
   403000:	00402f3d 	.word	0x00402f3d
-  403004:	00411174 	.word	0x00411174
-  403008:	00410468 	.word	0x00410468
+  403004:	00411200 	.word	0x00411200
+  403008:	004104f0 	.word	0x004104f0
   40300c:	00407269 	.word	0x00407269
-  403010:	00410cb8 	.word	0x00410cb8
-  403014:	0040fd30 	.word	0x0040fd30
+  403010:	00410d44 	.word	0x00410d44
+  403014:	00410518 	.word	0x00410518
 
 00403018 <spi_data_read>:
 
@@ -9382,15 +9382,15 @@ static sint8 spi_data_read(uint8 *b, uint16 sz,uint8 clockless)
   4030fa:	b003      	add	sp, #12
   4030fc:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
   403100:	00402f3d 	.word	0x00402f3d
-  403104:	0041128c 	.word	0x0041128c
-  403108:	00410468 	.word	0x00410468
+  403104:	00411318 	.word	0x00411318
+  403108:	004104f0 	.word	0x004104f0
   40310c:	00407269 	.word	0x00407269
-  403110:	00410cec 	.word	0x00410cec
-  403114:	0040fd30 	.word	0x0040fd30
-  403118:	00410d20 	.word	0x00410d20
-  40311c:	00410d50 	.word	0x00410d50
+  403110:	00410d78 	.word	0x00410d78
+  403114:	00410518 	.word	0x00410518
+  403118:	00410dac 	.word	0x00410dac
+  40311c:	00410ddc 	.word	0x00410ddc
   403120:	20000b60 	.word	0x20000b60
-  403124:	00410d84 	.word	0x00410d84
+  403124:	00410e10 	.word	0x00410e10
 
 00403128 <nmi_spi_write>:
 	spi.u16Sz = sz;
@@ -9723,12 +9723,12 @@ static uint8 crc7_byte(uint8 crc, uint8 data)
   4032d8:	b004      	add	sp, #16
   4032da:	bd70      	pop	{r4, r5, r6, pc}
   4032dc:	00403129 	.word	0x00403129
-  4032e0:	0041116c 	.word	0x0041116c
-  4032e4:	00410468 	.word	0x00410468
+  4032e0:	004111f8 	.word	0x004111f8
+  4032e4:	004104f0 	.word	0x004104f0
   4032e8:	00407269 	.word	0x00407269
-  4032ec:	00410dbc 	.word	0x00410dbc
-  4032f0:	0040fd30 	.word	0x0040fd30
-  4032f4:	0041118c 	.word	0x0041118c
+  4032ec:	00410e48 	.word	0x00410e48
+  4032f0:	00410518 	.word	0x00410518
+  4032f4:	00411218 	.word	0x00411218
   4032f8:	20000b60 	.word	0x20000b60
 
 004032fc <spi_write_reg>:
@@ -9826,13 +9826,13 @@ static sint8 spi_write_reg(uint32 addr, uint32 u32data)
   403370:	b002      	add	sp, #8
   403372:	bd70      	pop	{r4, r5, r6, pc}
   403374:	00403149 	.word	0x00403149
-  403378:	00410c88 	.word	0x00410c88
-  40337c:	00410468 	.word	0x00410468
+  403378:	00410d14 	.word	0x00410d14
+  40337c:	004104f0 	.word	0x004104f0
   403380:	00407269 	.word	0x00407269
-  403384:	00410de8 	.word	0x00410de8
-  403388:	0040fd30 	.word	0x0040fd30
+  403384:	00410e74 	.word	0x00410e74
+  403388:	00410518 	.word	0x00410518
   40338c:	00402f5d 	.word	0x00402f5d
-  403390:	00410e14 	.word	0x00410e14
+  403390:	00410ea0 	.word	0x00410ea0
 
 00403394 <spi_read_reg>:
 
@@ -9977,15 +9977,15 @@ static sint8 spi_read_reg(uint32 addr, uint32 *u32data)
   403466:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
   40346a:	bf00      	nop
   40346c:	00403149 	.word	0x00403149
-  403470:	00410c98 	.word	0x00410c98
-  403474:	00410468 	.word	0x00410468
+  403470:	00410d24 	.word	0x00410d24
+  403474:	004104f0 	.word	0x004104f0
   403478:	00407269 	.word	0x00407269
-  40347c:	00410e4c 	.word	0x00410e4c
-  403480:	0040fd30 	.word	0x0040fd30
+  40347c:	00410ed8 	.word	0x00410ed8
+  403480:	00410518 	.word	0x00410518
   403484:	00402f5d 	.word	0x00402f5d
-  403488:	00410e78 	.word	0x00410e78
+  403488:	00410f04 	.word	0x00410f04
   40348c:	00403019 	.word	0x00403019
-  403490:	00410eac 	.word	0x00410eac
+  403490:	00410f38 	.word	0x00410f38
 
 00403494 <nm_spi_deinit>:
 *	@date	27 Feb 2015
@@ -10240,15 +10240,15 @@ static void spi_init_pkt_sz(void)
   4035be:	bd30      	pop	{r4, r5, pc}
   4035c0:	20000b60 	.word	0x20000b60
   4035c4:	00403395 	.word	0x00403395
-  4035c8:	00410c6c 	.word	0x00410c6c
-  4035cc:	00410468 	.word	0x00410468
+  4035c8:	00410cf8 	.word	0x00410cf8
+  4035cc:	004104f0 	.word	0x004104f0
   4035d0:	00407269 	.word	0x00407269
-  4035d4:	00410ecc 	.word	0x00410ecc
-  4035d8:	0040fd30 	.word	0x0040fd30
-  4035dc:	00410f1c 	.word	0x00410f1c
+  4035d4:	00410f58 	.word	0x00410f58
+  4035d8:	00410518 	.word	0x00410518
+  4035dc:	00410fa8 	.word	0x00410fa8
   4035e0:	004032fd 	.word	0x004032fd
-  4035e4:	00410f4c 	.word	0x00410f4c
-  4035e8:	00410f80 	.word	0x00410f80
+  4035e4:	00410fd8 	.word	0x00410fd8
+  4035e8:	0041100c 	.word	0x0041100c
   4035ec:	004034a1 	.word	0x004034a1
   4035f0:	004034d1 	.word	0x004034d1
 
@@ -10372,15 +10372,15 @@ sint8 nm_spi_read_block(uint32 u32Addr, uint8 *puBuf, uint16 u16Sz)
   403694:	bdf0      	pop	{r4, r5, r6, r7, pc}
   403696:	bf00      	nop
   403698:	00403149 	.word	0x00403149
-  40369c:	00411180 	.word	0x00411180
-  4036a0:	00410468 	.word	0x00410468
+  40369c:	0041120c 	.word	0x0041120c
+  4036a0:	004104f0 	.word	0x004104f0
   4036a4:	00407269 	.word	0x00407269
-  4036a8:	00410fa8 	.word	0x00410fa8
-  4036ac:	0040fd30 	.word	0x0040fd30
+  4036a8:	00411034 	.word	0x00411034
+  4036ac:	00410518 	.word	0x00410518
   4036b0:	00402f5d 	.word	0x00402f5d
-  4036b4:	00410fd8 	.word	0x00410fd8
+  4036b4:	00411064 	.word	0x00411064
   4036b8:	00403019 	.word	0x00403019
-  4036bc:	00411010 	.word	0x00411010
+  4036bc:	0041109c 	.word	0x0041109c
 
 004036c0 <nm_spi_write_block>:
 *	@author	M. Abdelmawla
@@ -10626,19 +10626,19 @@ static sint8 spi_data_write(uint8 *b, uint16 sz)
   403802:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
   403806:	bf00      	nop
   403808:	00403149 	.word	0x00403149
-  40380c:	00410ca8 	.word	0x00410ca8
-  403810:	00410468 	.word	0x00410468
+  40380c:	00410d34 	.word	0x00410d34
+  403810:	004104f0 	.word	0x004104f0
   403814:	00407269 	.word	0x00407269
-  403818:	00411038 	.word	0x00411038
-  40381c:	0040fd30 	.word	0x0040fd30
+  403818:	004110c4 	.word	0x004110c4
+  40381c:	00410518 	.word	0x00410518
   403820:	00402f5d 	.word	0x00402f5d
-  403824:	00411068 	.word	0x00411068
+  403824:	004110f4 	.word	0x004110f4
   403828:	00403129 	.word	0x00403129
-  40382c:	00410c78 	.word	0x00410c78
-  403830:	004110a0 	.word	0x004110a0
-  403834:	004110d8 	.word	0x004110d8
-  403838:	0041110c 	.word	0x0041110c
-  40383c:	00411144 	.word	0x00411144
+  40382c:	00410d04 	.word	0x00410d04
+  403830:	0041112c 	.word	0x0041112c
+  403834:	00411164 	.word	0x00411164
+  403838:	00411198 	.word	0x00411198
+  40383c:	004111d0 	.word	0x004111d0
   403840:	20000b60 	.word	0x20000b60
 
 00403844 <Socket_ReadSocketData>:
@@ -10790,10 +10790,10 @@ NMI_API void Socket_ReadSocketData(SOCKET sock, tstrSocketRecvMsg *pstrRecv,uint
   4038e0:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
   4038e4:	2000bdc8 	.word	0x2000bdc8
   4038e8:	2000be78 	.word	0x2000be78
-  4038ec:	00410740 	.word	0x00410740
+  4038ec:	004107cc 	.word	0x004107cc
   4038f0:	00407269 	.word	0x00407269
-  4038f4:	0041129c 	.word	0x0041129c
-  4038f8:	0040fd30 	.word	0x0040fd30
+  4038f4:	00411328 	.word	0x00411328
+  4038f8:	00410518 	.word	0x00410518
   4038fc:	00402171 	.word	0x00402171
 
 00403900 <m2m_ip_cb>:
@@ -15517,9 +15517,9 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
   404d94:	e7fe      	b.n	404d94 <Reset_Handler+0x80>
   404d96:	bf00      	nop
   404d98:	20000000 	.word	0x20000000
-  404d9c:	00411a58 	.word	0x00411a58
+  404d9c:	00411ae8 	.word	0x00411ae8
   404da0:	200008d0 	.word	0x200008d0
-  404da4:	00411a54 	.word	0x00411a54
+  404da4:	00411ae4 	.word	0x00411ae4
   404da8:	2000be98 	.word	0x2000be98
   404dac:	200008d0 	.word	0x200008d0
   404db0:	2000be9b 	.word	0x2000be9b
@@ -18559,7 +18559,7 @@ void vTaskStartScheduler( void )
 }
   405b08:	b004      	add	sp, #16
   405b0a:	bd10      	pop	{r4, pc}
-  405b0c:	0041130c 	.word	0x0041130c
+  405b0c:	00411398 	.word	0x00411398
   405b10:	00405dc9 	.word	0x00405dc9
   405b14:	004058c1 	.word	0x004058c1
   405b18:	00406275 	.word	0x00406275
@@ -20123,7 +20123,7 @@ portBASE_TYPE xTimerCreateTimerTask( void )
   4062a6:	bd10      	pop	{r4, pc}
   4062a8:	00406219 	.word	0x00406219
   4062ac:	2000ad1c 	.word	0x2000ad1c
-  4062b0:	00411314 	.word	0x00411314
+  4062b0:	004113a0 	.word	0x004113a0
   4062b4:	004063c9 	.word	0x004063c9
   4062b8:	004058c1 	.word	0x004058c1
   4062bc:	004050bd 	.word	0x004050bd
@@ -20868,13 +20868,13 @@ static void task_send_status(void *pvParameters)
 	}
   4065c8:	e7dc      	b.n	406584 <task_send_status+0x24>
   4065ca:	bf00      	nop
-  4065cc:	0041131c 	.word	0x0041131c
+  4065cc:	004113a8 	.word	0x004113a8
   4065d0:	00407955 	.word	0x00407955
   4065d4:	00405d81 	.word	0x00405d81
   4065d8:	2000bda8 	.word	0x2000bda8
   4065dc:	004015ad 	.word	0x004015ad
   4065e0:	2000bdac 	.word	0x2000bdac
-  4065e4:	00411324 	.word	0x00411324
+  4065e4:	004113b0 	.word	0x004113b0
   4065e8:	00407269 	.word	0x00407269
   4065ec:	00400c1d 	.word	0x00400c1d
 
@@ -21437,7 +21437,7 @@ static inline void usart_serial_init(usart_if p_usart,
 	} 
 	else
 	{
-		printf("-E- Created Control Loop Task"STRING_EOL);
+		printf("-I- Created Control Loop Task"STRING_EOL);
   4068a4:	4836      	ldreq	r0, [pc, #216]	; (406980 <main+0x214>)
   4068a6:	4b19      	ldr	r3, [pc, #100]	; (40690c <main+0x1a0>)
   4068a8:	4798      	blx	r3
@@ -21491,41 +21491,41 @@ static inline void usart_serial_init(usart_if p_usart,
   4068fc:	00404441 	.word	0x00404441
   406900:	20000458 	.word	0x20000458
   406904:	00407a1d 	.word	0x00407a1d
-  406908:	00411364 	.word	0x00411364
+  406908:	004113f0 	.word	0x004113f0
   40690c:	00407269 	.word	0x00407269
   406910:	00400811 	.word	0x00400811
-  406914:	004113d0 	.word	0x004113d0
+  406914:	0041145c 	.word	0x0041145c
   406918:	00406539 	.word	0x00406539
   40691c:	004058c1 	.word	0x004058c1
-  406920:	004113dc 	.word	0x004113dc
-  406924:	004113fc 	.word	0x004113fc
+  406920:	00411468 	.word	0x00411468
+  406924:	00411488 	.word	0x00411488
   406928:	0040185d 	.word	0x0040185d
   40692c:	00401255 	.word	0x00401255
-  406930:	00411414 	.word	0x00411414
+  406930:	004114a0 	.word	0x004114a0
   406934:	00400a01 	.word	0x00400a01
   406938:	00407955 	.word	0x00407955
   40693c:	004012a1 	.word	0x004012a1
-  406940:	0041144c 	.word	0x0041144c
-  406944:	00411474 	.word	0x00411474
-  406948:	004114a8 	.word	0x004114a8
-  40694c:	004114e4 	.word	0x004114e4
+  406940:	004114d8 	.word	0x004114d8
+  406944:	00411500 	.word	0x00411500
+  406948:	00411534 	.word	0x00411534
+  40694c:	00411570 	.word	0x00411570
   406950:	00401181 	.word	0x00401181
   406954:	004054b9 	.word	0x004054b9
   406958:	2000bdb0 	.word	0x2000bdb0
   40695c:	00405511 	.word	0x00405511
   406960:	2000bdb4 	.word	0x2000bdb4
-  406964:	00411520 	.word	0x00411520
+  406964:	004115ac 	.word	0x004115ac
   406968:	0040662d 	.word	0x0040662d
-  40696c:	0041152c 	.word	0x0041152c
-  406970:	00411550 	.word	0x00411550
-  406974:	00411568 	.word	0x00411568
+  40696c:	004115b8 	.word	0x004115b8
+  406970:	004115dc 	.word	0x004115dc
+  406974:	004115f4 	.word	0x004115f4
   406978:	004065f1 	.word	0x004065f1
-  40697c:	0041157c 	.word	0x0041157c
-  406980:	004115a8 	.word	0x004115a8
-  406984:	004115c8 	.word	0x004115c8
+  40697c:	00411608 	.word	0x00411608
+  406980:	00411634 	.word	0x00411634
+  406984:	00411654 	.word	0x00411654
   406988:	00406561 	.word	0x00406561
-  40698c:	004115dc 	.word	0x004115dc
-  406990:	00411604 	.word	0x00411604
+  40698c:	00411668 	.word	0x00411668
+  406990:	00411690 	.word	0x00411690
   406994:	00405ac5 	.word	0x00405ac5
 
 00406998 <__aeabi_drsub>:
@@ -22244,7 +22244,7 @@ static inline void usart_serial_init(usart_if p_usart,
   407234:	4e0a      	ldr	r6, [pc, #40]	; (407260 <__libc_init_array+0x48>)
   407236:	4d0b      	ldr	r5, [pc, #44]	; (407264 <__libc_init_array+0x4c>)
   407238:	1b76      	subs	r6, r6, r5
-  40723a:	f00a fbf7 	bl	411a2c <_init>
+  40723a:	f00a fc3f 	bl	411abc <_init>
   40723e:	10b6      	asrs	r6, r6, #2
   407240:	bf18      	it	ne
   407242:	2400      	movne	r4, #0
@@ -22257,10 +22257,10 @@ static inline void usart_serial_init(usart_if p_usart,
   407252:	bd70      	pop	{r4, r5, r6, pc}
   407254:	bd70      	pop	{r4, r5, r6, pc}
   407256:	bf00      	nop
-  407258:	00411a38 	.word	0x00411a38
-  40725c:	00411a38 	.word	0x00411a38
-  407260:	00411a40 	.word	0x00411a40
-  407264:	00411a38 	.word	0x00411a38
+  407258:	00411ac8 	.word	0x00411ac8
+  40725c:	00411ac8 	.word	0x00411ac8
+  407260:	00411ad0 	.word	0x00411ad0
+  407264:	00411ac8 	.word	0x00411ac8
 
 00407268 <iprintf>:
   407268:	b40f      	push	{r0, r1, r2, r3}
@@ -24494,9 +24494,9 @@ static inline void usart_serial_init(usart_if p_usart,
   4089c8:	f04f 0e01 	mov.w	lr, #1
   4089cc:	e6fe      	b.n	4087cc <_strtod_r+0x14c>
   4089ce:	bf00      	nop
-  4089d0:	00411930 	.word	0x00411930
-  4089d4:	00411640 	.word	0x00411640
-  4089d8:	00411644 	.word	0x00411644
+  4089d0:	004119c0 	.word	0x004119c0
+  4089d4:	004116cc 	.word	0x004116cc
+  4089d8:	004116d0 	.word	0x004116d0
   4089dc:	7ff00000 	.word	0x7ff00000
   4089e0:	9b0a      	ldr	r3, [sp, #40]	; 0x28
   4089e2:	ebca 0a09 	rsb	sl, sl, r9
@@ -24790,7 +24790,7 @@ static inline void usart_serial_init(usart_if p_usart,
   408cbe:	e78d      	b.n	408bdc <_strtod_r+0x55c>
   408cc0:	ffc00000 	.word	0xffc00000
   408cc4:	41dfffff 	.word	0x41dfffff
-  408cc8:	00411930 	.word	0x00411930
+  408cc8:	004119c0 	.word	0x004119c0
   408ccc:	fffffc02 	.word	0xfffffc02
   408cd0:	3ff00000 	.word	0x3ff00000
   408cd4:	7ff00000 	.word	0x7ff00000
@@ -25062,12 +25062,12 @@ static inline void usart_serial_init(usart_if p_usart,
   408fd0:	7ca00000 	.word	0x7ca00000
   408fd4:	7fefffff 	.word	0x7fefffff
   408fd8:	bff00000 	.word	0xbff00000
-  408fdc:	0041164c 	.word	0x0041164c
+  408fdc:	004116d8 	.word	0x004116d8
   408fe0:	fff80000 	.word	0xfff80000
-  408fe4:	00411678 	.word	0x00411678
+  408fe4:	00411708 	.word	0x00411708
   408fe8:	7c9fffff 	.word	0x7c9fffff
   408fec:	7ff00000 	.word	0x7ff00000
-  408ff0:	004119f8 	.word	0x004119f8
+  408ff0:	00411a88 	.word	0x00411a88
   408ff4:	9b14      	ldr	r3, [sp, #80]	; 0x50
   408ff6:	3301      	adds	r3, #1
   408ff8:	d1d3      	bne.n	408fa2 <_strtod_r+0x922>
@@ -25328,8 +25328,8 @@ static inline void usart_serial_init(usart_if p_usart,
   4092c0:	35afe535 	.word	0x35afe535
   4092c4:	3fe00000 	.word	0x3fe00000
   4092c8:	7ff00000 	.word	0x7ff00000
-  4092cc:	00411930 	.word	0x00411930
-  4092d0:	00411650 	.word	0x00411650
+  4092cc:	004119c0 	.word	0x004119c0
+  4092d0:	004116e0 	.word	0x004116e0
   4092d4:	3ff00000 	.word	0x3ff00000
   4092d8:	9a1b      	ldr	r2, [sp, #108]	; 0x6c
   4092da:	9b1d      	ldr	r3, [sp, #116]	; 0x74
@@ -25559,14 +25559,14 @@ static inline void usart_serial_init(usart_if p_usart,
   409524:	e9cd 0102 	strd	r0, r1, [sp, #8]
   409528:	e4bc      	b.n	408ea4 <_strtod_r+0x824>
   40952a:	bf00      	nop
-  40952c:	00411930 	.word	0x00411930
+  40952c:	004119c0 	.word	0x004119c0
   409530:	7ff00000 	.word	0x7ff00000
   409534:	39500000 	.word	0x39500000
   409538:	000fffff 	.word	0x000fffff
   40953c:	3fe00000 	.word	0x3fe00000
   409540:	bfe00000 	.word	0xbfe00000
   409544:	7fefffff 	.word	0x7fefffff
-  409548:	0041162c 	.word	0x0041162c
+  409548:	004116b8 	.word	0x004116b8
 
 0040954c <strtof>:
   40954c:	b538      	push	{r3, r4, r5, lr}
@@ -26207,9 +26207,9 @@ static inline void usart_serial_init(usart_if p_usart,
   409bca:	9d0a      	ldr	r5, [sp, #40]	; 0x28
   409bcc:	9c09      	ldr	r4, [sp, #36]	; 0x24
   409bce:	e00a      	b.n	409be6 <_svfprintf_r+0x4b2>
-  409bd0:	004116c0 	.word	0x004116c0
-  409bd4:	004116e0 	.word	0x004116e0
-  409bd8:	0041168c 	.word	0x0041168c
+  409bd0:	00411750 	.word	0x00411750
+  409bd4:	00411770 	.word	0x00411770
+  409bd8:	0041171c 	.word	0x0041171c
   409bdc:	3f10      	subs	r7, #16
   409bde:	2f10      	cmp	r7, #16
   409be0:	f109 0908 	add.w	r9, r9, #8
@@ -26549,11 +26549,11 @@ static inline void usart_serial_init(usart_if p_usart,
   409f52:	f43f af51 	beq.w	409df8 <_svfprintf_r+0x6c4>
   409f56:	f88d 106f 	strb.w	r1, [sp, #111]	; 0x6f
   409f5a:	e74d      	b.n	409df8 <_svfprintf_r+0x6c4>
-  409f5c:	004116e0 	.word	0x004116e0
+  409f5c:	00411770 	.word	0x00411770
   409f60:	7fefffff 	.word	0x7fefffff
-  409f64:	004116a0 	.word	0x004116a0
-  409f68:	0041169c 	.word	0x0041169c
-  409f6c:	004116ac 	.word	0x004116ac
+  409f64:	00411730 	.word	0x00411730
+  409f68:	0041172c 	.word	0x0041172c
+  409f6c:	0041173c 	.word	0x0041173c
   409f70:	9311      	str	r3, [sp, #68]	; 0x44
   409f72:	46ab      	mov	fp, r5
   409f74:	2a00      	cmp	r2, #0
@@ -26801,9 +26801,9 @@ static inline void usart_serial_init(usart_if p_usart,
   40a1dc:	f109 0908 	add.w	r9, r9, #8
   40a1e0:	e4e6      	b.n	409bb0 <_svfprintf_r+0x47c>
   40a1e2:	bf00      	nop
-  40a1e4:	004116c0 	.word	0x004116c0
-  40a1e8:	004116dc 	.word	0x004116dc
-  40a1ec:	0041168c 	.word	0x0041168c
+  40a1e4:	00411750 	.word	0x00411750
+  40a1e8:	0041176c 	.word	0x0041176c
+  40a1ec:	0041171c 	.word	0x0041171c
   40a1f0:	9b12      	ldr	r3, [sp, #72]	; 0x48
   40a1f2:	9d24      	ldr	r5, [sp, #144]	; 0x90
   40a1f4:	2b01      	cmp	r3, #1
@@ -27225,7 +27225,7 @@ static inline void usart_serial_init(usart_if p_usart,
   40a640:	f10d 09c0 	add.w	r9, sp, #192	; 0xc0
   40a644:	e5e7      	b.n	40a216 <_svfprintf_r+0xae2>
   40a646:	bf00      	nop
-  40a648:	0041168c 	.word	0x0041168c
+  40a648:	0041171c 	.word	0x0041171c
   40a64c:	aa23      	add	r2, sp, #140	; 0x8c
   40a64e:	9909      	ldr	r1, [sp, #36]	; 0x24
   40a650:	980a      	ldr	r0, [sp, #40]	; 0x28
@@ -27744,10 +27744,10 @@ static inline void usart_serial_init(usart_if p_usart,
   40ab88:	4e04      	ldr	r6, [pc, #16]	; (40ab9c <_svfprintf_r+0x1468>)
   40ab8a:	f7fe bf99 	b.w	409ac0 <_svfprintf_r+0x38c>
   40ab8e:	bf00      	nop
-  40ab90:	004116dc 	.word	0x004116dc
-  40ab94:	0041168c 	.word	0x0041168c
+  40ab90:	0041176c 	.word	0x0041176c
+  40ab94:	0041171c 	.word	0x0041171c
   40ab98:	66666667 	.word	0x66666667
-  40ab9c:	004116d4 	.word	0x004116d4
+  40ab9c:	00411764 	.word	0x00411764
   40aba0:	aa23      	add	r2, sp, #140	; 0x8c
   40aba2:	9909      	ldr	r1, [sp, #36]	; 0x24
   40aba4:	980a      	ldr	r0, [sp, #40]	; 0x28
@@ -27955,8 +27955,8 @@ static inline void usart_serial_init(usart_if p_usart,
   40adbe:	f88d 106f 	strb.w	r1, [sp, #111]	; 0x6f
   40adc2:	f7fe be33 	b.w	409a2c <_svfprintf_r+0x2f8>
   40adc6:	bf00      	nop
-  40adc8:	004116a8 	.word	0x004116a8
-  40adcc:	004116a4 	.word	0x004116a4
+  40adc8:	00411738 	.word	0x00411738
+  40adcc:	00411734 	.word	0x00411734
 
 0040add0 <__sprint_r.part.0>:
   40add0:	6e4b      	ldr	r3, [r1, #100]	; 0x64
@@ -28461,9 +28461,9 @@ static inline void usart_serial_init(usart_if p_usart,
   40b33e:	9303      	str	r3, [sp, #12]
   40b340:	e6a2      	b.n	40b088 <_vfiprintf_r+0x240>
   40b342:	bf00      	nop
-  40b344:	004116c0 	.word	0x004116c0
-  40b348:	00411700 	.word	0x00411700
-  40b34c:	004116f0 	.word	0x004116f0
+  40b344:	00411750 	.word	0x00411750
+  40b348:	00411790 	.word	0x00411790
+  40b34c:	00411780 	.word	0x00411780
   40b350:	9406      	str	r4, [sp, #24]
   40b352:	2900      	cmp	r1, #0
   40b354:	f040 8462 	bne.w	40bc1c <_vfiprintf_r+0xdd4>
@@ -28914,9 +28914,9 @@ static inline void usart_serial_init(usart_if p_usart,
   40b808:	f100 0c01 	add.w	ip, r0, #1
   40b80c:	46de      	mov	lr, fp
   40b80e:	e4cb      	b.n	40b1a8 <_vfiprintf_r+0x360>
-  40b810:	004116ac 	.word	0x004116ac
-  40b814:	004116c0 	.word	0x004116c0
-  40b818:	004116f0 	.word	0x004116f0
+  40b810:	0041173c 	.word	0x0041173c
+  40b814:	00411750 	.word	0x00411750
+  40b818:	00411780 	.word	0x00411780
   40b81c:	2a00      	cmp	r2, #0
   40b81e:	f040 8133 	bne.w	40ba88 <_vfiprintf_r+0xc40>
   40b822:	f89d 302f 	ldrb.w	r3, [sp, #47]	; 0x2f
@@ -29307,9 +29307,9 @@ static inline void usart_serial_init(usart_if p_usart,
   40bc30:	e50f      	b.n	40b652 <_vfiprintf_r+0x80a>
   40bc32:	f88d 002f 	strb.w	r0, [sp, #47]	; 0x2f
   40bc36:	e4f3      	b.n	40b620 <_vfiprintf_r+0x7d8>
-  40bc38:	004116c0 	.word	0x004116c0
-  40bc3c:	004116d4 	.word	0x004116d4
-  40bc40:	00411700 	.word	0x00411700
+  40bc38:	00411750 	.word	0x00411750
+  40bc3c:	00411764 	.word	0x00411764
+  40bc40:	00411790 	.word	0x00411790
 
 0040bc44 <__sbprintf>:
   40bc44:	b5f0      	push	{r4, r5, r6, r7, lr}
@@ -29835,12 +29835,12 @@ static inline void usart_serial_init(usart_if p_usart,
   40c180:	509f79fb 	.word	0x509f79fb
   40c184:	3fd34413 	.word	0x3fd34413
   40c188:	7ff00000 	.word	0x7ff00000
-  40c18c:	004116dd 	.word	0x004116dd
-  40c190:	00411820 	.word	0x00411820
+  40c18c:	0041176d 	.word	0x0041176d
+  40c190:	004118b0 	.word	0x004118b0
   40c194:	3ff80000 	.word	0x3ff80000
-  40c198:	00411930 	.word	0x00411930
-  40c19c:	00411814 	.word	0x00411814
-  40c1a0:	004116dc 	.word	0x004116dc
+  40c198:	004119c0 	.word	0x004119c0
+  40c19c:	004118a4 	.word	0x004118a4
+  40c1a0:	0041176c 	.word	0x0041176c
   40c1a4:	40240000 	.word	0x40240000
   40c1a8:	f7fa fdae 	bl	406d08 <__aeabi_dmul>
   40c1ac:	2200      	movs	r2, #0
@@ -30426,8 +30426,8 @@ static inline void usart_serial_init(usart_if p_usart,
   40c76a:	2001      	movs	r0, #1
   40c76c:	e5f3      	b.n	40c356 <_dtoa_r+0x496>
   40c76e:	bf00      	nop
-  40c770:	00411930 	.word	0x00411930
-  40c774:	004119f8 	.word	0x004119f8
+  40c770:	004119c0 	.word	0x004119c0
+  40c774:	00411a88 	.word	0x00411a88
   40c778:	3ff00000 	.word	0x3ff00000
   40c77c:	401c0000 	.word	0x401c0000
   40c780:	3fe00000 	.word	0x3fe00000
@@ -30930,8 +30930,8 @@ static inline void usart_serial_init(usart_if p_usart,
   40cc76:	bf00      	nop
   40cc78:	401c0000 	.word	0x401c0000
   40cc7c:	40140000 	.word	0x40140000
-  40cc80:	00411930 	.word	0x00411930
-  40cc84:	004119f8 	.word	0x004119f8
+  40cc80:	004119c0 	.word	0x004119c0
+  40cc84:	00411a88 	.word	0x00411a88
   40cc88:	40240000 	.word	0x40240000
   40cc8c:	3fe00000 	.word	0x3fe00000
   40cc90:	2b39      	cmp	r3, #57	; 0x39
@@ -31268,9 +31268,9 @@ static inline void usart_serial_init(usart_if p_usart,
   40cfb0:	2c00      	cmp	r4, #0
   40cfb2:	d1f9      	bne.n	40cfa8 <__libc_fini_array+0xc>
   40cfb4:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
-  40cfb8:	f004 bd42 	b.w	411a40 <_fini>
-  40cfbc:	00411a50 	.word	0x00411a50
-  40cfc0:	00411a4c 	.word	0x00411a4c
+  40cfb8:	f004 bd8a 	b.w	411ad0 <_fini>
+  40cfbc:	00411ae0 	.word	0x00411ae0
+  40cfc0:	00411adc 	.word	0x00411adc
 
 0040cfc4 <__fputwc>:
   40cfc4:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -32328,7 +32328,7 @@ static inline void usart_serial_init(usart_if p_usart,
   40d9fa:	2500      	movs	r5, #0
   40d9fc:	e7ca      	b.n	40d994 <__gethex+0x2a8>
   40d9fe:	bf00      	nop
-  40da00:	00411824 	.word	0x00411824
+  40da00:	004118b4 	.word	0x004118b4
   40da04:	1b84      	subs	r4, r0, r6
   40da06:	4621      	mov	r1, r4
   40da08:	9804      	ldr	r0, [sp, #16]
@@ -32713,7 +32713,7 @@ static inline void usart_serial_init(usart_if p_usart,
   40dda2:	d8f4      	bhi.n	40dd8e <__hexnan+0x162>
   40dda4:	e78f      	b.n	40dcc6 <__hexnan+0x9a>
   40dda6:	bf00      	nop
-  40dda8:	00411824 	.word	0x00411824
+  40dda8:	004118b4 	.word	0x004118b4
 
 0040ddac <__locale_charset>:
   40ddac:	4800      	ldr	r0, [pc, #0]	; (40ddb0 <__locale_charset+0x4>)
@@ -33441,7 +33441,7 @@ static inline void usart_serial_init(usart_if p_usart,
   40e46a:	6003      	str	r3, [r0, #0]
   40e46c:	e7be      	b.n	40e3ec <__pow5mult+0x18>
   40e46e:	bf00      	nop
-  40e470:	00411a20 	.word	0x00411a20
+  40e470:	00411ab0 	.word	0x00411ab0
 
 0040e474 <__lshift>:
   40e474:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -34660,7 +34660,7 @@ static inline void usart_serial_init(usart_if p_usart,
   40f08a:	f04f 30ff 	mov.w	r0, #4294967295
   40f08e:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
   40f092:	bf00      	nop
-  40f094:	00411628 	.word	0x00411628
+  40f094:	004116b4 	.word	0x004116b4
   40f098:	00407291 	.word	0x00407291
 
 0040f09c <_calloc_r>:
@@ -35394,588 +35394,597 @@ static inline void usart_serial_init(usart_if p_usart,
   40fb1c:	0000 0304 0604 0007 0000 0000 0000 0000     ................
 	...
   40fb70:	452d 202d 6544 6976 6563 5520 6b6e 6f6e     -E- Device Unkno
-  40fb80:	6e77 0d0a 0000 0000 492d 202d 414e 444e     wn......-I- NAND
+  40fb80:	6e77 0a0d 0000 0000 492d 202d 414e 444e     wn......-I- NAND
   40fb90:	4620 616c 6873 6420 6972 6576 2072 6e69      Flash driver in
-  40fba0:	7469 6169 696c 657a 0a64 000d 492d 202d     itialized...-I- 
+  40fba0:	7469 6169 696c 657a 0d64 000a 492d 202d     itialized...-I- 
   40fbb0:	6953 657a 6f20 2066 6874 2065 6877 6c6f     Size of the whol
   40fbc0:	2065 6564 6976 6563 6920 206e 7962 6574     e device in byte
-  40fbd0:	2073 203a 7830 7825 0a20 000d 492d 202d     s : 0x%x ...-I- 
+  40fbd0:	2073 203a 7830 7825 0d20 000a 492d 202d     s : 0x%x ...-I- 
   40fbe0:	6953 657a 6920 206e 7962 6574 2073 666f     Size in bytes of
   40fbf0:	6f20 656e 7320 6e69 6c67 2065 6c62 636f      one single bloc
   40fc00:	206b 666f 6120 6420 7665 6369 2065 203a     k of a device : 
-  40fc10:	7830 7825 0a20 000d 492d 202d 754e 626d     0x%x ...-I- Numb
+  40fc10:	7830 7825 0d20 000a 492d 202d 754e 626d     0x%x ...-I- Numb
   40fc20:	7265 6f20 2066 6c62 636f 736b 6920 206e     er of blocks in 
   40fc30:	6874 2065 6e65 6974 6572 6420 7665 6369     the entire devic
-  40fc40:	2065 203a 7830 7825 0a20 000d 492d 202d     e : 0x%x ...-I- 
+  40fc40:	2065 203a 7830 7825 0d20 000a 492d 202d     e : 0x%x ...-I- 
   40fc50:	754e 626d 7265 6f20 2066 6c62 636f 736b     Number of blocks
   40fc60:	7520 6573 2064 7962 7420 6568 6120 7070      used by the app
   40fc70:	696c 6163 6974 6e6f 3a20 3020 2578 2078     lication : 0x%x 
-  40fc80:	0d0a 0000 492d 202d 6953 657a 6f20 2066     ....-I- Size of 
+  40fc80:	0a0d 0000 492d 202d 6953 657a 6f20 2066     ....-I- Size of 
   40fc90:	6874 2065 6164 6174 6120 6572 2061 666f     the data area of
   40fca0:	6120 7020 6761 2065 6e69 6220 7479 7365      a page in bytes
-  40fcb0:	3a20 3020 2578 2078 0d0a 0000 492d 202d      : 0x%x ....-I- 
+  40fcb0:	3a20 3020 2578 2078 0a0d 0000 492d 202d      : 0x%x ....-I- 
   40fcc0:	754e 626d 7265 6f20 2066 6170 6567 2073     Number of pages 
   40fcd0:	6e69 7420 6568 6520 746e 7269 2065 6564     in the entire de
-  40fce0:	6976 6563 3a20 3020 2578 2078 0d0a 0000     vice : 0x%x ....
+  40fce0:	6976 6563 3a20 3020 2578 2078 0a0d 0000     vice : 0x%x ....
   40fcf0:	492d 202d 7250 7065 7261 6e69 2067 7562     -I- Preparing bu
   40fd00:	6666 7265 6920 206e 5253 4d41 2e20 2e2e     ffer in SRAM ...
-  40fd10:	0d0a 0000 452d 202d 6c42 636f 206b 7525     ....-E- Block %u
-  40fd20:	6920 2073 4142 2044 6c62 636f 2e6b 0a20      is BAD block. .
-  40fd30:	000d 0000 492d 202d 7257 7469 6e69 2067     ....-I- Writing 
+  40fd10:	0a0d 0000 452d 202d 6c42 636f 206b 7525     ....-E- Block %u
+  40fd20:	6920 2073 4142 2044 6c62 636f 2e6b 0a0d      is BAD block...
+  40fd30:	0000 0000 492d 202d 7257 7469 6e69 2067     ....-I- Writing 
   40fd40:	6874 2065 7562 6666 7265 6920 206e 6170     the buffer in pa
   40fd50:	6567 2520 2064 666f 6220 6f6c 6b63 2520     ge %d of block %
-  40fd60:	2064 6977 6874 756f 2074 4345 0a43 000d     d without ECC...
+  40fd60:	2064 6977 6874 756f 2074 4345 0d43 000a     d without ECC...
   40fd70:	452d 202d 6143 6e6e 746f 7720 6972 6574     -E- Cannot write
   40fd80:	7020 6761 2065 6425 6f20 2066 6c62 636f      page %d of bloc
   40fd90:	206b 6425 202e 7254 6979 676e 6e20 7865     k %d. Trying nex
-  40fda0:	2074 6c62 636f 2e6b 2e2e 0d0a 0000 0000     t block.........
+  40fda0:	2074 6c62 636f 2e6b 2e2e 0a0d 0000 0000     t block.........
   40fdb0:	492d 202d 6552 6461 6e69 2067 6170 6567     -I- Reading page
-  40fdc0:	2520 2064 666f 6220 6f6c 6b63 2520 0a64      %d of block %d.
-  40fdd0:	000d 0000 452d 202d 6143 6e6e 746f 7220     ....-E- Cannot r
+  40fdc0:	2520 2064 666f 6220 6f6c 6b63 2520 0d64      %d of block %d.
+  40fdd0:	000a 0000 452d 202d 6143 6e6e 746f 7220     ....-E- Cannot r
   40fde0:	6165 2064 6170 6567 2520 2064 666f 6220     ead page %d of b
   40fdf0:	6f6c 6b63 2520 2e64 5420 7972 6e69 2067     lock %d. Trying 
-  40fe00:	656e 7478 6220 6f6c 6b63 2e2e 0a2e 000d     next block......
-  40fe10:	654e 7774 726f 696b 676e 203a 6166 6c69     Networking: fail
-  40fe20:	6465 7420 206f 7263 6165 6574 5420 5043     ed to create TCP
-  40fe30:	6320 696c 6e65 2074 6f73 6b63 7465 6520      client socket e
-  40fe40:	7272 726f 0d21 000a 654e 7774 726f 696b     rror!...Networki
-  40fe50:	676e 203a 6166 6c69 6465 7420 206f 6f63     ng: failed to co
-  40fe60:	6e6e 6365 2074 4354 2050 6c63 6569 746e     nnect TCP client
-  40fe70:	7320 636f 656b 2074 7265 6f72 2172 0a0d      socket error!..
-  40fe80:	0000 0000 6374 5f70 6f70 7472 655f 6378     ....tcp_port_exc
-  40fe90:	6168 676e 5f65 6f73 6b63 7465 203a 6f63     hange_socket: co
-  40fea0:	6e6e 6365 2074 7573 6363 7365 2173 0a0d     nnect success!..
-  40feb0:	0000 0000 6425 0000 6374 5f70 6f70 7472     ....%d..tcp_port
-  40fec0:	655f 6378 6168 676e 5f65 6f73 6b63 7465     _exchange_socket
-  40fed0:	203a 6f63 6e6e 6365 2074 7265 6f72 2172     : connect error!
-  40fee0:	0a0d 0000 6374 5f70 6f70 7472 655f 6378     ....tcp_port_exc
-  40fef0:	6168 676e 5f65 6f73 6b63 7465 203a 6572     hange_socket: re
-  40ff00:	7663 7320 6375 6563 7373 0d21 000a 0000     cv success!.....
-  40ff10:	6f48 7473 7020 726f 2074 6572 6f73 766c     Host port resolv
-  40ff20:	6465 7420 3a6f 2820 6425 0d29 000a 0000     ed to: (%d).....
-  40ff30:	6374 5f70 6f70 7472 655f 6378 6168 676e     tcp_port_exchang
-  40ff40:	5f65 6f73 6b63 7465 203a 6572 7663 6520     e_socket: recv e
-  40ff50:	7272 726f 0d21 000a 6475 5f70 6f63 6d6d     rror!...udp_comm
-  40ff60:	6e61 5f64 6f73 6b63 7465 203a 6942 646e     and_socket: Bind
-  40ff70:	4620 6961 656c 0a64 0000 0000 6475 5f70      Failed.....udp_
-  40ff80:	6f63 6d6d 6e61 5f64 6f73 6b63 7465 203a     command_socket: 
-  40ff90:	6572 7663 7266 6d6f 7320 6375 6563 7373     recvfrom success
-  40ffa0:	0d21 000a 6475 5f70 6f63 6d6d 6e61 5f64     !...udp_command_
-  40ffb0:	6f73 6b63 7465 203a 6f63 6d6d 6e61 2064     socket: command 
-  40ffc0:	6572 6563 7669 6465 203a 7325 0a0d 0000     received: %s....
-  40ffd0:	6374 5f70 6573 7474 6e69 7367 6c5f 7369     tcp_settings_lis
-  40ffe0:	6574 5f6e 6f73 6b63 7465 203a 6942 646e     ten_socket: Bind
-  40fff0:	4620 6961 656c 0a64 0000 0000 6374 5f70      Failed.....tcp_
-  410000:	6573 7474 6e69 7367 6c5f 7369 6574 5f6e     settings_listen_
-  410010:	6f73 6b63 7465 203a 696c 7473 6e65 7320     socket: listen s
-  410020:	6375 6563 7373 0d21 000a 0000 6374 5f70     uccess!.....tcp_
-  410030:	6573 7474 6e69 7367 6c5f 7369 6574 5f6e     settings_listen_
-  410040:	6f73 6b63 7465 203a 696c 7473 6e65 4620     socket: listen F
-  410050:	6961 656c 2e64 5220 7365 6174 7472 6e69     ailed. Restartin
-  410060:	2e67 2e2e 000a 0000 6374 5f70 6573 7474     g.......tcp_sett
-  410070:	6e69 7367 6c5f 7369 6574 5f6e 6f73 6b63     ings_listen_sock
-  410080:	7465 203a 6361 6563 7470 7320 6375 6563     et: accept succe
-  410090:	7373 0d21 000a 0000 6374 5f70 6573 7474     ss!.....tcp_sett
-  4100a0:	6e69 7367 6c5f 7369 6574 5f6e 6f73 6b63     ings_listen_sock
-  4100b0:	7465 203a 6341 6563 7470 4620 6961 656c     et: Accept Faile
-  4100c0:	0a64 0000 6374 5f70 6573 7474 6e69 7367     d...tcp_settings
-  4100d0:	645f 7461 5f61 6f73 6b63 7465 203a 6573     _data_socket: se
-  4100e0:	7474 6e69 7367 7220 6365 6965 6576 3a64     ttings received:
-  4100f0:	2520 0d73 000a 0000 4d43 2a44 4b4f 0000      %s.....CMD*OK..
-  410100:	6374 5f70 6573 7474 6e69 7367 645f 7461     tcp_settings_dat
-  410110:	5f61 6f73 6b63 7465 203a 6f63 666e 6769     a_socket: config
-  410120:	7275 7461 6f69 206e 7573 6363 7365 6673     uration successf
-  410130:	6c75 202e 6553 646e 6e69 2067 4341 2e4b     ul. Sending ACK.
-  410140:	2e2e 0a0d 0000 0000 4d43 2a44 4f4e 0000     ........CMD*NO..
-  410150:	6374 5f70 6573 7474 6e69 7367 645f 7461     tcp_settings_dat
-  410160:	5f61 6f73 6b63 7465 203a 6f63 666e 6769     a_socket: config
-  410170:	7275 7461 6f69 206e 6177 2073 6f6e 2074     uration was not 
-  410180:	7573 6363 7365 6673 6c75 202e 6553 646e     successful. Send
-  410190:	6e69 2067 414e 4b43 2e2e 0d2e 000a 0000     ing NACK........
-  4101a0:	6475 5f70 7473 7461 7375 735f 636f 656b     udp_status_socke
-  4101b0:	3a74 5320 6174 7574 2073 6573 746e 0d21     t: Status sent!.
-  4101c0:	000a 0000 6957 462d 2069 6964 6373 6e6f     ....Wi-Fi discon
-  4101d0:	656e 7463 6465 0a0d 0000 0000 6957 462d     nected......Wi-F
-  4101e0:	2069 6f63 6e6e 6365 6574 0d64 000a 0000     i connected.....
-  4101f0:	6957 462d 2069 5049 6920 2073 7525 252e     Wi-Fi IP is %u.%
-  410200:	2e75 7525 252e 0d75 000a 0000 6957 462d     u.%u.%u.....Wi-F
-  410210:	2069 7247 756f 2070 776f 656e 2072 5049     i Group owner IP
-  410220:	6920 2073 7525 252e 2e75 7525 252e 0d75      is %u.%u.%u.%u.
-  410230:	000a 0000 6957 6946 505f 5032 203a 326d     ....WiFi_P2P: m2
-  410240:	5f6d 6977 6966 705f 7032 6320 6c61 206c     m_wifi_p2p call 
-  410250:	7265 6f72 2172 0a0d 0000 0000 3250 2050     error!......P2P 
-  410260:	6f6d 6564 7320 6174 7472 6465 202e 7325     mode started. %s
-  410270:	6920 2073 7761 6961 6974 676e 6320 6e6f      is awaiting con
-  410280:	656e 7463 6f69 2e6e 0a0d 0000 6142 6863     nection.....Bach
-  410290:	6c65 726f 6f47 6f47 002a 0000 6957 6946     elorGoGo*...WiFi
-  4102a0:	505f 5032 203a 326d 5f6d 6977 6966 735f     _P2P: m2m_wifi_s
-  4102b0:	7465 645f 7665 6369 5f65 616e 656d 6320     et_device_name c
-  4102c0:	6c61 206c 7265 6f72 2172 0a0d 0000 0000     all error!......
-  4102d0:	6957 6946 505f 5032 203a 326d 5f6d 6977     WiFi_P2P: m2m_wi
-  4102e0:	6966 695f 696e 2074 6163 6c6c 6520 7272     fi_init call err
-  4102f0:	726f 2821 6425 0d29 000a 0000 6f52 6f62     or!(%d).....Robo
-  410300:	6f47 6f47 0000 0000 4d43 2a44 5443 0000     GoGo....CMD*CT..
-  410310:	003b 0000 3a58 2520 2073 2528 2964 0a0d     ;...X: %s (%d)..
-  410320:	0000 0000 3a59 2520 2073 2528 2964 0a0d     ....Y: %s (%d)..
-  410330:	0000 0000 7750 0072 7750 3a72 2520 2073     ....Pwr.Pwr: %s 
-  410340:	2528 2964 0a0d 0000 6741 006c 6e41 3a67     (%d)....Agl.Ang:
-  410350:	2520 2073 2528 2964 0a0d 0000 7551 7565      %s (%d)....Queu
-  410360:	2065 7277 7469 2065 4b4f 0a0d 0000 0000     e write OK......
-  410370:	7551 7565 2065 7566 6c6c 0a0d 0000 0000     Queue full......
-  410380:	4d43 2a44 4553 0000 614e 656d 0000 0000     CMD*SE..Name....
-  410390:	7341 6973 7473 6465 0000 0000 6f50 6577     Assisted....Powe
-  4103a0:	4d72 646f 0065 0000 6956 6564 516f 6175     rMode...VideoQua
-  4103b0:	696c 7974 0000 0000 452d 202d 6f43 6c75     lity....-E- Coul
-  4103c0:	2064 6f6e 2074 6573 2074 6564 6976 6563     d not set device
-  4103d0:	6e20 6d61 0d65 000a 492d 202d 614e 656d      name...-I- Name
-  4103e0:	203a 7325 0a0d 0000 492d 202d 7341 6973     : %s....-I- Assi
-  4103f0:	7473 6465 4420 6972 6576 4d20 646f 3a65     sted Drive Mode:
-  410400:	2520 0d64 000a 0000 492d 202d 6f50 6577      %d.....-I- Powe
-  410410:	2072 6153 6576 4d20 646f 3a65 2520 0d64     r Save Mode: %d.
-  410420:	000a 0000 492d 202d 6956 6564 206f 7551     ....-I- Video Qu
-  410430:	6c61 7469 3a79 2520 0d64 000a 4d43 2a44     ality: %d...CMD*
-  410440:	5453 0000 6142 7474 7265 0079 6143 656d     ST..Battery.Came
-  410450:	6172 0000 7053 6361 0065 0000 6552 616d     ra..Space...Rema
-  410460:	6e69 6e69 0067 0000 4128 5050 2829 5245     ining...(APP)(ER
-  410470:	2952 255b 5d73 255b 5d64 0000 6e69 6176     R)[%s][%d]..inva
-  410480:	696c 6564 6920 636f 746c 6320 646d 000a     lide ioclt cmd..
+  40fe00:	656e 7478 6220 6f6c 6b63 2e2e 0d2e 000a     next block......
+  40fe10:	452d 202d 6c42 636f 206b 7525 6920 2073     -E- Block %u is 
+  40fe20:	4142 2044 6c62 636f 2e6b 0d20 000a 0000     BAD block. .....
+  40fe30:	452d 202d 654e 7774 726f 696b 676e 203a     -E- Networking: 
+  40fe40:	6166 6c69 6465 7420 206f 7263 6165 6574     failed to create
+  40fe50:	5420 5043 6320 696c 6e65 2074 6f73 6b63      TCP client sock
+  40fe60:	7465 6520 7272 726f 0d21 000a 452d 202d     et error!...-E- 
+  40fe70:	654e 7774 726f 696b 676e 203a 6166 6c69     Networking: fail
+  40fe80:	6465 7420 206f 6f63 6e6e 6365 2074 4354     ed to connect TC
+  40fe90:	2050 6c63 6569 746e 7320 636f 656b 2074     P client socket 
+  40fea0:	7265 6f72 2172 0a0d 0000 0000 492d 202d     error!......-I- 
+  40feb0:	6374 5f70 6f70 7472 655f 6378 6168 676e     tcp_port_exchang
+  40fec0:	5f65 6f73 6b63 7465 203a 6f63 6e6e 6365     e_socket: connec
+  40fed0:	2074 7573 6363 7365 2173 0a0d 0000 0000     t success!......
+  40fee0:	6425 0000 452d 202d 6374 5f70 6f70 7472     %d..-E- tcp_port
+  40fef0:	655f 6378 6168 676e 5f65 6f73 6b63 7465     _exchange_socket
+  40ff00:	203a 6f63 6e6e 6365 2074 7265 6f72 2172     : connect error!
+  40ff10:	0a0d 0000 492d 202d 6374 5f70 6f70 7472     ....-I- tcp_port
+  40ff20:	655f 6378 6168 676e 5f65 6f73 6b63 7465     _exchange_socket
+  40ff30:	203a 6572 7663 7320 6375 6563 7373 0d21     : recv success!.
+  40ff40:	000a 0000 492d 202d 6f48 7473 7020 726f     ....-I- Host por
+  40ff50:	2074 6572 6f73 766c 6465 7420 3a6f 2820     t resolved to: (
+  40ff60:	6425 0d29 000a 0000 452d 202d 6374 5f70     %d).....-E- tcp_
+  40ff70:	6f70 7472 655f 6378 6168 676e 5f65 6f73     port_exchange_so
+  40ff80:	6b63 7465 203a 6572 7663 6520 7272 726f     cket: recv error
+  40ff90:	0d21 000a 452d 202d 6475 5f70 6f63 6d6d     !...-E- udp_comm
+  40ffa0:	6e61 5f64 6f73 6b63 7465 203a 6942 646e     and_socket: Bind
+  40ffb0:	4620 6961 656c 0a64 0000 0000 492d 202d      Failed.....-I- 
+  40ffc0:	6475 5f70 6f63 6d6d 6e61 5f64 6f73 6b63     udp_command_sock
+  40ffd0:	7465 203a 6572 7663 7266 6d6f 7320 6375     et: recvfrom suc
+  40ffe0:	6563 7373 0d21 000a 492d 202d 6475 5f70     cess!...-I- udp_
+  40fff0:	6f63 6d6d 6e61 5f64 6f73 6b63 7465 203a     command_socket: 
+  410000:	6f63 6d6d 6e61 2064 6572 6563 7669 6465     command received
+  410010:	203a 7325 0a0d 0000 452d 202d 6374 5f70     : %s....-E- tcp_
+  410020:	6573 7474 6e69 7367 6c5f 7369 6574 5f6e     settings_listen_
+  410030:	6f73 6b63 7465 203a 6942 646e 4620 6961     socket: Bind Fai
+  410040:	656c 0a64 0000 0000 492d 202d 6374 5f70     led.....-I- tcp_
+  410050:	6573 7474 6e69 7367 6c5f 7369 6574 5f6e     settings_listen_
+  410060:	6f73 6b63 7465 203a 696c 7473 6e65 7320     socket: listen s
+  410070:	6375 6563 7373 0d21 000a 0000 452d 202d     uccess!.....-E- 
+  410080:	6374 5f70 6573 7474 6e69 7367 6c5f 7369     tcp_settings_lis
+  410090:	6574 5f6e 6f73 6b63 7465 203a 696c 7473     ten_socket: list
+  4100a0:	6e65 4620 6961 656c 2e64 5220 7365 6174     en Failed. Resta
+  4100b0:	7472 6e69 2e67 2e2e 000a 0000 492d 202d     rting.......-I- 
+  4100c0:	6374 5f70 6573 7474 6e69 7367 6c5f 7369     tcp_settings_lis
+  4100d0:	6574 5f6e 6f73 6b63 7465 203a 6361 6563     ten_socket: acce
+  4100e0:	7470 7320 6375 6563 7373 0d21 000a 0000     pt success!.....
+  4100f0:	452d 202d 6374 5f70 6573 7474 6e69 7367     -E- tcp_settings
+  410100:	6c5f 7369 6574 5f6e 6f73 6b63 7465 203a     _listen_socket: 
+  410110:	6341 6563 7470 4620 6961 656c 0a64 0000     Accept Failed...
+  410120:	492d 202d 6374 5f70 6573 7474 6e69 7367     -I- tcp_settings
+  410130:	645f 7461 5f61 6f73 6b63 7465 203a 6573     _data_socket: se
+  410140:	7474 6e69 7367 7220 6365 6965 6576 3a64     ttings received:
+  410150:	2520 0d73 000a 0000 4d43 2a44 4b4f 0000      %s.....CMD*OK..
+  410160:	492d 202d 6374 5f70 6573 7474 6e69 7367     -I- tcp_settings
+  410170:	645f 7461 5f61 6f73 6b63 7465 203a 6f63     _data_socket: co
+  410180:	666e 6769 7275 7461 6f69 206e 7573 6363     nfiguration succ
+  410190:	7365 6673 6c75 202e 6553 646e 6e69 2067     essful. Sending 
+  4101a0:	4341 2e4b 2e2e 0a0d 0000 0000 4d43 2a44     ACK.........CMD*
+  4101b0:	4f4e 0000 492d 202d 6374 5f70 6573 7474     NO..-I- tcp_sett
+  4101c0:	6e69 7367 645f 7461 5f61 6f73 6b63 7465     ings_data_socket
+  4101d0:	203a 6f63 666e 6769 7275 7461 6f69 206e     : configuration 
+  4101e0:	6177 2073 6f6e 2074 7573 6363 7365 6673     was not successf
+  4101f0:	6c75 202e 6553 646e 6e69 2067 414e 4b43     ul. Sending NACK
+  410200:	2e2e 0d2e 000a 0000 492d 202d 6475 5f70     ........-I- udp_
+  410210:	7473 7461 7375 735f 636f 656b 3a74 5320     status_socket: S
+  410220:	6174 7574 2073 6573 746e 0d21 000a 0000     tatus sent!.....
+  410230:	492d 202d 6957 462d 2069 6964 6373 6e6f     -I- Wi-Fi discon
+  410240:	656e 7463 6465 0a0d 0000 0000 492d 202d     nected......-I- 
+  410250:	6957 462d 2069 6f63 6e6e 6365 6574 0d64     Wi-Fi connected.
+  410260:	000a 0000 492d 202d 6957 462d 2069 5049     ....-I- Wi-Fi IP
+  410270:	6920 2073 7525 252e 2e75 7525 252e 0d75      is %u.%u.%u.%u.
+  410280:	000a 0000 492d 202d 6957 462d 2069 7247     ....-I- Wi-Fi Gr
+  410290:	756f 2070 776f 656e 2072 5049 6920 2073     oup owner IP is 
+  4102a0:	7525 252e 2e75 7525 252e 0d75 000a 0000     %u.%u.%u.%u.....
+  4102b0:	452d 202d 6957 6946 505f 5032 203a 326d     -E- WiFi_P2P: m2
+  4102c0:	5f6d 6977 6966 705f 7032 6320 6c61 206c     m_wifi_p2p call 
+  4102d0:	7265 6f72 2172 0a0d 0000 0000 492d 202d     error!......-I- 
+  4102e0:	3250 2050 6f6d 6564 7320 6174 7472 6465     P2P mode started
+  4102f0:	202e 7325 6920 2073 7761 6961 6974 676e     . %s is awaiting
+  410300:	6320 6e6f 656e 7463 6f69 2e6e 0a0d 0000      connection.....
+  410310:	6142 6863 6c65 726f 6f47 6f47 002a 0000     BachelorGoGo*...
+  410320:	452d 202d 6957 6946 505f 5032 203a 326d     -E- WiFi_P2P: m2
+  410330:	5f6d 6977 6966 735f 7465 645f 7665 6369     m_wifi_set_devic
+  410340:	5f65 616e 656d 6320 6c61 206c 7265 6f72     e_name call erro
+  410350:	2172 0a0d 0000 0000 6957 6946 505f 5032     r!......WiFi_P2P
+  410360:	203a 326d 5f6d 6977 6966 695f 696e 2074     : m2m_wifi_init 
+  410370:	6163 6c6c 6520 7272 726f 2821 6425 0d29     call error!(%d).
+  410380:	000a 0000 6f52 6f62 6f47 6f47 0000 0000     ....RoboGoGo....
+  410390:	4d43 2a44 5443 0000 003b 0000 3a58 2520     CMD*CT..;...X: %
+  4103a0:	2073 2528 2964 0a0d 0000 0000 3a59 2520     s (%d)......Y: %
+  4103b0:	2073 2528 2964 0a0d 0000 0000 7750 0072     s (%d)......Pwr.
+  4103c0:	7750 3a72 2520 2073 2528 2964 0a0d 0000     Pwr: %s (%d)....
+  4103d0:	6741 006c 6e41 3a67 2520 2073 2528 2964     Agl.Ang: %s (%d)
+  4103e0:	0a0d 0000 7551 7565 2065 7277 7469 2065     ....Queue write 
+  4103f0:	4b4f 0a0d 0000 0000 7551 7565 2065 7566     OK......Queue fu
+  410400:	6c6c 0a0d 0000 0000 4d43 2a44 4553 0000     ll......CMD*SE..
+  410410:	614e 656d 0000 0000 7341 6973 7473 6465     Name....Assisted
+  410420:	0000 0000 6f50 6577 4d72 646f 0065 0000     ....PowerMode...
+  410430:	6956 6564 516f 6175 696c 7974 0000 0000     VideoQuality....
+  410440:	452d 202d 6f43 6c75 2064 6f6e 2074 6573     -E- Could not se
+  410450:	2074 6564 6976 6563 6e20 6d61 0d65 000a     t device name...
+  410460:	492d 202d 614e 656d 203a 7325 0a0d 0000     -I- Name: %s....
+  410470:	492d 202d 7341 6973 7473 6465 4420 6972     -I- Assisted Dri
+  410480:	6576 4d20 646f 3a65 2520 0d64 000a 0000     ve Mode: %d.....
+  410490:	492d 202d 6f50 6577 2072 6153 6576 4d20     -I- Power Save M
+  4104a0:	646f 3a65 2520 0d64 000a 0000 492d 202d     ode: %d.....-I- 
+  4104b0:	6956 6564 206f 7551 6c61 7469 3a79 2520     Video Quality: %
+  4104c0:	0d64 000a 4d43 2a44 5453 0000 6142 7474     d...CMD*ST..Batt
+  4104d0:	7265 0079 6143 656d 6172 0000 7053 6361     ery.Camera..Spac
+  4104e0:	0065 0000 6552 616d 6e69 6e69 0067 0000     e...Remaining...
+  4104f0:	4128 5050 2829 5245 2952 255b 5d73 255b     (APP)(ERR)[%s][%
+  410500:	5d64 0000 6e69 6176 696c 6564 6920 636f     d]..invalide ioc
+  410510:	746c 6320 646d 000a 000d 0000               lt cmd......
 
-00410490 <__FUNCTION__.9647>:
-  410490:	6d6e 625f 7375 695f 636f 6c74 0000 0000     nm_bus_ioctl....
+0041051c <__FUNCTION__.9647>:
+  41051c:	6d6e 625f 7375 695f 636f 6c74 0000 0000     nm_bus_ioctl....
 
-004104a0 <__FUNCTION__.10826>:
-  4104a0:	6968 5f66 6572 6563 7669 0065               hif_receive.
+0041052c <__FUNCTION__.10826>:
+  41052c:	6968 5f66 6572 6563 7669 0065               hif_receive.
 
-004104ac <__FUNCTION__.10805>:
-  4104ac:	6968 5f66 7369 0072                         hif_isr.
+00410538 <__FUNCTION__.10805>:
+  410538:	6968 5f66 7369 0072                         hif_isr.
 
-004104b4 <__FUNCTION__.10841>:
-  4104b4:	6968 5f66 6572 6967 7473 7265 635f 0062     hif_register_cb.
-  4104c4:	4828 4649 4629 6961 206c 6f74 7720 6b61     (HIF)Fail to wak
-  4104d4:	7075 7420 6568 6320 6968 0a70 0000 0000     up the chip.....
-  4104e4:	6828 6669 2029 4957 4946 485f 534f 5f54     (hif) WIFI_HOST_
-  4104f4:	4352 5f56 5443 4c52 315f 6220 7375 6620     RCV_CTRL_1 bus f
-  410504:	6961 0a6c 0000 0000 6828 6669 2029 6461     ail.....(hif) ad
-  410514:	7264 7365 2073 7562 2073 6166 6c69 000a     dress bus fail..
-  410524:	6828 6669 2029 6f43 7272 7075 6574 2064     (hif) Corrupted 
-  410534:	6170 6b63 7465 5320 7a69 2065 203d 7525     packet Size = %u
-  410544:	3c20 204c 203d 7525 202c 2047 203d 7525      <L = %u, G = %u
-  410554:	202c 504f 3d20 2520 3230 3e58 000a 0000     , OP = %02X>....
-  410564:	6828 6669 2029 6e69 6176 696c 2064 7267     (hif) invalid gr
-  410574:	756f 2070 4449 000a 6828 6669 2029 6f68     oup ID..(hif) ho
-  410584:	7473 6120 7070 6420 6469 276e 2074 6573     st app didn't se
-  410594:	2074 5852 4420 6e6f 0a65 0000 6828 6669     t RX Done...(hif
-  4105a4:	2029 7257 6e6f 2067 6953 657a 000a 0000     ) Wrong Size....
-  4105b4:	6828 6669 2029 6146 736c 2065 6e69 6574     (hif) False inte
-  4105c4:	7272 7075 2074 6c25 0078 0000 6828 6669     rrupt %lx...(hif
-  4105d4:	2029 6146 6c69 7420 206f 6552 6461 6920     ) Fail to Read i
-  4105e4:	746e 7265 7572 7470 7220 6765 000a 0000     nterrupt reg....
-  4105f4:	6828 6669 2029 4146 4c49 7420 206f 6177     (hif) FAIL to wa
-  410604:	656b 7075 7420 6568 6320 6968 0a70 0000     keup the chip...
-  410614:	4828 4649 2029 6146 6c69 7420 206f 6168     (HIF) Fail to ha
-  410624:	646e 656c 6920 746e 7265 7572 7470 2520     ndle interrupt %
-  410634:	2064 7274 2079 6741 6961 2e6e 0a2e 0000     d try Again.....
-  410644:	6820 6669 725f 6365 6965 6576 203a 6e49      hif_receive: In
-  410654:	6176 696c 2064 7261 7567 656d 746e 000a     valid argument..
-  410664:	5041 2050 6552 7571 7365 6574 2064 6953     APP Requested Si
-  410674:	657a 6920 2073 616c 6772 7265 7420 6168     ze is larger tha
-  410684:	206e 6874 2065 6572 6963 6576 2064 7562     n the recived bu
-  410694:	6666 7265 7320 7a69 2065 253c 3e64 253c     ffer size <%d><%
-  4106a4:	3e64 000a 5041 2050 6552 7571 7365 6574     d>..APP Requeste
-  4106b4:	2064 6441 7264 7365 2073 6562 6f79 646e     d Address beyond
-  4106c4:	7420 6568 7220 6365 7669 6465 6220 6675      the recived buf
-  4106d4:	6566 2072 6461 7264 7365 2073 6e61 2064     fer address and 
-  4106e4:	656c 676e 6874 000a 5247 2070 203f 6425     length..GRp ? %d
-  4106f4:	000a 0000                                   ....
+00410540 <__FUNCTION__.10841>:
+  410540:	6968 5f66 6572 6967 7473 7265 635f 0062     hif_register_cb.
+  410550:	4828 4649 4629 6961 206c 6f74 7720 6b61     (HIF)Fail to wak
+  410560:	7075 7420 6568 6320 6968 0a70 0000 0000     up the chip.....
+  410570:	6828 6669 2029 4957 4946 485f 534f 5f54     (hif) WIFI_HOST_
+  410580:	4352 5f56 5443 4c52 315f 6220 7375 6620     RCV_CTRL_1 bus f
+  410590:	6961 0a6c 0000 0000 6828 6669 2029 6461     ail.....(hif) ad
+  4105a0:	7264 7365 2073 7562 2073 6166 6c69 000a     dress bus fail..
+  4105b0:	6828 6669 2029 6f43 7272 7075 6574 2064     (hif) Corrupted 
+  4105c0:	6170 6b63 7465 5320 7a69 2065 203d 7525     packet Size = %u
+  4105d0:	3c20 204c 203d 7525 202c 2047 203d 7525      <L = %u, G = %u
+  4105e0:	202c 504f 3d20 2520 3230 3e58 000a 0000     , OP = %02X>....
+  4105f0:	6828 6669 2029 6e69 6176 696c 2064 7267     (hif) invalid gr
+  410600:	756f 2070 4449 000a 6828 6669 2029 6f68     oup ID..(hif) ho
+  410610:	7473 6120 7070 6420 6469 276e 2074 6573     st app didn't se
+  410620:	2074 5852 4420 6e6f 0a65 0000 6828 6669     t RX Done...(hif
+  410630:	2029 7257 6e6f 2067 6953 657a 000a 0000     ) Wrong Size....
+  410640:	6828 6669 2029 6146 736c 2065 6e69 6574     (hif) False inte
+  410650:	7272 7075 2074 6c25 0078 0000 6828 6669     rrupt %lx...(hif
+  410660:	2029 6146 6c69 7420 206f 6552 6461 6920     ) Fail to Read i
+  410670:	746e 7265 7572 7470 7220 6765 000a 0000     nterrupt reg....
+  410680:	6828 6669 2029 4146 4c49 7420 206f 6177     (hif) FAIL to wa
+  410690:	656b 7075 7420 6568 6320 6968 0a70 0000     keup the chip...
+  4106a0:	4828 4649 2029 6146 6c69 7420 206f 6168     (HIF) Fail to ha
+  4106b0:	646e 656c 6920 746e 7265 7572 7470 2520     ndle interrupt %
+  4106c0:	2064 7274 2079 6741 6961 2e6e 0a2e 0000     d try Again.....
+  4106d0:	6820 6669 725f 6365 6965 6576 203a 6e49      hif_receive: In
+  4106e0:	6176 696c 2064 7261 7567 656d 746e 000a     valid argument..
+  4106f0:	5041 2050 6552 7571 7365 6574 2064 6953     APP Requested Si
+  410700:	657a 6920 2073 616c 6772 7265 7420 6168     ze is larger tha
+  410710:	206e 6874 2065 6572 6963 6576 2064 7562     n the recived bu
+  410720:	6666 7265 7320 7a69 2065 253c 3e64 253c     ffer size <%d><%
+  410730:	3e64 000a 5041 2050 6552 7571 7365 6574     d>..APP Requeste
+  410740:	2064 6441 7264 7365 2073 6562 6f79 646e     d Address beyond
+  410750:	7420 6568 7220 6365 7669 6465 6220 6675      the recived buf
+  410760:	6566 2072 6461 7264 7365 2073 6e61 2064     fer address and 
+  410770:	656c 676e 6874 000a 5247 2070 203f 6425     length..GRp ? %d
+  410780:	000a 0000                                   ....
 
-004106f8 <__FUNCTION__.10811>:
-  4106f8:	6968 5f66 6168 646e 656c 695f 7273 0000     hif_handle_isr..
+00410784 <__FUNCTION__.10811>:
+  410784:	6968 5f66 6168 646e 656c 695f 7273 0000     hif_handle_isr..
 
-00410708 <__FUNCTION__.10795>:
-  410708:	6968 5f66 6573 646e 0000 0000               hif_send....
+00410794 <__FUNCTION__.10795>:
+  410794:	6968 5f66 6573 646e 0000 0000               hif_send....
 
-00410714 <__FUNCTION__.8127>:
-  410714:	326d 5f6d 6977 6966 635f 0062               m2m_wifi_cb.
+004107a0 <__FUNCTION__.8127>:
+  4107a0:	326d 5f6d 6977 6966 635f 0062               m2m_wifi_cb.
 
-00410720 <__FUNCTION__.8254>:
-  410720:	326d 5f6d 6977 6966 705f 7032 0000 0000     m2m_wifi_p2p....
+004107ac <__FUNCTION__.8254>:
+  4107ac:	326d 5f6d 6977 6966 705f 7032 0000 0000     m2m_wifi_p2p....
 
-00410730 <__FUNCTION__.8151>:
-  410730:	326d 5f6d 6977 6966 695f 696e 0074 0000     m2m_wifi_init...
-  410740:	4128 5050 2829 4e49 4f46 0029 6f43 666e     (APP)(INFO).Conf
-  410750:	696c 7463 6465 4920 2050 2022 7525 252e     licted IP " %u.%
-  410760:	2e75 7525 252e 2075 2022 000a 4552 2051     u.%u.%u " ..REQ 
-  410770:	6f4e 2074 6564 6966 656e 2064 6425 000a     Not defined %d..
-  410780:	4e49 4156 494c 2044 4f50 4e49 4554 0a52     INVALID POINTER.
-  410790:	0000 0000 4e49 4156 494c 2044 5353 4449     ....INVALID SSID
-  4107a0:	000a 0000 4e49 4156 494c 2044 4843 000a     ....INVALID CH..
-  4107b0:	4e49 4156 494c 2044 4844 5043 5320 5245     INVALID DHCP SER
-  4107c0:	4556 2052 5049 000a 4e49 4156 494c 2044     VER IP..INVALID 
-  4107d0:	454b 2059 4e49 4544 0a58 0000 4e49 4156     KEY INDEX...INVA
-  4107e0:	494c 2044 454b 2059 4953 455a 000a 0000     LID KEY SIZE....
-  4107f0:	4e49 4156 494c 2044 4557 2050 454b 0a59     INVALID WEP KEY.
-  410800:	0000 0000 4e49 4156 494c 2044 5541 4854     ....INVALID AUTH
-  410810:	4e45 4954 4143 4954 4e4f 4d20 444f 0a45     ENTICATION MODE.
-  410820:	0000 0000 6946 6d72 6177 6572 7620 7265     ....Firmware ver
-  410830:	2020 3a20 2520 2e75 7525 252e 0a75 0000        : %u.%u.%u...
-  410840:	694d 206e 7264 7669 7265 7620 7265 3a20     Min driver ver :
-  410850:	2520 2e75 7525 252e 0a75 0000 7543 7272      %u.%u.%u...Curr
-  410860:	6420 6972 6576 2072 6576 3a72 2520 2e75      driver ver: %u.
-  410870:	7525 252e 0a75 0000 694d 6d73 7461 6863     %u.%u...Mismatch
-  410880:	4620 7269 616d 7277 2065 6556 7372 6f69      Firmawre Versio
-  410890:	0a6e 0000 654b 2079 7369 6e20 746f 7620     n...Key is not v
-  4108a0:	6c61 6469 000a 0000 6e49 6176 696c 2064     alid....Invalid 
-  4108b0:	654b 0a79 0000 0000 5353 4449 4c20 4e45     Key.....SSID LEN
-  4108c0:	4920 564e 4c41 4449 000a 0000 4843 4920      INVALID....CH I
-  4108d0:	564e 4c41 4449 000a 6e49 6176 696c 2064     NVALID..Invalid 
-  4108e0:	6557 2070 656b 2079 6e69 6564 2078 6425     Wep key index %d
-  4108f0:	000a 0000 6e49 6176 696c 2064 6557 2070     ....Invalid Wep 
-  410900:	656b 2079 656c 676e 6874 2520 0a64 0000     key length %d...
-  410910:	6e49 6f63 7272 6365 2074 5350 204b 656b     Incorrect PSK ke
-  410920:	2079 656c 676e 6874 000a 0000 6e75 6564     y length....unde
-  410930:	6966 656e 2064 6573 2063 7974 6570 000a     fined sec type..
-  410940:	4e49 4156 494c 2044 6f4e 6f20 2066 6373     INVALID No of sc
-  410950:	6e61 7320 6f6c 7374 0a21 0000 4e49 4156     an slots!...INVA
-  410960:	494c 2044 6373 6e61 7320 6f6c 2074 6974     LID scan slot ti
-  410970:	656d 0a21 0000 0000 4e49 4156 494c 2044     me!.....INVALID 
-  410980:	6f4e 6f20 2066 7270 626f 2065 6572 7571     No of probe requ
-  410990:	7365 7374 7020 7265 7320 6163 206e 6c73     ests per scan sl
-  4109a0:	746f 000a 4e49 4156 494c 2044 5352 4953     ot..INVALID RSSI
-  4109b0:	7420 7268 7365 6f68 646c 2520 2064 000a      threshold %d ..
-  4109c0:	505f 5f53 4553 5652 5245 205f 7369 6e20     _PS_SERVER_ is n
-  4109d0:	746f 6420 6665 6e69 6465 000a 694c 7473     ot defined..List
-  4109e0:	6e65 6320 6168 6e6e 6c65 7320 6f68 6c75     en channel shoul
-  4109f0:	2064 6e6f 796c 6220 2065 2c31 3620 6f20     d only be 1, 6 o
-  410a00:	2072 3131 000a 0000 4f50 4557 2052 4153     r 11....POWER SA
-  410a10:	4556 2520 0a64 0000 4e49 4156 494c 2044     VE %d...INVALID 
-  410a20:	4f44 414d 4e49 4e20 4d41 0a45 0000 0000     DOMAIN NAME.....
-  410a30:	5250 474e 4220 6675 6566 2072 7865 6563     PRNG Buffer exce
-  410a40:	6465 6465 6d20 7861 6d69 6d75 7320 7a69     eded maximum siz
-  410a50:	2065 6425 6f20 2072 554e 4c4c 4220 6675     e %d or NULL Buf
-  410a60:	6566 0a72 0000 0000                         fer.....
+004107bc <__FUNCTION__.8151>:
+  4107bc:	326d 5f6d 6977 6966 695f 696e 0074 0000     m2m_wifi_init...
+  4107cc:	4128 5050 2829 4e49 4f46 0029 6f43 666e     (APP)(INFO).Conf
+  4107dc:	696c 7463 6465 4920 2050 2022 7525 252e     licted IP " %u.%
+  4107ec:	2e75 7525 252e 2075 2022 000a 4552 2051     u.%u.%u " ..REQ 
+  4107fc:	6f4e 2074 6564 6966 656e 2064 6425 000a     Not defined %d..
+  41080c:	4e49 4156 494c 2044 4f50 4e49 4554 0a52     INVALID POINTER.
+  41081c:	0000 0000 4e49 4156 494c 2044 5353 4449     ....INVALID SSID
+  41082c:	000a 0000 4e49 4156 494c 2044 4843 000a     ....INVALID CH..
+  41083c:	4e49 4156 494c 2044 4844 5043 5320 5245     INVALID DHCP SER
+  41084c:	4556 2052 5049 000a 4e49 4156 494c 2044     VER IP..INVALID 
+  41085c:	454b 2059 4e49 4544 0a58 0000 4e49 4156     KEY INDEX...INVA
+  41086c:	494c 2044 454b 2059 4953 455a 000a 0000     LID KEY SIZE....
+  41087c:	4e49 4156 494c 2044 4557 2050 454b 0a59     INVALID WEP KEY.
+  41088c:	0000 0000 4e49 4156 494c 2044 5541 4854     ....INVALID AUTH
+  41089c:	4e45 4954 4143 4954 4e4f 4d20 444f 0a45     ENTICATION MODE.
+  4108ac:	0000 0000 6946 6d72 6177 6572 7620 7265     ....Firmware ver
+  4108bc:	2020 3a20 2520 2e75 7525 252e 0a75 0000        : %u.%u.%u...
+  4108cc:	694d 206e 7264 7669 7265 7620 7265 3a20     Min driver ver :
+  4108dc:	2520 2e75 7525 252e 0a75 0000 7543 7272      %u.%u.%u...Curr
+  4108ec:	6420 6972 6576 2072 6576 3a72 2520 2e75      driver ver: %u.
+  4108fc:	7525 252e 0a75 0000 694d 6d73 7461 6863     %u.%u...Mismatch
+  41090c:	4620 7269 616d 7277 2065 6556 7372 6f69      Firmawre Versio
+  41091c:	0a6e 0000 654b 2079 7369 6e20 746f 7620     n...Key is not v
+  41092c:	6c61 6469 000a 0000 6e49 6176 696c 2064     alid....Invalid 
+  41093c:	654b 0a79 0000 0000 5353 4449 4c20 4e45     Key.....SSID LEN
+  41094c:	4920 564e 4c41 4449 000a 0000 4843 4920      INVALID....CH I
+  41095c:	564e 4c41 4449 000a 6e49 6176 696c 2064     NVALID..Invalid 
+  41096c:	6557 2070 656b 2079 6e69 6564 2078 6425     Wep key index %d
+  41097c:	000a 0000 6e49 6176 696c 2064 6557 2070     ....Invalid Wep 
+  41098c:	656b 2079 656c 676e 6874 2520 0a64 0000     key length %d...
+  41099c:	6e49 6f63 7272 6365 2074 5350 204b 656b     Incorrect PSK ke
+  4109ac:	2079 656c 676e 6874 000a 0000 6e75 6564     y length....unde
+  4109bc:	6966 656e 2064 6573 2063 7974 6570 000a     fined sec type..
+  4109cc:	4e49 4156 494c 2044 6f4e 6f20 2066 6373     INVALID No of sc
+  4109dc:	6e61 7320 6f6c 7374 0a21 0000 4e49 4156     an slots!...INVA
+  4109ec:	494c 2044 6373 6e61 7320 6f6c 2074 6974     LID scan slot ti
+  4109fc:	656d 0a21 0000 0000 4e49 4156 494c 2044     me!.....INVALID 
+  410a0c:	6f4e 6f20 2066 7270 626f 2065 6572 7571     No of probe requ
+  410a1c:	7365 7374 7020 7265 7320 6163 206e 6c73     ests per scan sl
+  410a2c:	746f 000a 4e49 4156 494c 2044 5352 4953     ot..INVALID RSSI
+  410a3c:	7420 7268 7365 6f68 646c 2520 2064 000a      threshold %d ..
+  410a4c:	505f 5f53 4553 5652 5245 205f 7369 6e20     _PS_SERVER_ is n
+  410a5c:	746f 6420 6665 6e69 6465 000a 694c 7473     ot defined..List
+  410a6c:	6e65 6320 6168 6e6e 6c65 7320 6f68 6c75     en channel shoul
+  410a7c:	2064 6e6f 796c 6220 2065 2c31 3620 6f20     d only be 1, 6 o
+  410a8c:	2072 3131 000a 0000 4f50 4557 2052 4153     r 11....POWER SA
+  410a9c:	4556 2520 0a64 0000 4e49 4156 494c 2044     VE %d...INVALID 
+  410aac:	4f44 414d 4e49 4e20 4d41 0a45 0000 0000     DOMAIN NAME.....
+  410abc:	5250 474e 4220 6675 6566 2072 7865 6563     PRNG Buffer exce
+  410acc:	6465 6465 6d20 7861 6d69 6d75 7320 7a69     eded maximum siz
+  410adc:	2065 6425 6f20 2072 554e 4c4c 4220 6675     e %d or NULL Buf
+  410aec:	6566 0a72 0000 0000                         fer.....
 
-00410a68 <__FUNCTION__.7964>:
-  410a68:	6d6e 635f 6b6c 656c 7373 775f 6b61 0065     nm_clkless_wake.
-  410a78:	7542 2073 7265 6f72 2072 3128 2e29 5720     Bus error (1). W
-  410a88:	6b61 2065 7075 6620 6961 656c 0a64 0000     ake up failed...
-  410a98:	7542 2073 7265 6f72 2072 3228 2e29 5720     Bus error (2). W
-  410aa8:	6b61 2065 7075 6620 6961 656c 0a64 0000     ake up failed...
-  410ab8:	6c63 636f 736b 7320 6974 6c6c 4f20 4646     clocks still OFF
-  410ac8:	202e 6157 656b 7520 2070 6166 6c69 6465     . Wake up failed
-  410ad8:	000a 0000 6e5b 696d 7320 6174 7472 3a5d     ....[nmi start]:
-  410ae8:	6620 6961 206c 6572 6461 7220 6765 3020      fail read reg 0
-  410af8:	3178 3131 2038 2e2e 0a2e 0000 6166 6c69     x1118 ......fail
-  410b08:	6465 7420 206f 6564 692d 696e 6974 6c61     ed to de-initial
-  410b18:	7a69 0a65 0000 0000 7245 6f72 2072 6877     ize.....Error wh
-  410b28:	6c69 2065 7277 7469 6e69 2067 6572 0a67     ile writing reg.
-  410b38:	0000 0000 7245 6f72 2072 6877 6c69 2065     ....Error while 
-  410b48:	6572 6461 6e69 2067 6572 0a67 0000 0000     reading reg.....
-  410b58:	705b 6c75 756c 5f70 7463 6c72 3a5d 6620     [pullup_ctrl]: f
-  410b68:	6961 656c 2064 6f74 7220 6165 0a64 0000     ailed to read...
-  410b78:	705b 6c75 756c 5f70 7463 6c72 3a5d 6620     [pullup_ctrl]: f
-  410b88:	6961 656c 2064 6f74 7720 6972 6574 000a     ailed to write..
+00410af4 <__FUNCTION__.7964>:
+  410af4:	6d6e 635f 6b6c 656c 7373 775f 6b61 0065     nm_clkless_wake.
+  410b04:	7542 2073 7265 6f72 2072 3128 2e29 5720     Bus error (1). W
+  410b14:	6b61 2065 7075 6620 6961 656c 0a64 0000     ake up failed...
+  410b24:	7542 2073 7265 6f72 2072 3228 2e29 5720     Bus error (2). W
+  410b34:	6b61 2065 7075 6620 6961 656c 0a64 0000     ake up failed...
+  410b44:	6c63 636f 736b 7320 6974 6c6c 4f20 4646     clocks still OFF
+  410b54:	202e 6157 656b 7520 2070 6166 6c69 6465     . Wake up failed
+  410b64:	000a 0000 6e5b 696d 7320 6174 7472 3a5d     ....[nmi start]:
+  410b74:	6620 6961 206c 6572 6461 7220 6765 3020      fail read reg 0
+  410b84:	3178 3131 2038 2e2e 0a2e 0000 6166 6c69     x1118 ......fail
+  410b94:	6465 7420 206f 6564 692d 696e 6974 6c61     ed to de-initial
+  410ba4:	7a69 0a65 0000 0000 7245 6f72 2072 6877     ize.....Error wh
+  410bb4:	6c69 2065 7277 7469 6e69 2067 6572 0a67     ile writing reg.
+  410bc4:	0000 0000 7245 6f72 2072 6877 6c69 2065     ....Error while 
+  410bd4:	6572 6461 6e69 2067 6572 0a67 0000 0000     reading reg.....
+  410be4:	705b 6c75 756c 5f70 7463 6c72 3a5d 6620     [pullup_ctrl]: f
+  410bf4:	6961 656c 2064 6f74 7220 6165 0a64 0000     ailed to read...
+  410c04:	705b 6c75 756c 5f70 7463 6c72 3a5d 6620     [pullup_ctrl]: f
+  410c14:	6961 656c 2064 6f74 7720 6972 6574 000a     ailed to write..
 
-00410b98 <__FUNCTION__.8058>:
-  410b98:	6863 7069 645f 6965 696e 0074 6e5b 696d     chip_deinit.[nmi
-  410ba8:	7320 6174 7472 3a5d 6620 6961 206c 6e69      start]: fail in
-  410bb8:	7469 6220 7375 000a 6843 7069 4920 2044     it bus..Chip ID 
-  410bc8:	6c25 0a78 0000 0000 6166 6c69 6465 7420     %lx.....failed t
-  410bd8:	206f 6e65 6261 656c 6920 746e 7265 7572     o enable interru
-  410be8:	7470 2e73 0a2e 0000 6e5b 696d 7320 6f74     pts.....[nmi sto
-  410bf8:	5d70 203a 6863 7069 645f 6965 696e 2074     p]: chip_deinit 
-  410c08:	6166 6c69 000a 0000 6e5b 696d 7320 6f74     fail....[nmi sto
-  410c18:	5d70 203a 5053 2049 6c66 7361 2068 6964     p]: SPI flash di
-  410c28:	6173 6c62 2065 6166 6c69 000a 6e5b 696d     sable fail..[nmi
-  410c38:	7320 6f74 5d70 203a 6166 6c69 6920 696e      stop]: fail ini
-  410c48:	2074 7562 0a73 0000                         t bus...
+00410c24 <__FUNCTION__.8058>:
+  410c24:	6863 7069 645f 6965 696e 0074 6e5b 696d     chip_deinit.[nmi
+  410c34:	7320 6174 7472 3a5d 6620 6961 206c 6e69      start]: fail in
+  410c44:	7469 6220 7375 000a 6843 7069 4920 2044     it bus..Chip ID 
+  410c54:	6c25 0a78 0000 0000 6166 6c69 6465 7420     %lx.....failed t
+  410c64:	206f 6e65 6261 656c 6920 746e 7265 7572     o enable interru
+  410c74:	7470 2e73 0a2e 0000 6e5b 696d 7320 6f74     pts.....[nmi sto
+  410c84:	5d70 203a 6863 7069 645f 6965 696e 2074     p]: chip_deinit 
+  410c94:	6166 6c69 000a 0000 6e5b 696d 7320 6f74     fail....[nmi sto
+  410ca4:	5d70 203a 5053 2049 6c66 7361 2068 6964     p]: SPI flash di
+  410cb4:	6173 6c62 2065 6166 6c69 000a 6e5b 696d     sable fail..[nmi
+  410cc4:	7320 6f74 5d70 203a 6166 6c69 6920 696e      stop]: fail ini
+  410cd4:	2074 7562 0a73 0000                         t bus...
 
-00410c50 <__FUNCTION__.8045>:
-  410c50:	6d6e 645f 7672 695f 696e 0074               nm_drv_init.
+00410cdc <__FUNCTION__.8045>:
+  410cdc:	6d6e 645f 7672 695f 696e 0074               nm_drv_init.
 
-00410c5c <__FUNCTION__.8052>:
-  410c5c:	6d6e 645f 7672 645f 6965 696e 0074 0000     nm_drv_deinit...
+00410ce8 <__FUNCTION__.8052>:
+  410ce8:	6d6e 645f 7672 645f 6965 696e 0074 0000     nm_drv_deinit...
 
-00410c6c <__FUNCTION__.7520>:
-  410c6c:	6d6e 735f 6970 695f 696e 0074               nm_spi_init.
+00410cf8 <__FUNCTION__.7520>:
+  410cf8:	6d6e 735f 6970 695f 696e 0074               nm_spi_init.
 
-00410c78 <__FUNCTION__.7468>:
-  410c78:	7073 5f69 6164 6174 775f 6972 6574 0000     spi_data_write..
+00410d04 <__FUNCTION__.7468>:
+  410d04:	7073 5f69 6164 6174 775f 6972 6574 0000     spi_data_write..
 
-00410c88 <__FUNCTION__.7478>:
-  410c88:	7073 5f69 7277 7469 5f65 6572 0067 0000     spi_write_reg...
+00410d14 <__FUNCTION__.7478>:
+  410d14:	7073 5f69 7277 7469 5f65 6572 0067 0000     spi_write_reg...
 
-00410c98 <__FUNCTION__.7495>:
-  410c98:	7073 5f69 6572 6461 725f 6765 0000 0000     spi_read_reg....
+00410d24 <__FUNCTION__.7495>:
+  410d24:	7073 5f69 6572 6461 725f 6765 0000 0000     spi_read_reg....
 
-00410ca8 <__FUNCTION__.7486>:
-  410ca8:	6d6e 735f 6970 775f 6972 6574 0000 0000     nm_spi_write....
-  410cb8:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  410cc8:	2064 6d63 2064 6572 7073 6e6f 6573 7220     d cmd response r
-  410cd8:	6165 2c64 6220 7375 6520 7272 726f 2e2e     ead, bus error..
-  410ce8:	0a2e 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410cf8:	6961 656c 2064 6164 6174 7220 7365 6f70     ailed data respo
-  410d08:	736e 2065 6572 6461 202c 7562 2073 7265     nse read, bus er
-  410d18:	6f72 2e72 2e2e 000a 6e5b 696d 7320 6970     ror.....[nmi spi
-  410d28:	3a5d 4620 6961 656c 2064 6164 6174 7220     ]: Failed data r
-  410d38:	7365 6f70 736e 2065 6572 6461 2e2e 282e     esponse read...(
-  410d48:	3025 7832 0a29 0000 6e5b 696d 7320 6970     %02x)...[nmi spi
-  410d58:	3a5d 4620 6961 656c 2064 6164 6174 6220     ]: Failed data b
-  410d68:	6f6c 6b63 7220 6165 2c64 6220 7375 6520     lock read, bus e
-  410d78:	7272 726f 2e2e 0a2e 0000 0000 6e5b 696d     rror........[nmi
-  410d88:	7320 6970 3a5d 4620 6961 656c 2064 6164      spi]: Failed da
-  410d98:	6174 6220 6f6c 6b63 6320 6372 7220 6165     ta block crc rea
-  410da8:	2c64 6220 7375 6520 7272 726f 2e2e 0a2e     d, bus error....
-  410db8:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410dc8:	6961 656c 2064 6d63 2064 7277 7469 2c65     ailed cmd write,
-  410dd8:	6220 7375 6520 7272 726f 2e2e 0a2e 0000      bus error......
-  410de8:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  410df8:	2064 6d63 2c64 7720 6972 6574 7220 6765     d cmd, write reg
-  410e08:	2820 3025 7838 2e29 2e2e 000a 6e5b 696d      (%08x).....[nmi
-  410e18:	7320 6970 3a5d 4620 6961 656c 2064 6d63      spi]: Failed cm
-  410e28:	2064 6572 7073 6e6f 6573 202c 7277 7469     d response, writ
-  410e38:	2065 6572 2067 2528 3830 2978 2e2e 0a2e     e reg (%08x)....
-  410e48:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410e58:	6961 656c 2064 6d63 2c64 7220 6165 2064     ailed cmd, read 
-  410e68:	6572 2067 2528 3830 2978 2e2e 0a2e 0000     reg (%08x)......
-  410e78:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  410e88:	2064 6d63 2064 6572 7073 6e6f 6573 202c     d cmd response, 
-  410e98:	6572 6461 7220 6765 2820 3025 7838 2e29     read reg (%08x).
-  410ea8:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410eb8:	6961 656c 2064 6164 6174 7220 6165 2e64     ailed data read.
-  410ec8:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410ed8:	6961 656c 2064 6e69 6574 6e72 6c61 7220     ailed internal r
-  410ee8:	6165 2064 7270 746f 636f 6c6f 7720 7469     ead protocol wit
-  410ef8:	2068 5243 2043 6e6f 202c 6572 7974 6972     h CRC on, retyri
-  410f08:	676e 7720 7469 2068 5243 2043 666f 2e66     ng with CRC off.
-  410f18:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410f28:	6961 656c 2064 6e69 6574 6e72 6c61 7220     ailed internal r
-  410f38:	6165 2064 7270 746f 636f 6c6f 2e2e 0a2e     ead protocol....
-  410f48:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  410f58:	6961 656c 2064 6e69 6574 6e72 6c61 7720     ailed internal w
-  410f68:	6972 6574 7020 6f72 6f74 6f63 206c 6572     rite protocol re
-  410f78:	2e67 2e2e 000a 0000 6e5b 696d 7320 6970     g.......[nmi spi
-  410f88:	3a5d 4620 6961 206c 6d63 2064 6572 6461     ]: Fail cmd read
-  410f98:	6320 6968 2070 6469 2e2e 0a2e 0000 0000      chip id........
-  410fa8:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  410fb8:	2064 6d63 2c64 7220 6165 2064 6c62 636f     d cmd, read bloc
-  410fc8:	206b 2528 3830 2978 2e2e 0a2e 0000 0000     k (%08x)........
-  410fd8:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  410fe8:	2064 6d63 2064 6572 7073 6e6f 6573 202c     d cmd response, 
-  410ff8:	6572 6461 6220 6f6c 6b63 2820 3025 7838     read block (%08x
-  411008:	2e29 2e2e 000a 0000 6e5b 696d 7320 6970     ).......[nmi spi
-  411018:	3a5d 4620 6961 656c 2064 6c62 636f 206b     ]: Failed block 
-  411028:	6164 6174 7220 6165 2e64 2e2e 000a 0000     data read.......
-  411038:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  411048:	2064 6d63 2c64 7720 6972 6574 6220 6f6c     d cmd, write blo
-  411058:	6b63 2820 3025 7838 2e29 2e2e 000a 0000     ck (%08x).......
-  411068:	6e5b 696d 7320 6970 5d20 203a 6146 6c69     [nmi spi ]: Fail
-  411078:	6465 6320 646d 7220 7365 6f70 736e 2c65     ed cmd response,
-  411088:	7720 6972 6574 6220 6f6c 6b63 2820 3025      write block (%0
-  411098:	7838 2e29 2e2e 000a 6e5b 696d 7320 6970     8x).....[nmi spi
-  4110a8:	3a5d 4620 6961 656c 2064 6164 6174 6220     ]: Failed data b
-  4110b8:	6f6c 6b63 6320 646d 7720 6972 6574 202c     lock cmd write, 
-  4110c8:	7562 2073 7265 6f72 2e72 2e2e 000a 0000     bus error.......
-  4110d8:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
-  4110e8:	2064 6164 6174 6220 6f6c 6b63 7720 6972     d data block wri
-  4110f8:	6574 202c 7562 2073 7265 6f72 2e72 2e2e     te, bus error...
-  411108:	000a 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
-  411118:	6961 656c 2064 6164 6174 6220 6f6c 6b63     ailed data block
-  411128:	6320 6372 7720 6972 6574 202c 7562 2073      crc write, bus 
-  411138:	7265 6f72 2e72 2e2e 000a 0000 6e5b 696d     error.......[nmi
-  411148:	7320 6970 3a5d 4620 6961 656c 2064 6c62      spi]: Failed bl
-  411158:	636f 206b 6164 6174 7720 6972 6574 2e2e     ock data write..
-  411168:	0a2e 0000                                   ....
+00410d34 <__FUNCTION__.7486>:
+  410d34:	6d6e 735f 6970 775f 6972 6574 0000 0000     nm_spi_write....
+  410d44:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  410d54:	2064 6d63 2064 6572 7073 6e6f 6573 7220     d cmd response r
+  410d64:	6165 2c64 6220 7375 6520 7272 726f 2e2e     ead, bus error..
+  410d74:	0a2e 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410d84:	6961 656c 2064 6164 6174 7220 7365 6f70     ailed data respo
+  410d94:	736e 2065 6572 6461 202c 7562 2073 7265     nse read, bus er
+  410da4:	6f72 2e72 2e2e 000a 6e5b 696d 7320 6970     ror.....[nmi spi
+  410db4:	3a5d 4620 6961 656c 2064 6164 6174 7220     ]: Failed data r
+  410dc4:	7365 6f70 736e 2065 6572 6461 2e2e 282e     esponse read...(
+  410dd4:	3025 7832 0a29 0000 6e5b 696d 7320 6970     %02x)...[nmi spi
+  410de4:	3a5d 4620 6961 656c 2064 6164 6174 6220     ]: Failed data b
+  410df4:	6f6c 6b63 7220 6165 2c64 6220 7375 6520     lock read, bus e
+  410e04:	7272 726f 2e2e 0a2e 0000 0000 6e5b 696d     rror........[nmi
+  410e14:	7320 6970 3a5d 4620 6961 656c 2064 6164      spi]: Failed da
+  410e24:	6174 6220 6f6c 6b63 6320 6372 7220 6165     ta block crc rea
+  410e34:	2c64 6220 7375 6520 7272 726f 2e2e 0a2e     d, bus error....
+  410e44:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410e54:	6961 656c 2064 6d63 2064 7277 7469 2c65     ailed cmd write,
+  410e64:	6220 7375 6520 7272 726f 2e2e 0a2e 0000      bus error......
+  410e74:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  410e84:	2064 6d63 2c64 7720 6972 6574 7220 6765     d cmd, write reg
+  410e94:	2820 3025 7838 2e29 2e2e 000a 6e5b 696d      (%08x).....[nmi
+  410ea4:	7320 6970 3a5d 4620 6961 656c 2064 6d63      spi]: Failed cm
+  410eb4:	2064 6572 7073 6e6f 6573 202c 7277 7469     d response, writ
+  410ec4:	2065 6572 2067 2528 3830 2978 2e2e 0a2e     e reg (%08x)....
+  410ed4:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410ee4:	6961 656c 2064 6d63 2c64 7220 6165 2064     ailed cmd, read 
+  410ef4:	6572 2067 2528 3830 2978 2e2e 0a2e 0000     reg (%08x)......
+  410f04:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  410f14:	2064 6d63 2064 6572 7073 6e6f 6573 202c     d cmd response, 
+  410f24:	6572 6461 7220 6765 2820 3025 7838 2e29     read reg (%08x).
+  410f34:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410f44:	6961 656c 2064 6164 6174 7220 6165 2e64     ailed data read.
+  410f54:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410f64:	6961 656c 2064 6e69 6574 6e72 6c61 7220     ailed internal r
+  410f74:	6165 2064 7270 746f 636f 6c6f 7720 7469     ead protocol wit
+  410f84:	2068 5243 2043 6e6f 202c 6572 7974 6972     h CRC on, retyri
+  410f94:	676e 7720 7469 2068 5243 2043 666f 2e66     ng with CRC off.
+  410fa4:	2e2e 000a 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410fb4:	6961 656c 2064 6e69 6574 6e72 6c61 7220     ailed internal r
+  410fc4:	6165 2064 7270 746f 636f 6c6f 2e2e 0a2e     ead protocol....
+  410fd4:	0000 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  410fe4:	6961 656c 2064 6e69 6574 6e72 6c61 7720     ailed internal w
+  410ff4:	6972 6574 7020 6f72 6f74 6f63 206c 6572     rite protocol re
+  411004:	2e67 2e2e 000a 0000 6e5b 696d 7320 6970     g.......[nmi spi
+  411014:	3a5d 4620 6961 206c 6d63 2064 6572 6461     ]: Fail cmd read
+  411024:	6320 6968 2070 6469 2e2e 0a2e 0000 0000      chip id........
+  411034:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  411044:	2064 6d63 2c64 7220 6165 2064 6c62 636f     d cmd, read bloc
+  411054:	206b 2528 3830 2978 2e2e 0a2e 0000 0000     k (%08x)........
+  411064:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  411074:	2064 6d63 2064 6572 7073 6e6f 6573 202c     d cmd response, 
+  411084:	6572 6461 6220 6f6c 6b63 2820 3025 7838     read block (%08x
+  411094:	2e29 2e2e 000a 0000 6e5b 696d 7320 6970     ).......[nmi spi
+  4110a4:	3a5d 4620 6961 656c 2064 6c62 636f 206b     ]: Failed block 
+  4110b4:	6164 6174 7220 6165 2e64 2e2e 000a 0000     data read.......
+  4110c4:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  4110d4:	2064 6d63 2c64 7720 6972 6574 6220 6f6c     d cmd, write blo
+  4110e4:	6b63 2820 3025 7838 2e29 2e2e 000a 0000     ck (%08x).......
+  4110f4:	6e5b 696d 7320 6970 5d20 203a 6146 6c69     [nmi spi ]: Fail
+  411104:	6465 6320 646d 7220 7365 6f70 736e 2c65     ed cmd response,
+  411114:	7720 6972 6574 6220 6f6c 6b63 2820 3025      write block (%0
+  411124:	7838 2e29 2e2e 000a 6e5b 696d 7320 6970     8x).....[nmi spi
+  411134:	3a5d 4620 6961 656c 2064 6164 6174 6220     ]: Failed data b
+  411144:	6f6c 6b63 6320 646d 7720 6972 6574 202c     lock cmd write, 
+  411154:	7562 2073 7265 6f72 2e72 2e2e 000a 0000     bus error.......
+  411164:	6e5b 696d 7320 6970 3a5d 4620 6961 656c     [nmi spi]: Faile
+  411174:	2064 6164 6174 6220 6f6c 6b63 7720 6972     d data block wri
+  411184:	6574 202c 7562 2073 7265 6f72 2e72 2e2e     te, bus error...
+  411194:	000a 0000 6e5b 696d 7320 6970 3a5d 4620     ....[nmi spi]: F
+  4111a4:	6961 656c 2064 6164 6174 6220 6f6c 6b63     ailed data block
+  4111b4:	6320 6372 7720 6972 6574 202c 7562 2073      crc write, bus 
+  4111c4:	7265 6f72 2e72 2e2e 000a 0000 6e5b 696d     error.......[nmi
+  4111d4:	7320 6970 3a5d 4620 6961 656c 2064 6c62      spi]: Failed bl
+  4111e4:	636f 206b 6164 6174 7720 6972 6574 2e2e     ock data write..
+  4111f4:	0a2e 0000                                   ....
 
-0041116c <__FUNCTION__.7429>:
-  41116c:	7073 5f69 6d63 0064                         spi_cmd.
+004111f8 <__FUNCTION__.7429>:
+  4111f8:	7073 5f69 6d63 0064                         spi_cmd.
 
-00411174 <__FUNCTION__.7437>:
-  411174:	7073 5f69 6d63 5f64 7372 0070               spi_cmd_rsp.
+00411200 <__FUNCTION__.7437>:
+  411200:	7073 5f69 6d63 5f64 7372 0070               spi_cmd_rsp.
 
-00411180 <__FUNCTION__.7503>:
-  411180:	6d6e 735f 6970 725f 6165 0064               nm_spi_read.
+0041120c <__FUNCTION__.7503>:
+  41120c:	6d6e 735f 6970 725f 6165 0064               nm_spi_read.
 
-0041118c <crc7_syndrome_table>:
-  41118c:	0900 1b12 2d24 3f36 4148 535a 656c 777e     ....$-6?HAZSle~w
-  41119c:	1019 020b 343d 262f 5851 4a43 7c75 6e67     ....=4/&QXCJu|gn
-  4111ac:	3b32 2920 1f16 0d04 737a 6168 575e 454c     2; )....zsha^WLE
-  4111bc:	222b 3039 060f 141d 6a63 7871 4e47 5c55     +"90....cjqxGNU\
-  4111cc:	6d64 7f76 4940 5b52 252c 373e 0108 131a     dmv.@IR[,%>7....
-  4111dc:	747d 666f 5059 424b 3c35 2e27 1811 0a03     }tofYPKB5<'.....
-  4111ec:	5f56 4d44 7b72 6960 171e 050c 333a 2128     V_DMr{`i....:3(!
-  4111fc:	464f 545d 626b 7079 0e07 1c15 2a23 3831     OF]Tkbyp....#*18
-  41120c:	4841 5a53 6c65 7e77 0009 121b 242d 363f     AHSZelw~....-$?6
-  41121c:	5158 434a 757c 676e 1910 0b02 3d34 2f26     XQJC|ung....4=&/
-  41122c:	7a73 6861 5e57 4c45 323b 2029 161f 040d     szahW^EL;2) ....
-  41123c:	636a 7178 474e 555c 2b22 3930 0f06 1d14     jcxqNG\U"+09....
-  41124c:	2c25 3e37 0801 1a13 646d 767f 4049 525b     %,7>....md.vI@[R
-  41125c:	353c 272e 1118 030a 7d74 6f66 5950 4b42     <5.'....t}foPYBK
-  41126c:	1e17 0c05 3a33 2821 565f 444d 727b 6069     ....3:!(_VMD{ri`
-  41127c:	070e 151c 232a 3138 4f46 5d54 6b62 7970     ....*#81FOT]bkpy
+00411218 <crc7_syndrome_table>:
+  411218:	0900 1b12 2d24 3f36 4148 535a 656c 777e     ....$-6?HAZSle~w
+  411228:	1019 020b 343d 262f 5851 4a43 7c75 6e67     ....=4/&QXCJu|gn
+  411238:	3b32 2920 1f16 0d04 737a 6168 575e 454c     2; )....zsha^WLE
+  411248:	222b 3039 060f 141d 6a63 7871 4e47 5c55     +"90....cjqxGNU\
+  411258:	6d64 7f76 4940 5b52 252c 373e 0108 131a     dmv.@IR[,%>7....
+  411268:	747d 666f 5059 424b 3c35 2e27 1811 0a03     }tofYPKB5<'.....
+  411278:	5f56 4d44 7b72 6960 171e 050c 333a 2128     V_DMr{`i....:3(!
+  411288:	464f 545d 626b 7079 0e07 1c15 2a23 3831     OF]Tkbyp....#*18
+  411298:	4841 5a53 6c65 7e77 0009 121b 242d 363f     AHSZelw~....-$?6
+  4112a8:	5158 434a 757c 676e 1910 0b02 3d34 2f26     XQJC|ung....4=&/
+  4112b8:	7a73 6861 5e57 4c45 323b 2029 161f 040d     szahW^EL;2) ....
+  4112c8:	636a 7178 474e 555c 2b22 3930 0f06 1d14     jcxqNG\U"+09....
+  4112d8:	2c25 3e37 0801 1a13 646d 767f 4049 525b     %,7>....md.vI@[R
+  4112e8:	353c 272e 1118 030a 7d74 6f66 5950 4b42     <5.'....t}foPYBK
+  4112f8:	1e17 0c05 3a33 2821 565f 444d 727b 6069     ....3:!(_VMD{ri`
+  411308:	070e 151c 232a 3138 4f46 5d54 6b62 7970     ....*#81FOT]bkpy
 
-0041128c <__FUNCTION__.7453>:
-  41128c:	7073 5f69 6164 6174 725f 6165 0064 0000     spi_data_read...
-  41129c:	4528 5252 2952 7543 7272 6e65 2074 253c     (ERRR)Current <%
-  4112ac:	3e64 000a 4e53 2049 7845 6563 6465 2073     d>..SNI Exceeds 
-  4112bc:	614d 2078 654c 676e 6874 000a 6e55 6e6b     Max Length..Unkn
-  4112cc:	776f 206e 5353 204c 6f53 6b63 7465 4f20     own SSL Socket O
-  4112dc:	7470 6f69 206e 6425 000a 0000 6f4e 2074     ption %d....Not 
-  4112ec:	5353 204c 6f53 6b63 7465 000a 7325 0909     SSL Socket..%s..
-  4112fc:	6325 2509 0975 7525 2509 0d75 000a 0000     %c.%u.%u.%u.....
-  41130c:	4449 454c 0000 0000 6d54 2072 7653 0063     IDLE....Tmr Svc.
-  41131c:	6554 7473 0000 0000 452d 202d 7245 6f72     Test....-E- Erro
-  41132c:	2072 6567 656e 6172 6974 676e 7320 6174     r generating sta
-  41133c:	7574 2073 656d 7373 6761 0d65 000a 0000     tus message.....
-  41134c:	7473 6361 206b 766f 7265 6c66 776f 2520     stack overflow %
-  41135c:	2078 7325 0a0d 0000 2d2d 5220 626f 206f     x %s....-- Robo 
-  41136c:	4f47 4f47 5220 626f 746f 4320 6e6f 7274     GOGO Robot Contr
-  41137c:	6c6f 4d20 5543 5020 6f72 7267 6d61 2d20     ol MCU Program -
-  41138c:	0d2d 2d0a 202d 4153 344d 5f53 5058 414c     -..-- SAM4S_XPLA
-  41139c:	4e49 4445 505f 4f52 2d20 0d2d 2d0a 202d     INED_PRO --..-- 
-  4113ac:	6f43 706d 6c69 6465 203a 6f4e 2076 3432     Compiled: Nov 24
-  4113bc:	3220 3130 2036 3531 333a 3a32 3034 2d20      2016 15:32:40 -
-  4113cc:	0d2d 000a 454c 2044 6154 6b73 0000 0000     -...LED Task....
-  4113dc:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
-  4113ec:	6165 6574 4c20 4445 5420 7361 0d6b 000a     eate LED Task...
-  4113fc:	492d 202d 7243 6165 6574 2064 454c 2044     -I- Created LED 
-  41140c:	6154 6b73 0a0d 0000 492d 202d 6552 7473     Task....-I- Rest
-  41141c:	726f 6e69 2067 6573 7474 6e69 7367 6620     oring settings f
-  41142c:	6f72 206d 6f6e 2d6e 6f76 616c 6974 656c     rom non-volatile
-  41143c:	6d20 6d65 726f 2e79 2e2e 0a0d 0000 0000      memory.........
-  41144c:	492d 202d 6553 7474 6e69 7367 7320 6375     -I- Settings suc
-  41145c:	6563 7373 7566 6c6c 2079 6572 7473 726f     cessfully restor
-  41146c:	6465 0a0d 0000 0000 492d 202d 6f4e 7320     ed......-I- No s
-  41147c:	7465 6974 676e 2073 6f66 6e75 2e64 4420     ettings found. D
-  41148c:	6665 7561 746c 7320 7465 6974 676e 2073     efault settings 
-  41149c:	7061 6c70 6569 2e64 0a0d 0000 452d 202d     applied.....-E- 
-  4114ac:	7245 6f72 2072 6572 7473 726f 6e69 2067     Error restoring 
-  4114bc:	6573 7474 6e69 7367 202e 6544 6166 6c75     settings. Defaul
-  4114cc:	2074 6573 7474 6e69 7367 6120 7070 696c     t settings appli
-  4114dc:	6465 0d2e 000a 0000 452d 202d 7245 6f72     ed......-E- Erro
-  4114ec:	2072 6572 7274 6569 6976 676e 7320 7465     r retrieving set
-  4114fc:	6974 676e 2e73 4420 6665 7561 746c 7320     tings. Default s
-  41150c:	7465 6974 676e 2073 7061 6c70 6569 2e64     ettings applied.
-  41151c:	0a0d 0000 4957 434e 5420 7361 006b 0000     ....WINC Task...
-  41152c:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
-  41153c:	6165 6574 5720 4e49 2043 6154 6b73 0a0d     eate WINC Task..
-  41154c:	0000 0000 492d 202d 7243 6165 6574 2064     ....-I- Created 
-  41155c:	4957 434e 5420 7361 0d6b 000a 6f43 746e     WINC Task...Cont
-  41156c:	6f72 206c 6f4c 706f 5420 7361 006b 0000     rol Loop Task...
-  41157c:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
-  41158c:	6165 6574 4320 6e6f 7274 6c6f 4c20 6f6f     eate Control Loo
-  41159c:	2070 6154 6b73 0a0d 0000 0000 452d 202d     p Task......-E- 
-  4115ac:	7243 6165 6574 2064 6f43 746e 6f72 206c     Created Control 
-  4115bc:	6f4c 706f 5420 7361 0d6b 000a 6553 646e     Loop Task...Send
-  4115cc:	5320 6174 7574 2073 6154 6b73 0000 0000      Status Task....
-  4115dc:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
-  4115ec:	6165 6574 5320 6e65 2064 7453 7461 7375     eate Send Status
-  4115fc:	5420 7361 0d6b 000a 492d 202d 7243 6165      Task...-I- Crea
-  41160c:	6574 2064 6553 646e 5320 6174 7574 2073     ted Send Status 
-  41161c:	6154 6b73 0a0d 0000 0043 0000               Task....C...
+00411318 <__FUNCTION__.7453>:
+  411318:	7073 5f69 6164 6174 725f 6165 0064 0000     spi_data_read...
+  411328:	4528 5252 2952 7543 7272 6e65 2074 253c     (ERRR)Current <%
+  411338:	3e64 000a 4e53 2049 7845 6563 6465 2073     d>..SNI Exceeds 
+  411348:	614d 2078 654c 676e 6874 000a 6e55 6e6b     Max Length..Unkn
+  411358:	776f 206e 5353 204c 6f53 6b63 7465 4f20     own SSL Socket O
+  411368:	7470 6f69 206e 6425 000a 0000 6f4e 2074     ption %d....Not 
+  411378:	5353 204c 6f53 6b63 7465 000a 7325 0909     SSL Socket..%s..
+  411388:	6325 2509 0975 7525 2509 0d75 000a 0000     %c.%u.%u.%u.....
+  411398:	4449 454c 0000 0000 6d54 2072 7653 0063     IDLE....Tmr Svc.
+  4113a8:	6554 7473 0000 0000 452d 202d 7245 6f72     Test....-E- Erro
+  4113b8:	2072 6567 656e 6172 6974 676e 7320 6174     r generating sta
+  4113c8:	7574 2073 656d 7373 6761 0d65 000a 0000     tus message.....
+  4113d8:	7473 6361 206b 766f 7265 6c66 776f 2520     stack overflow %
+  4113e8:	2078 7325 0a0d 0000 2d2d 5220 626f 206f     x %s....-- Robo 
+  4113f8:	4f47 4f47 5220 626f 746f 4320 6e6f 7274     GOGO Robot Contr
+  411408:	6c6f 4d20 5543 5020 6f72 7267 6d61 2d20     ol MCU Program -
+  411418:	0d2d 2d0a 202d 4153 344d 5f53 5058 414c     -..-- SAM4S_XPLA
+  411428:	4e49 4445 505f 4f52 2d20 0d2d 2d0a 202d     INED_PRO --..-- 
+  411438:	6f43 706d 6c69 6465 203a 6f4e 2076 3432     Compiled: Nov 24
+  411448:	3220 3130 2036 3531 343a 3a39 3932 2d20      2016 15:49:29 -
+  411458:	0d2d 000a 454c 2044 6154 6b73 0000 0000     -...LED Task....
+  411468:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
+  411478:	6165 6574 4c20 4445 5420 7361 0d6b 000a     eate LED Task...
+  411488:	492d 202d 7243 6165 6574 2064 454c 2044     -I- Created LED 
+  411498:	6154 6b73 0a0d 0000 492d 202d 6552 7473     Task....-I- Rest
+  4114a8:	726f 6e69 2067 6573 7474 6e69 7367 6620     oring settings f
+  4114b8:	6f72 206d 6f6e 2d6e 6f76 616c 6974 656c     rom non-volatile
+  4114c8:	6d20 6d65 726f 2e79 2e2e 0a0d 0000 0000      memory.........
+  4114d8:	492d 202d 6553 7474 6e69 7367 7320 6375     -I- Settings suc
+  4114e8:	6563 7373 7566 6c6c 2079 6572 7473 726f     cessfully restor
+  4114f8:	6465 0a0d 0000 0000 492d 202d 6f4e 7320     ed......-I- No s
+  411508:	7465 6974 676e 2073 6f66 6e75 2e64 4420     ettings found. D
+  411518:	6665 7561 746c 7320 7465 6974 676e 2073     efault settings 
+  411528:	7061 6c70 6569 2e64 0a0d 0000 452d 202d     applied.....-E- 
+  411538:	7245 6f72 2072 6572 7473 726f 6e69 2067     Error restoring 
+  411548:	6573 7474 6e69 7367 202e 6544 6166 6c75     settings. Defaul
+  411558:	2074 6573 7474 6e69 7367 6120 7070 696c     t settings appli
+  411568:	6465 0d2e 000a 0000 452d 202d 7245 6f72     ed......-E- Erro
+  411578:	2072 6572 7274 6569 6976 676e 7320 7465     r retrieving set
+  411588:	6974 676e 2e73 4420 6665 7561 746c 7320     tings. Default s
+  411598:	7465 6974 676e 2073 7061 6c70 6569 2e64     ettings applied.
+  4115a8:	0a0d 0000 4957 434e 5420 7361 006b 0000     ....WINC Task...
+  4115b8:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
+  4115c8:	6165 6574 5720 4e49 2043 6154 6b73 0a0d     eate WINC Task..
+  4115d8:	0000 0000 492d 202d 7243 6165 6574 2064     ....-I- Created 
+  4115e8:	4957 434e 5420 7361 0d6b 000a 6f43 746e     WINC Task...Cont
+  4115f8:	6f72 206c 6f4c 706f 5420 7361 006b 0000     rol Loop Task...
+  411608:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
+  411618:	6165 6574 4320 6e6f 7274 6c6f 4c20 6f6f     eate Control Loo
+  411628:	2070 6154 6b73 0a0d 0000 0000 492d 202d     p Task......-I- 
+  411638:	7243 6165 6574 2064 6f43 746e 6f72 206c     Created Control 
+  411648:	6f4c 706f 5420 7361 0d6b 000a 6553 646e     Loop Task...Send
+  411658:	5320 6174 7574 2073 6154 6b73 0000 0000      Status Task....
+  411668:	452d 202d 6146 6c69 6465 7420 206f 7263     -E- Failed to cr
+  411678:	6165 6574 5320 6e65 2064 7453 7461 7375     eate Send Status
+  411688:	5420 7361 0d6b 000a 492d 202d 7243 6165      Task...-I- Crea
+  411698:	6574 2064 6553 646e 5320 6174 7574 2073     ted Send Status 
+  4116a8:	6154 6b73 0a0d 0000 0043 0000               Task....C...
 
-00411628 <_global_impure_ptr>:
-  411628:	0030 2000                                   0.. 
+004116b4 <_global_impure_ptr>:
+  4116b4:	0030 2000                                   0.. 
 
-0041162c <fpinan.5370>:
-  41162c:	0034 0000 fbce ffff 03cb 0000 0001 0000     4...............
-  41163c:	0000 0000 666e 0000 6e69 7469 0079 0000     ....nf..inity...
-  41164c:	6e61 0000                                   an..
+004116b8 <fpinan.5370>:
+  4116b8:	0034 0000 fbce ffff 03cb 0000 0001 0000     4...............
+  4116c8:	0000 0000 666e 0000 6e69 7469 0079 0000     ....nf..inity...
+  4116d8:	6e61 0000 0000 0000                         an......
 
-00411650 <tinytens>:
-  411650:	89bc 97d8 d2b2 3c9c a733 d5a8 f623 3949     .......<3...#.I9
-  411660:	a73d 44f4 0ffd 32a5 979d cf8c ba08 255b     =..D...2......[%
-  411670:	6f43 64ac 0628 1168                         Co.d(.h.
+004116e0 <tinytens>:
+  4116e0:	89bc 97d8 d2b2 3c9c a733 d5a8 f623 3949     .......<3...#.I9
+  4116f0:	a73d 44f4 0ffd 32a5 979d cf8c ba08 255b     =..D...2......[%
+  411700:	6f43 64ac 0628 1168                         Co.d(.h.
 
-00411678 <fpi.5334>:
-  411678:	0035 0000 fbce ffff 03cb 0000 0001 0000     5...............
-  411688:	0000 0000                                   ....
+00411708 <fpi.5334>:
+  411708:	0035 0000 fbce ffff 03cb 0000 0001 0000     5...............
+  411718:	0000 0000                                   ....
 
-0041168c <zeroes.7035>:
-  41168c:	3030 3030 3030 3030 3030 3030 3030 3030     0000000000000000
-  41169c:	4e49 0046 6e69 0066 414e 004e 616e 006e     INF.inf.NAN.nan.
-  4116ac:	3130 3332 3534 3736 3938 4241 4443 4645     0123456789ABCDEF
-  4116bc:	0000 0000 3130 3332 3534 3736 3938 6261     ....0123456789ab
-  4116cc:	6463 6665 0000 0000 6e28 6c75 296c 0000     cdef....(null)..
-  4116dc:	0030 0000                                   0...
+0041171c <zeroes.7035>:
+  41171c:	3030 3030 3030 3030 3030 3030 3030 3030     0000000000000000
+  41172c:	4e49 0046 6e69 0066 414e 004e 616e 006e     INF.inf.NAN.nan.
+  41173c:	3130 3332 3534 3736 3938 4241 4443 4645     0123456789ABCDEF
+  41174c:	0000 0000 3130 3332 3534 3736 3938 6261     ....0123456789ab
+  41175c:	6463 6665 0000 0000 6e28 6c75 296c 0000     cdef....(null)..
+  41176c:	0030 0000                                   0...
 
-004116e0 <blanks.7034>:
-  4116e0:	2020 2020 2020 2020 2020 2020 2020 2020                     
+00411770 <blanks.7034>:
+  411770:	2020 2020 2020 2020 2020 2020 2020 2020                     
 
-004116f0 <zeroes.6993>:
-  4116f0:	3030 3030 3030 3030 3030 3030 3030 3030     0000000000000000
+00411780 <zeroes.6993>:
+  411780:	3030 3030 3030 3030 3030 3030 3030 3030     0000000000000000
 
-00411700 <blanks.6992>:
-  411700:	2020 2020 2020 2020 2020 2020 2020 2020                     
+00411790 <blanks.6992>:
+  411790:	2020 2020 2020 2020 2020 2020 2020 2020                     
 
-00411710 <_ctype_>:
-  411710:	2000 2020 2020 2020 2020 2828 2828 2028     .         ((((( 
-  411720:	2020 2020 2020 2020 2020 2020 2020 2020                     
-  411730:	8820 1010 1010 1010 1010 1010 1010 1010      ...............
-  411740:	0410 0404 0404 0404 0404 1004 1010 1010     ................
-  411750:	1010 4141 4141 4141 0101 0101 0101 0101     ..AAAAAA........
-  411760:	0101 0101 0101 0101 0101 0101 1010 1010     ................
-  411770:	1010 4242 4242 4242 0202 0202 0202 0202     ..BBBBBB........
-  411780:	0202 0202 0202 0202 0202 0202 1010 1010     ................
-  411790:	0020 0000 0000 0000 0000 0000 0000 0000      ...............
+004117a0 <_ctype_>:
+  4117a0:	2000 2020 2020 2020 2020 2828 2828 2028     .         ((((( 
+  4117b0:	2020 2020 2020 2020 2020 2020 2020 2020                     
+  4117c0:	8820 1010 1010 1010 1010 1010 1010 1010      ...............
+  4117d0:	0410 0404 0404 0404 0404 1004 1010 1010     ................
+  4117e0:	1010 4141 4141 4141 0101 0101 0101 0101     ..AAAAAA........
+  4117f0:	0101 0101 0101 0101 0101 0101 1010 1010     ................
+  411800:	1010 4242 4242 4242 0202 0202 0202 0202     ..BBBBBB........
+  411810:	0202 0202 0202 0202 0202 0202 1010 1010     ................
+  411820:	0020 0000 0000 0000 0000 0000 0000 0000      ...............
 	...
-  411814:	6e49 6966 696e 7974 0000 0000 614e 004e     Infinity....NaN.
+  4118a4:	6e49 6966 696e 7974 0000 0000 614e 004e     Infinity....NaN.
 
-00411824 <__hexdig>:
+004118b4 <__hexdig>:
 	...
-  411854:	1110 1312 1514 1716 1918 0000 0000 0000     ................
-  411864:	1a00 1c1b 1e1d 001f 0000 0000 0000 0000     ................
+  4118e4:	1110 1312 1514 1716 1918 0000 0000 0000     ................
+  4118f4:	1a00 1c1b 1e1d 001f 0000 0000 0000 0000     ................
 	...
-  411884:	1a00 1c1b 1e1d 001f 0000 0000 0000 0000     ................
+  411914:	1a00 1c1b 1e1d 001f 0000 0000 0000 0000     ................
 	...
-  411924:	4f50 4953 0058 0000 002e 0000               POSIX.......
+  4119b4:	4f50 4953 0058 0000 002e 0000               POSIX.......
 
-00411930 <__mprec_tens>:
-  411930:	0000 0000 0000 3ff0 0000 0000 0000 4024     .......?......$@
-  411940:	0000 0000 0000 4059 0000 0000 4000 408f     ......Y@.....@.@
-  411950:	0000 0000 8800 40c3 0000 0000 6a00 40f8     .......@.....j.@
-  411960:	0000 0000 8480 412e 0000 0000 12d0 4163     .......A......cA
-  411970:	0000 0000 d784 4197 0000 0000 cd65 41cd     .......A....e..A
-  411980:	0000 2000 a05f 4202 0000 e800 4876 4237     ... _..B....vH7B
-  411990:	0000 a200 1a94 426d 0000 e540 309c 42a2     ......mB..@..0.B
-  4119a0:	0000 1e90 bcc4 42d6 0000 2634 6bf5 430c     .......B..4&.k.C
-  4119b0:	8000 37e0 c379 4341 a000 85d8 3457 4376     ...7y.AC....W4vC
-  4119c0:	c800 674e c16d 43ab 3d00 6091 58e4 43e1     ..Ngm..C.=.`.X.C
-  4119d0:	8c40 78b5 af1d 4415 ef50 d6e2 1ae4 444b     @..x...DP.....KD
-  4119e0:	d592 064d f0cf 4480 4af6 c7e1 2d02 44b5     ..M....D.J...-.D
-  4119f0:	9db4 79d9 7843 44ea                         ...yCx.D
+004119c0 <__mprec_tens>:
+  4119c0:	0000 0000 0000 3ff0 0000 0000 0000 4024     .......?......$@
+  4119d0:	0000 0000 0000 4059 0000 0000 4000 408f     ......Y@.....@.@
+  4119e0:	0000 0000 8800 40c3 0000 0000 6a00 40f8     .......@.....j.@
+  4119f0:	0000 0000 8480 412e 0000 0000 12d0 4163     .......A......cA
+  411a00:	0000 0000 d784 4197 0000 0000 cd65 41cd     .......A....e..A
+  411a10:	0000 2000 a05f 4202 0000 e800 4876 4237     ... _..B....vH7B
+  411a20:	0000 a200 1a94 426d 0000 e540 309c 42a2     ......mB..@..0.B
+  411a30:	0000 1e90 bcc4 42d6 0000 2634 6bf5 430c     .......B..4&.k.C
+  411a40:	8000 37e0 c379 4341 a000 85d8 3457 4376     ...7y.AC....W4vC
+  411a50:	c800 674e c16d 43ab 3d00 6091 58e4 43e1     ..Ngm..C.=.`.X.C
+  411a60:	8c40 78b5 af1d 4415 ef50 d6e2 1ae4 444b     @..x...DP.....KD
+  411a70:	d592 064d f0cf 4480 4af6 c7e1 2d02 44b5     ..M....D.J...-.D
+  411a80:	9db4 79d9 7843 44ea                         ...yCx.D
 
-004119f8 <__mprec_bigtens>:
-  4119f8:	8000 37e0 c379 4341 6e17 b505 b8b5 4693     ...7y.AC.n.....F
-  411a08:	f9f5 e93f 4f03 4d38 1d32 f930 7748 5a82     ..?..O8M2.0.Hw.Z
-  411a18:	bf3c 7f73 4fdd 7515                         <.s..O.u
+00411a88 <__mprec_bigtens>:
+  411a88:	8000 37e0 c379 4341 6e17 b505 b8b5 4693     ...7y.AC.n.....F
+  411a98:	f9f5 e93f 4f03 4d38 1d32 f930 7748 5a82     ..?..O8M2.0.Hw.Z
+  411aa8:	bf3c 7f73 4fdd 7515                         <.s..O.u
 
-00411a20 <p05.5373>:
-  411a20:	0005 0000 0019 0000 007d 0000               ........}...
+00411ab0 <p05.5373>:
+  411ab0:	0005 0000 0019 0000 007d 0000               ........}...
 
-00411a2c <_init>:
-  411a2c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-  411a2e:	bf00      	nop
-  411a30:	bcf8      	pop	{r3, r4, r5, r6, r7}
-  411a32:	bc08      	pop	{r3}
-  411a34:	469e      	mov	lr, r3
-  411a36:	4770      	bx	lr
+00411abc <_init>:
+  411abc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+  411abe:	bf00      	nop
+  411ac0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+  411ac2:	bc08      	pop	{r3}
+  411ac4:	469e      	mov	lr, r3
+  411ac6:	4770      	bx	lr
 
-00411a38 <__init_array_start>:
-  411a38:	0040bd79 	.word	0x0040bd79
+00411ac8 <__init_array_start>:
+  411ac8:	0040bd79 	.word	0x0040bd79
 
-00411a3c <__frame_dummy_init_array_entry>:
-  411a3c:	004000f1                                ..@.
+00411acc <__frame_dummy_init_array_entry>:
+  411acc:	004000f1                                ..@.
 
-00411a40 <_fini>:
-  411a40:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-  411a42:	bf00      	nop
-  411a44:	bcf8      	pop	{r3, r4, r5, r6, r7}
-  411a46:	bc08      	pop	{r3}
-  411a48:	469e      	mov	lr, r3
-  411a4a:	4770      	bx	lr
+00411ad0 <_fini>:
+  411ad0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+  411ad2:	bf00      	nop
+  411ad4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+  411ad6:	bc08      	pop	{r3}
+  411ad8:	469e      	mov	lr, r3
+  411ada:	4770      	bx	lr
 
-00411a4c <__fini_array_start>:
-  411a4c:	004000cd 	.word	0x004000cd
+00411adc <__fini_array_start>:
+  411adc:	004000cd 	.word	0x004000cd
 
 Disassembly of section .relocate:
 
@@ -36028,7 +36037,7 @@ void portable_delay_cycles(unsigned long n)
 20000030 <impure_data>:
 20000030:	0000 0000 031c 2000 0384 2000 03ec 2000     ....... ... ... 
 	...
-20000064:	1624 0041 0000 0000 0000 0000 0000 0000     $.A.............
+20000064:	16b0 0041 0000 0000 0000 0000 0000 0000     ..A.............
 	...
 200000d8:	0001 0000 0000 0000 330e abcd 1234 e66d     .........3..4.m.
 200000e8:	deec 0005 000b 0000 0000 0000 0000 0000     ................
@@ -36111,12 +36120,12 @@ void portable_delay_cycles(unsigned long n)
 20000868:	ffff ffff                                   ....
 
 2000086c <__ctype_ptr__>:
-2000086c:	1710 0041                                   ..A.
+2000086c:	17a0 0041                                   ..A.
 
 20000870 <lconv>:
-20000870:	192c 0041 02cc 0041 02cc 0041 02cc 0041     ,.A...A...A...A.
-20000880:	02cc 0041 02cc 0041 02cc 0041 02cc 0041     ..A...A...A...A.
-20000890:	02cc 0041 02cc 0041 ffff ffff ffff ffff     ..A...A.........
+20000870:	19bc 0041 0354 0041 0354 0041 0354 0041     ..A.T.A.T.A.T.A.
+20000880:	0354 0041 0354 0041 0354 0041 0354 0041     T.A.T.A.T.A.T.A.
+20000890:	0354 0041 0354 0041 ffff ffff ffff ffff     T.A.T.A.........
 200008a0:	ffff ffff ffff 0000                         ........
 
 200008a8 <lc_ctype_charset>:

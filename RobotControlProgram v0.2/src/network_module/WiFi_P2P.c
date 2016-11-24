@@ -27,7 +27,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 				m2m_wifi_request_dhcp_client();
 			} else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
 				WIFI_CONNECTION_STATE = 0;
-				printf("Wi-Fi disconnected\r\n");
+				printf("-I- Wi-Fi disconnected\r\n");
 				network_disconnected();
 			}
 
@@ -38,10 +38,10 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 		{
 			WIFI_CONNECTION_STATE = 1;
 			uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
-			printf("Wi-Fi connected\r\n");
-			printf("Wi-Fi IP is %u.%u.%u.%u\r\n",
+			printf("-I- Wi-Fi connected\r\n");
+			printf("-I- Wi-Fi IP is %u.%u.%u.%u\r\n",
 			pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
-			printf("Wi-Fi Group owner IP is %u.%u.%u.%u\r\n",
+			printf("-I- Wi-Fi Group owner IP is %u.%u.%u.%u\r\n",
 			pu8IPAddress[4], pu8IPAddress[5], pu8IPAddress[6], pu8IPAddress[7]);
 			
 			// Convert IP address from uint8 array to uint32
@@ -93,10 +93,10 @@ void wifi_p2p_start(void)
 		/* Bring up P2P mode with channel number. */
 		ret = m2m_wifi_p2p(M2M_WIFI_CH_6);
 		if (M2M_SUCCESS != ret) {
-			printf("WiFi_P2P: m2m_wifi_p2p call error!\r\n");
+			printf("-E- WiFi_P2P: m2m_wifi_p2p call error!\r\n");
 		}
 
-		printf("P2P mode started. %s is awaiting connection.\r\n", (char *)device_name);
+		printf("-I- P2P mode started. %s is awaiting connection.\r\n", (char *)device_name);
 }
 
 /*
@@ -114,7 +114,7 @@ int8_t wifi_set_device_name(char* name, uint8_t size)
 		/* Set device name to be shown in peer device. */
 		ret = m2m_wifi_set_device_name((uint8_t *)tmp, strlen(tmp));
 		if (M2M_SUCCESS != ret) {
-			printf("WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
+			printf("-E- WiFi_P2P: m2m_wifi_set_device_name call error!\r\n");
 			while (1) {
 			}
 		} else {

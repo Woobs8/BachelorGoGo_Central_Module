@@ -137,7 +137,7 @@ int main (void)
 	} 
 	else
 	{
-		printf("-E- Created Control Loop Task"STRING_EOL);
+		printf("-I- Created Control Loop Task"STRING_EOL);
 	}
 #endif
 

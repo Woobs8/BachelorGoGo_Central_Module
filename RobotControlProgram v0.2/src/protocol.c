@@ -76,23 +76,23 @@ int8_t network_message_handler(char *msg)
 					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
 					if ((xStatus == pdPASS))
 					{
-						printf("Queue write OK\r\n");
+						printf("-I- Coordinates written to queue\r\n");
 						error = PARSER_SUCCESS;
 					}
 					else if((xStatus == errQUEUE_FULL))
 					{
-						printf("Queue full\r\n");
+						printf("-E- Queue is full\r\n");
 					}
 				}  else if (uValidPowerAng == 2) {
 					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
 					if ((xStatus == pdPASS))
 					{
-						printf("Queue write OK\r\n");
+						printf("-I- Power/Ang. written to queue\r\n");
 						error = PARSER_SUCCESS;
 					}
 					else if((xStatus == errQUEUE_FULL))
 					{
-						printf("Queue full\r\n");
+						printf("-E- Queue is full\r\n");
 					}
 				} else {
 					error = CONTROL_INPUT_ERROR;

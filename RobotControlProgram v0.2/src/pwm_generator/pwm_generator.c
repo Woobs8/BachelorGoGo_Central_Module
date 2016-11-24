@@ -7,6 +7,7 @@
 /** Configure and start PWM channel 1 */
 void pwm_ch1_start(uint32_t freq, uint32_t period_value, uint32_t duty_cycle_value)
 {
+	printf("-I- Starting PWM Channel 1 with %d Hz\r\n",freq);
 	// Configure IO pin
 	pio_configure_pin(PWM1_DAC, PIO_TYPE_PIO_PERIPH_B);
 	
@@ -38,6 +39,7 @@ void pwm_ch1_start(uint32_t freq, uint32_t period_value, uint32_t duty_cycle_val
 /** Stop PWM channel 1 */
 void pwm_ch1_stop(void)
 {
+	printf("-I- Stopping PWM Channel 1\r\n");
 	pwm_channel_disable(PWM, PWM_CHANNEL_1);	
 }
 
@@ -53,6 +55,8 @@ void pwm_ch1_set_duty_cycle(uint32_t duty_cycle_value)
 /** Configure and start PWM channel 2 */
 void pwm_ch2_start(uint32_t freq, uint32_t period_value, uint32_t duty_cycle_value)
 {
+	printf("-I- Starting PWM Channel 2 with %d Hz\r\n",freq);
+	
 	// Configure IO pin
 	pio_configure_pin(PWM2_DAC, PIO_TYPE_PIO_PERIPH_B);
 	
@@ -84,6 +88,7 @@ void pwm_ch2_start(uint32_t freq, uint32_t period_value, uint32_t duty_cycle_val
 /** Stop PWM channel 1 */
 void pwm_ch2_stop(void)
 {
+	printf("-I- Stopping PWM Channel 2\r\n");
 	pwm_channel_disable(PWM, PWM_CHANNEL_2);
 }
 
@@ -99,6 +104,7 @@ void pwm_ch2_set_duty_cycle(uint32_t duty_cycle_value)
 /** Timer Counter 0 - Channel 0 - TIOA0 */
 void tc0_ch0_waveform_start(uint32_t freq, float duty_cycle_a)
 {
+	printf("-I- Starting waveform on TIOA0 with %d\r\n",freq);
 	uint32_t ra;
 	
 	if(duty_cycle_a > 1)
@@ -145,6 +151,7 @@ void tc0_ch0a_set_duty_cycle(float duty_cycle)
 /** Timer Counter 0 - Channel 1 - TIOB1 */
 void tc0_ch1_waveform_start(uint32_t freq, float duty_cycle_b)
 {
+	printf("-I- Starting waveform on TIOB1 with %d\r\n",freq);
 	uint32_t rb;
 	
 	if(duty_cycle_b > 1)
@@ -192,6 +199,7 @@ void tc0_ch1b_set_duty_cycle(float duty_cycle)
 /** Timer Counter 1 - Channel 1 - TIOA4 & TIOB4 */
 void tc1_ch1_waveform_start(uint32_t freq, float duty_cycle_a, float duty_cycle_b)
 {
+	printf("-I- Starting waveform on TIOA4 and TIOB4 with %d\r\n",freq);
 	uint32_t ra, rb;
 	
 	if(duty_cycle_a > 1)
@@ -262,7 +270,8 @@ void tc1_ch1b_set_duty_cycle(float duty_cycle)
 /** Timer Counter 1 - Channel 2 - TIOA5 & TIOB5 */
 void tc1_ch2_waveform_start(uint32_t freq, float duty_cycle_a, float duty_cycle_b)
 {
-		uint32_t ra, rb;
+	printf("-I- Starting waveform on TIOA5 and TIOB5 with %d\r\n",freq);
+	uint32_t ra, rb;
 		
 	if(duty_cycle_a > 1)
 		duty_cycle_a = 1;

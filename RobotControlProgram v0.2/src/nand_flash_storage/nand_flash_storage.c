@@ -42,10 +42,10 @@ int8_t nand_flash_storage_init(void)
 	if (nand_flash_raw_initialize(&nf_raw, 0, cmd_address,
 	addr_address, data_address)) {
 
-		printf("-E- Device Unknown\n\r");
+		printf("-E- Device Unknown\r\n");
 		ret = -1;
 	} else {
-		printf("-I- NAND Flash driver initialized\n\r");
+		printf("-I- NAND Flash driver initialized\r\n");
 	}
 
 	/* Get device parameters */
@@ -55,12 +55,12 @@ int8_t nand_flash_storage_init(void)
 	page_size = nand_flash_model_get_page_data_size(&nf_raw.model);
 	pages_per_block = nand_flash_model_get_block_size_in_pages(&nf_raw.model);
 
-	printf("-I- Size of the whole device in bytes : 0x%x \n\r", mem_size);
-	printf("-I- Size in bytes of one single block of a device : 0x%x \n\r",	block_size);
-	printf("-I- Number of blocks in the entire device : 0x%x \n\r",	num_block);
-	printf("-I- Number of blocks used by the application : 0x%x \n\r", BLOCK_USAGE);
-	printf("-I- Size of the data area of a page in bytes : 0x%x \n\r", page_size);
-	printf("-I- Number of pages in the entire device : 0x%x \n\r", pages_per_block);
+	printf("-I- Size of the whole device in bytes : 0x%x \r\n", mem_size);
+	printf("-I- Size in bytes of one single block of a device : 0x%x \r\n",	block_size);
+	printf("-I- Number of blocks in the entire device : 0x%x \r\n",	num_block);
+	printf("-I- Number of blocks used by the application : 0x%x \r\n", BLOCK_USAGE);
+	printf("-I- Size of the data area of a page in bytes : 0x%x \r\n", page_size);
+	printf("-I- Number of pages in the entire device : 0x%x \r\n", pages_per_block);
 	
 	// TODO: Bad block handling
 	
@@ -76,7 +76,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 	uint8_t ret = 0;
 	error = -1;
 	/* Prepare buffer in SRAM. */
-	printf("-I- Preparing buffer in SRAM ...\n\r");
+	printf("-I- Preparing buffer in SRAM ...\r\n");
 	write_buffer[0] = size;								//First byte is size of data block 
 	memcpy(write_buffer+1,buf,size);
 
@@ -88,17 +88,17 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 		error = nand_flash_raw_erase_block(&nf_raw, i);
 
 		if (error == NAND_COMMON_ERROR_BADBLOCK) {
-			printf("-E- Block %u is BAD block. \n\r", i);
+			printf("-E- Block %u is BAD block.\r\n", i);
 			ret = -1;
 		} else {
 			/* Write a page to the NAND Flash. */
-			printf("-I- Writing the buffer in page %d of block %d without ECC\n\r", page, i);
+			printf("-I- Writing the buffer in page %d of block %d without ECC\r\n", page, i);
 			error = nand_flash_raw_write_page(&nf_raw, i, page, write_buffer, 0);
 			if (!error) {
 				block = i;
 				break;
 			}
-			printf("-E- Cannot write page %d of block %d. Trying next block...\n\r", page, i);
+			printf("-E- Cannot write page %d of block %d. Trying next block...\r\n", page, i);
 			ret = -1;
 		}
 	}
@@ -115,18 +115,18 @@ int16_t nand_flash_storage_read(uint8_t* buf)
 	/* Iterate through blocks until a successful read is performed. Data is written to the first good block. */
 	for (i = block; i < BLOCK_USAGE; i++) {
 		/* Read a page from the NAND Flash. */
-		printf("-I- Reading page %d of block %d\n\r", page, i);
+		printf("-I- Reading page %d of block %d\r\n", page, i);
 		nand_flash_raw_read_page(&nf_raw, i, page, read_buffer, spare_area_buffer);
 		if(spare_area_buffer[0] == 0xFF) {
 			block = i;
 			break;
 		}
 		error = -1;
-		printf("-E- Cannot read page %d of block %d. Trying next block...\n\r", page, i);
+		printf("-E- Cannot read page %d of block %d. Trying next block...\r\n", page, i);
 	}
 	
 	if(error < 0) {
-		printf("-E- Could not read any blocks\n\r");
+		printf("-E- Could not read any blocks\r\n");
 		ret = error;
 	} else {
 		uint8_t data_size = read_buffer[0];
@@ -144,7 +144,7 @@ int8_t nand_flash_storage_erase(void)
 		error = nand_flash_raw_erase_block(&nf_raw, i);
 
 		if (error == NAND_COMMON_ERROR_BADBLOCK) {
-			printf("-E- Block %u is BAD block. \n\r", i);
+			printf("-E- Block %u is BAD block. \r\n", i);
 		}
 	}
 }

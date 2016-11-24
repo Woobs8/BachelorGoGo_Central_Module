@@ -69,16 +69,17 @@ static void task_send_status(void *pvParameters)
 	char status_packet[PACKET_SIZE] = {0};
 	vTaskDelay(10000);
 	for (;;) {
-		if(network_generate_status_packet(status_packet, &cName, iBattery, 1, storage_space, remaining_space) == -1 ) {
-			printf("Status message FAIL");
+		if(network_is_connected == IS_CONNECTED) {
+			if(network_generate_status_packet(status_packet, &cName, iBattery, 1, storage_space, remaining_space) == -1 ) {
+				printf("-E- Error generating status message\r\n");
+			}
+			network_send_status(status_packet, peer_address);
+			iBattery += 10;
+			if (iBattery >= 100)
+			{
+				iBattery = 0;
+			}
 		}
-		network_send_status(status_packet, peer_address);
-		iBattery += 10;
-		if (iBattery >= 100)
-		{
-			iBattery = 0;
-		}
-		
 		vTaskDelay(TASK_SEND_STATUS_DELAY);
 	}
 }

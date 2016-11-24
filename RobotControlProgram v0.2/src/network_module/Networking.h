@@ -5,18 +5,23 @@
 #ifndef NETWORKING_H_
 #define NETWORKING_H_
 
+// Network ports
 #define GO_PORT								(9999)
 #define TCP_SETTINGS_PORT					(4999)
 #define UDP_COMMAND_PORT					(4998)
 #define HTTP_VIDEO_PORT						(4997)
+
+// Network comm. buffer limits
 #define TCP_PORT_EXCHANGE_BUFFER_SIZE		4
 #define UDP_COMMAND_BUFFER_SIZE				PACKET_SIZE
 #define TCP_SETTINGS_BUFFER_SIZE			PACKET_SIZE
 #define TCP_ACK_BUFFER_SIZE					CMD_SPECIFIER_SIZE
 #define UDP_STATUS_BUFFER_SIZE				PACKET_SIZE
 
+// Status Flag
+#define IS_CONNECTED						(1)
+#define NOT_CONNECTED						(-1)
 int8_t network_is_connected;
-//int8_t network_test;
 
 /** Message format definitions. */
 typedef struct s_msg_port {

@@ -308,14 +308,14 @@ void network_send_status(char* msg, uint32_t address)
 
 void network_connected(void)
 {
-	network_is_connected = 1;
+	network_is_connected = IS_CONNECTED;
 	network_listen_for_commands();
 	network_listen_for_settings();
 }
 
 void network_disconnected(void)
 {
-	network_is_connected = -1;
+	network_is_connected = NOT_CONNECTED;
 	if(tcp_port_exchange_socket > 0)
 	{
 		close(tcp_port_exchange_socket);

@@ -1,4 +1,5 @@
 #include "protocol.h"
+#include "conf.h"
 #include "String.h"
 #include "stdio.h"
 #include "FreeRTOS.h"
@@ -151,10 +152,7 @@ int8_t network_message_handler(char *msg)
 		}
 		// Only configure robot if all settings have been parsed
 		if(name && assisted_drive_mode >= 0 && power_save_mode >= 0 && video_quality >= 0)
-		{
-			/* Store settings in non-volatile memory */
-			nand_flash_storage_write(msg,PACKET_SIZE);
-			
+		{	
 			/* Configure device name */
 			uint8_t size = strlen(name);	
 			int8_t ret = wifi_set_device_name(name, size+1);	// include NUL-terminator
@@ -179,6 +177,24 @@ int8_t network_message_handler(char *msg)
 			if(error != SETTINGS_ERROR) {
 				/* Configure Video Quality */
 				printf("-I- Video Quality: %d\r\n",video_quality);
+			}
+			
+			if(error != SETTINGS_ERROR) {			
+				/* Store settings in non-volatile memory */
+				nand_flash_storage_write(msg,PACKET_SIZE);
+				
+				/* Save current settings to RAM */
+				if(power_save_mode > 0)
+					iPower_save_mode = SETTING_ENABLED;
+				else
+					iPower_save_mode = SETTING_DISABLED;
+				
+				if(assisted_drive_mode > 0)
+					iAssisted_drive_mode = SETTING_ENABLED;
+				else
+					iAssisted_drive_mode = SETTING_DISABLED;	
+
+				uiVideo_quality = video_quality;
 			}
 		} else {
 			error = SETTINGS_ERROR;
@@ -213,8 +229,8 @@ int8_t network_generate_status_packet(char* packet,
 	uint8_t index = 0;
 	
 	/** Multiple use tag sizes */
-	uint8_t data_spacing_size = sizeof(DATA_TAG_SPACING) -1;	//ignore NUL-terminator
-	uint8_t tag_separator_size = sizeof(TAG_SEPARATOR) -1;		//ignore NUL-terminator
+	uint8_t data_spacing_size = strlen(DATA_TAG_SPACING);
+	uint8_t tag_separator_size = strlen(TAG_SEPARATOR);
 		
 	/** Initialize packet to zero */
 	memset(packet,0,PACKET_SIZE);
@@ -230,7 +246,7 @@ int8_t network_generate_status_packet(char* packet,
 	{
 		if(sizeof(name) <= 30)
 		{
-			uint8_t tag_size = sizeof(TAG_STATUS_NAME)-1;	//ignore NUL-terminator	
+			uint8_t tag_size = strlen(TAG_STATUS_NAME);
 			// Data tag specifier
 			memcpy(packet+index,TAG_STATUS_NAME,tag_size);
 			index = index + tag_size;
@@ -238,7 +254,7 @@ int8_t network_generate_status_packet(char* packet,
 			index = index + data_spacing_size;
 				
 			// Data
-			uint8_t data_size = sizeof(name)-1;				//ignore NUL-terminator
+			uint8_t data_size = strlen(name);
 			memcpy(packet+index,name,data_size);
 			index = index + data_size;
 				
@@ -255,7 +271,7 @@ int8_t network_generate_status_packet(char* packet,
 	/** Battery */
 	if(battery != NULL)
 	{
-		uint8_t tag_size = sizeof(TAG_STATUS_BATTERY)-1;	//ignore NUL-terminator
+		uint8_t tag_size = strlen(TAG_STATUS_BATTERY);
 		// Data tag specifier
 		memcpy(packet+index,TAG_STATUS_BATTERY,tag_size);
 		index = index + tag_size;
@@ -287,7 +303,7 @@ int8_t network_generate_status_packet(char* packet,
 	/** Camera */
 	if(camera != NULL)
 	{
-		uint8_t tag_size = sizeof(TAG_STATUS_CAMERA)-1;	//ignore NUL-terminator
+		uint8_t tag_size = strlen(TAG_STATUS_CAMERA);
 		// Data tag specifier
 		memcpy(packet+index,TAG_STATUS_CAMERA,tag_size);
 		index = index + tag_size;
@@ -317,7 +333,7 @@ int8_t network_generate_status_packet(char* packet,
 		// Remaining space must also be set
 		if(remaining_space!= NULL)
 		{
-			uint8_t tag_size = sizeof(TAG_STATUS_STORAGE_SPACE)-1;	//ignore NUL-terminator
+			uint8_t tag_size = strlen(TAG_STATUS_STORAGE_SPACE);
 			// Data tag specifier
 			memcpy(packet+index,TAG_STATUS_STORAGE_SPACE,tag_size);
 			index = index + tag_size;
@@ -374,7 +390,7 @@ int8_t network_generate_status_packet(char* packet,
 		// Storage space must also be set and must be larger than remaining space
 		if(space!=NULL && (remaining_space < space) )
 		{
-			uint8_t tag_size = sizeof(TAG_STATUS_STORAGE_REMAINING)-1;	//ignore NUL-terminator
+			uint8_t tag_size = strlen(TAG_STATUS_STORAGE_REMAINING);
 			// Data tag specifier
 			memcpy(packet+index,TAG_STATUS_STORAGE_REMAINING,tag_size);
 			index = index + tag_size;
@@ -424,6 +440,158 @@ int8_t network_generate_status_packet(char* packet,
 			ret = -1;
 		}
 	}	
+	
+	if(ret < 0)
+		return ret;
+	else
+		return index;
+}
+
+/** Generate a settings packet formatted according to the transfer protocol
+  * Parameters:
+  *		- packet:			char array of size PACKET_SIZE
+  *		- name:				Device Name: max. 30 characters
+  *		- power_mode:		Power Save Mode: 1 (activated) or -1 (deactivated)
+  *		- assisted_drive:	Assisted Drive Mode: 1 (activated) or -1 (deactivated)
+  *		- video_quality:	1-255 (currently only 1-4 supported)
+  *
+  * Return:
+  *		- success:			Number of data bytes
+  *		- failure:			-1
+ */
+int8_t generate_settings_packet(char* packet,
+								char* name,
+								int8_t power_mode,
+								int8_t assisted_drive,
+								uint8_t video_quality)
+{
+	int8_t ret = 0;
+	uint8_t index = 0;
+	
+	/** Multiple use tag sizes */
+	uint8_t data_spacing_size = strlen(DATA_TAG_SPACING);
+	uint8_t tag_separator_size = strlen(TAG_SEPARATOR);	
+	
+	/** Initialize packet to zero */
+	memset(packet,0,PACKET_SIZE);
+	
+	/** Cmd specifier */
+	memcpy(packet,CMD_SETTINGS,CMD_SPECIFIER_SIZE);
+	index = index + CMD_SPECIFIER_SIZE;
+	packet[CMD_SPECIFIER_SIZE] = TAG_SEPARATOR[0];
+	index = index + tag_separator_size;
+	
+	/** Name */
+	if(name != NULL)
+	{
+		if(strlen(name) <= 30)
+		{
+			uint8_t tag_size = strlen(TAG_SETTINGS_NAME);	//ignore NUL-terminator
+			// Data tag specifier
+			memcpy(packet+index,TAG_SETTINGS_NAME,tag_size);
+			index = index + tag_size;
+			packet[index] = DATA_TAG_SPACING[0];
+			index = index + data_spacing_size;
+			
+			// Data
+			uint8_t data_size = strlen(name);				
+			memcpy(packet+index,name,data_size);
+			index = index + data_size;
+			
+			// Tag separator
+			packet[index] = TAG_SEPARATOR[0];
+			index = index + tag_separator_size;
+		}
+		else
+		{
+			ret = -1;
+		}
+	}
+	
+	/** Power Save Mode */
+	if(power_mode != NULL)
+	{
+		uint8_t tag_size = strlen(TAG_SETTINGS_POWER_SAVE_MODE);	//ignore NUL-terminator
+		// Data tag specifier
+		memcpy(packet+index,TAG_SETTINGS_POWER_SAVE_MODE,tag_size);
+		index = index + tag_size;
+		packet[index] = DATA_TAG_SPACING[0];
+		index = index + data_spacing_size;
+		
+		// Data
+		if(power_mode < 0 )			// Activated
+			packet[index] = VALUE_FALSE[0];
+		else						// Deactivated
+			packet[index] = VALUE_TRUE[0];
+
+		index = index + 1;
+		
+		// Tag separator
+		packet[index] = TAG_SEPARATOR[0];
+		index = index + tag_separator_size;
+	}
+	
+	/** Assisted Drive Mode */
+	if(assisted_drive != NULL)
+	{
+		uint8_t tag_size = strlen(TAG_SETTINGS_ASSISTED_DRIVE_MODE);
+		// Data tag specifier
+		memcpy(packet+index,TAG_SETTINGS_ASSISTED_DRIVE_MODE,tag_size);
+		index = index + tag_size;
+		packet[index] = DATA_TAG_SPACING[0];
+		index = index + data_spacing_size;
+		
+		// Data
+		if(assisted_drive < 0)
+			packet[index] = VALUE_FALSE[0];
+		else
+			packet[index] = VALUE_TRUE[0];
+		
+		index = index + 1;
+		
+		// Tag separator
+		packet[index] = TAG_SEPARATOR[0];
+		index = index + tag_separator_size;
+	}
+	
+	/** Video Quality */
+	if(video_quality != NULL)
+	{
+		uint8_t tag_size = strlen(TAG_SETTINGS_VIDEO_QUALITY);
+		// Data tag specifier
+		memcpy(packet+index,TAG_SETTINGS_VIDEO_QUALITY,tag_size);
+		index = index + tag_size;
+		packet[index] = DATA_TAG_SPACING[0];
+		index = index + data_spacing_size;
+			
+		// Find number of characters needed to represent the number
+		uint8_t digits;
+		// 0-9 = 1 digit
+		if(video_quality < 10)
+		{
+			digits = 1;
+		}
+		// 10-99 = 2 digits
+		else if(video_quality < 100)
+		{
+			digits = 2;
+		}
+		// 100-255 = 3 digits
+		else
+		{
+			digits = 3;
+		}
+			
+		// Data
+		char* tmp[digits];
+		sprintf(tmp, "%d", video_quality);
+		memcpy(packet+index,tmp,digits);
+		index = index + digits;
+			
+		// Tag separator
+		packet[index] = TAG_SEPARATOR[0];
+		index = index + tag_separator_size;
+	}
 	
 	if(ret < 0)
 		return ret;

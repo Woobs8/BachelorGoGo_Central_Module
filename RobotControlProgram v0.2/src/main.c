@@ -33,6 +33,7 @@
  */
 #include <asf.h>
 #include "conf_project.h"
+#include "conf.h"
 #include "freertos_hooks.h"
 #include "freertos_tasks.h"
 #include "semphr.h"
@@ -105,11 +106,20 @@ int main (void)
 		if(ret == PARSER_SUCCESS) {
 			printf("-I- Settings successfully restored\r\n");
 		} else if (ret == PARSER_ERROR) {
+			iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
+			iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
+			uiVideo_quality = DEFAULT_VIDEO_QUALITY;
 			printf("-I- No settings found. Default settings applied.\r\n");	
 		} else {
+			iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
+			iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
+			uiVideo_quality = DEFAULT_VIDEO_QUALITY;
 			printf("-E- Error restoring settings. Default settings applied.\r\n");
 		}
 	} else {
+		iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
+		iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
+		uiVideo_quality = DEFAULT_VIDEO_QUALITY;
 		printf("-E- Error retrieving settings. Default settings applied.\r\n");
 	}
 	

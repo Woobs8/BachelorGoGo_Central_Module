@@ -182,14 +182,14 @@ src/network_module/Networking.d src/network_module/Networking.o: \
  ../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_internal.h \
  ../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_sam4s.h \
  ../src/config/conf_winc.h ../src/protocol.h ../src/asf.h \
- ../src/network_module/WiFi_P2P.h \
+ ../src/network_module/WiFi_P2P.h ../src/conf.h ../src/protocol.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
  ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_wifi.h \
  ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_types.h \
  ../src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.h \
  ../src/freertos_tasks.h ../src/network_module/WiFi_P2P.h \
- ../src/protocol.h ../src/network_module/Networking.h
+ ../src/network_module/Networking.h
 
 ../src/network_module/Networking.h:
 
@@ -577,6 +577,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/network_module/WiFi_P2P.h:
 
+../src/conf.h:
+
+../src/protocol.h:
+
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
@@ -590,7 +594,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/freertos_tasks.h:
 
 ../src/network_module/WiFi_P2P.h:
-
-../src/protocol.h:
 
 ../src/network_module/Networking.h:

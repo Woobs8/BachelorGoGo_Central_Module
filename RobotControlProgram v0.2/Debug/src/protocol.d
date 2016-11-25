@@ -173,7 +173,7 @@ src/protocol.d src/protocol.o: ../src/protocol.c ../src/protocol.h \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/wdt/wdt.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h \
+ ../src/ASF/sam/drivers/pio/pio_handler.h ../src/conf.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
  ../src/freertos_tasks.h \
@@ -186,7 +186,7 @@ src/protocol.d src/protocol.o: ../src/protocol.c ../src/protocol.h \
  ../src/config/conf_winc.h \
  ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_types.h \
  ../src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.h \
- ../src/network_module/WiFi_P2P.h ../src/asf.h \
+ ../src/network_module/WiFi_P2P.h ../src/asf.h ../src/conf.h \
  ../src/network_module/Networking.h \
  ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h \
  ../src/protocol.h ../src/nand_flash_storage/nand_flash_storage.h
@@ -557,6 +557,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 
+../src/conf.h:
+
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
@@ -584,6 +586,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/network_module/WiFi_P2P.h:
 
 ../src/asf.h:
+
+../src/conf.h:
 
 ../src/network_module/Networking.h:
 

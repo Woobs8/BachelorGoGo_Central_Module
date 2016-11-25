@@ -861,6 +861,9 @@
     <None Include="src\config\conf_nf.h">
       <SubType>compile</SubType>
     </None>
+    <Compile Include="src\conf.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\freertos_hooks.h">
       <SubType>compile</SubType>
     </Compile>

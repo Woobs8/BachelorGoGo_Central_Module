@@ -6,12 +6,12 @@
 #include "freertos_tasks.h"
 
 /** Receive buffer definition. */
-static uint8_t TCPPortExchangeRxBuffer[TCP_PORT_EXCHANGE_BUFFER_SIZE];
+static uint8_t TCPConnectionEstRxBuffer[TCP_PORT_EXCHANGE_BUFFER_SIZE];
 static uint8_t UDPCommandRxBuffer[UDP_COMMAND_BUFFER_SIZE];
 static uint8_t TCPSettingsRxBuffer[TCP_SETTINGS_BUFFER_SIZE];
 
 /** Sockets */
-SOCKET tcp_port_exchange_socket = -1;		// TCP client socket
+SOCKET tcp_connection_est_socket = -1;		// TCP client socket
 SOCKET udp_command_socket = -1;				// UDP server socket
 SOCKET tcp_settings_listen_socket = -1;		// TCP server listening socket
 SOCKET tcp_settings_data_socket = -1;		// TCP server data transfer socket
@@ -28,36 +28,46 @@ uint16_t host_udp_port;
 static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 {
 	/** Establishing connection */
-	if(sock == tcp_port_exchange_socket)
+	if(sock == tcp_connection_est_socket)
 	{
 		/* Socket connected */
 		if(u8Msg == SOCKET_MSG_CONNECT)
 		{
 			tstrSocketConnectMsg *pstrConnect = (tstrSocketConnectMsg *)pvMsg;
 			if (pstrConnect && pstrConnect->s8Error >= 0) {
-				printf("-I- tcp_port_exchange_socket: connect success!\r\n");
+				printf("-I- tcp_connection_est_socket: connect success!\r\n");
 				// Perform data exchange.
 				s_msg_port port_msg;
+				s_msg_settings settings_msg;
 			
 				// Send UDP command port
 				sprintf(port_msg.port, "%d", UDP_COMMAND_PORT);
-				send(tcp_port_exchange_socket, &port_msg, sizeof(s_msg_port), 0);
+				send(tcp_connection_est_socket, &port_msg, sizeof(s_msg_port), 0);
 				
 				// Send TCP settings port
 				sprintf(port_msg.port, "%d", TCP_SETTINGS_PORT);
-				send(tcp_port_exchange_socket, &port_msg, sizeof(s_msg_port), 0);
+				send(tcp_connection_est_socket, &port_msg, sizeof(s_msg_port), 0);
 			
 				// Send TCP settings port
 				sprintf(port_msg.port, "%d", HTTP_VIDEO_PORT);
-				send(tcp_port_exchange_socket, &port_msg, sizeof(s_msg_port), 0);
+				send(tcp_connection_est_socket, &port_msg, sizeof(s_msg_port), 0);
 			
 				// Recv. UDP status port
-				recv(sock, TCPPortExchangeRxBuffer, sizeof(TCPPortExchangeRxBuffer), 0);
+				recv(sock, TCPConnectionEstRxBuffer, sizeof(TCPConnectionEstRxBuffer), 0);
+				
+				// Send current settings
+				if(generate_settings_packet(settings_msg.settings, 
+											device_name,
+											iPower_save_mode,
+											iAssisted_drive_mode,
+											uiVideo_quality)) {
+					send(tcp_connection_est_socket,&settings_msg,sizeof(s_msg_settings), 0);
+				}
 		
 			} else {
-				printf("-E- tcp_port_exchange_socket: connect error!\r\n");
-				close(tcp_port_exchange_socket);
-				tcp_port_exchange_socket = -1;
+				printf("-E- tcp_connection_est_socket: connect error!\r\n");
+				close(tcp_connection_est_socket);
+				tcp_connection_est_socket = -1;
 				m2m_wifi_disconnect();
 			}
 		}
@@ -66,17 +76,17 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketRecvMsg *pstrRecv = (tstrSocketRecvMsg *)pvMsg;
 			if (pstrRecv && pstrRecv->s16BufferSize > 0) {
-				printf("-I- tcp_port_exchange_socket: recv success!\r\n");
+				printf("-I- tcp_connection_est_socket: recv success!\r\n");
 				char *ptr;
-				host_udp_port = strtol(TCPPortExchangeRxBuffer,ptr,10);
+				host_udp_port = strtol(TCPConnectionEstRxBuffer,ptr,10);
 				printf("-I- Host port resolved to: (%d)\r\n",host_udp_port);
-				close(tcp_port_exchange_socket);
-				tcp_port_exchange_socket = -1;
+				close(tcp_connection_est_socket);
+				tcp_connection_est_socket = -1;
 				network_connected();
 			} else {
-				printf("-E- tcp_port_exchange_socket: recv error!\r\n");
-				close(tcp_port_exchange_socket);
-				tcp_port_exchange_socket = -1;
+				printf("-E- tcp_connection_est_socket: recv error!\r\n");
+				close(tcp_connection_est_socket);
+				tcp_connection_est_socket = -1;
 				m2m_wifi_disconnect();
 			}
 		}
@@ -226,19 +236,19 @@ void network_establish_connection(uint32_t address)
 	registerSocketCallback(socket_event_handler_cb, NULL);
 	
 	/* Open client socket. */
-	if (tcp_port_exchange_socket < 0) {
-		if ((tcp_port_exchange_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+	if (tcp_connection_est_socket < 0) {
+		if ((tcp_connection_est_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 			printf("-E- Networking: failed to create TCP client socket error!\r\n");
 			m2m_wifi_disconnect();
 		}
 
 		/* Connect server */
-		ret = connect(tcp_port_exchange_socket, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
+		ret = connect(tcp_connection_est_socket, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
 
 		if (ret < 0) {
 			printf("-E- Networking: failed to connect TCP client socket error!\r\n");
-			close(tcp_port_exchange_socket);
-			tcp_port_exchange_socket = -1;
+			close(tcp_connection_est_socket);
+			tcp_connection_est_socket = -1;
 			m2m_wifi_disconnect();
 		}
 	}	
@@ -316,10 +326,10 @@ void network_connected(void)
 void network_disconnected(void)
 {
 	network_is_connected = NOT_CONNECTED;
-	if(tcp_port_exchange_socket > 0)
+	if(tcp_connection_est_socket > 0)
 	{
-		close(tcp_port_exchange_socket);
-		tcp_port_exchange_socket = -1;
+		close(tcp_connection_est_socket);
+		tcp_connection_est_socket = -1;
 	}
 	if(udp_command_socket > 0)
 	{

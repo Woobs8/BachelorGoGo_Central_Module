@@ -190,8 +190,8 @@ src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/wdt/wdt.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h ../src/protocol.h ../src/asf.h \
- ../src/network_module/Networking.h \
+ ../src/ASF/sam/drivers/pio/pio_handler.h ../src/conf.h ../src/protocol.h \
+ ../src/asf.h ../src/network_module/Networking.h \
  ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h \
  ../src/protocol.h
 
@@ -590,6 +590,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam/drivers/wdt/wdt.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
+
+../src/conf.h:
 
 ../src/protocol.h:
 

@@ -1,11 +1,12 @@
 #include "asf.h"
+#include "conf.h"
 
 #ifndef NETWORK_MODULE_H_
 #define NETWORK_MODULE_H_
 
 /** P2P device name. */
 #define SYSTEM_IDENTIFIER			"BachelorGoGo*"
-#define DEFAULT_WLAN_DEVICE_NAME	"RoboGoGo"
+#define DEFAULT_WLAN_DEVICE_NAME	DEFAULT_DEVICE_NAME
 char *device_name;
 
 /** Wi-Fi connection state */

@@ -64,23 +64,20 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
  */
 void wifi_init(void)
 {
-		tstrWifiInitParam param;
-		int8_t ret;
+	tstrWifiInitParam param;
+	int8_t ret;
 
-		/* Initialize Wi-Fi parameters structure. */
-		memset((uint8_t *)&param, 0, sizeof(tstrWifiInitParam));
+	/* Initialize Wi-Fi parameters structure. */
+	memset((uint8_t *)&param, 0, sizeof(tstrWifiInitParam));
 
-		/* Initialize Wi-Fi driver with data and status callbacks. */
-		param.pfAppWifiCb = wifi_cb;
-		ret = m2m_wifi_init(&param);
-		if (M2M_SUCCESS != ret) {
-			printf("WiFi_P2P: m2m_wifi_init call error!(%d)\r\n", ret);
-			while (1) {
-			}
+	/* Initialize Wi-Fi driver with data and status callbacks. */
+	param.pfAppWifiCb = wifi_cb;
+	ret = m2m_wifi_init(&param);
+	if (M2M_SUCCESS != ret) {
+		printf("WiFi_P2P: m2m_wifi_init call error!(%d)\r\n", ret);
+		while (1) {
 		}
-
-		/* Set device name to be shown in peer device. */
-		wifi_set_device_name(DEFAULT_WLAN_DEVICE_NAME,strlen(DEFAULT_WLAN_DEVICE_NAME)+1);
+	}
 }
 
 /**

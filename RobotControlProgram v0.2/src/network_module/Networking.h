@@ -36,6 +36,10 @@ typedef struct s_msg_status {
 	char status[UDP_STATUS_BUFFER_SIZE];
 } s_msg_status;
 
+typedef struct s_msg_settings {
+	char settings[TCP_SETTINGS_BUFFER_SIZE];
+} s_msg_settings;
+
 void network_establish_connection(uint32_t peer_address);
 void network_listen_for_commands(void);
 void network_listen_for_settings(void);

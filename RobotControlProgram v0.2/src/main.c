@@ -1,36 +1,3 @@
-/**
- * \file
- *
- * \brief Empty user application template
- *
- */
-
-/**
- * \mainpage User Application template doxygen documentation
- *
- * \par Empty user application template
- *
- * This is a bare minimum user application template.
- *
- * For documentation of the board, go \ref group_common_boards "here" for a link
- * to the board-specific documentation.
- *
- * \par Content
- *
- * -# Include the ASF header files (through asf.h)
- * -# Minimal main function that starts with a call to board_init()
- * -# Basic usage of on-board LED and button
- * -# "Insert application code here" comment
- *
- */
-
-/*
- * Include header files for all drivers that have been imported from
- * Atmel Software Framework (ASF).
- */
-/*
- * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
- */
 #include <asf.h>
 #include "conf_project.h"
 #include "conf.h"
@@ -39,7 +6,6 @@
 #include "semphr.h"
 #include "driver/include/m2m_wifi.h"
 #include "network_module/WiFi_P2P.h"
-#include "nand_flash_storage/nand_flash_storage.h"
 #include "protocol.h"
 #include "servos/servos.h"
 #include <string.h>
@@ -94,40 +60,10 @@ int main (void)
 	/* Initialize Wi-Fi parameters structure. */
 	wifi_init();
 	
-	/* Read persisted settings from non-volatile memory */
-	printf("-I- Restoring settings from non-volatile memory...\r\n");
-	uint8_t buf[PAGE_SIZE];
-	int16_t ret = nand_flash_storage_read(buf);
-	if(ret > 0)
-	{
-		/* Clear non-data bits */
-		memset(buf+ret,0,PAGE_SIZE-ret);
-		int8_t ret = network_message_handler(buf);
-		if(ret == PARSER_SUCCESS) {
-			printf("-I- Settings successfully restored\r\n");
-		} else if (ret == PARSER_ERROR) {
-			iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
-			iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
-			uiVideo_quality = DEFAULT_VIDEO_QUALITY;
-			printf("-I- No settings found. Default settings applied.\r\n");	
-		} else {
-			iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
-			iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
-			uiVideo_quality = DEFAULT_VIDEO_QUALITY;
-			printf("-E- Error restoring settings. Default settings applied.\r\n");
-		}
-	} else {
-		iPower_save_mode = DEFAULT_POWER_SAVE_MODE;
-		iAssisted_drive_mode = DEFAULT_ASSISTED_DRIVE_MODE;
-		uiVideo_quality = DEFAULT_VIDEO_QUALITY;
-		printf("-E- Error retrieving settings. Default settings applied.\r\n");
-	}
-	
-	/* Start Wi-Fi P2P mode */
-	wifi_p2p_start();
-	
 	vSemaphoreCreateBinary(xWINC_Semaphore_handle);
-	xControl_Msg_Queue_handle = xQueueCreate(CONTROL_MSG_QUEUE_LENGTH, 2);
+	xControl_Msg_Queue_handle = xQueueCreate(CONTROL_MSG_QUEUE_LENGTH, CONTROL_MSG_QUEUE_ITEM_SIZE);
+	xSettings_Msg_Queue_handle = xQueueCreate(SETTINGS_MSG_QUEUE_LENGTH,SETTINGS_MSG_QUEUE_ITEM_SIZE);
+	xName_Queue_handle = xQueueCreate(NAME_QUEUE_LENGTH,NAME_QUEUE_ITEM_SIZE);
 	
 	/* Create WINC task */
 	if (xTaskCreate(task_winc, "WINC Task", TASK_WINC_STACK_SIZE, NULL, TASK_LED_STACK_PRIORITY, NULL) != pdPASS )
@@ -148,17 +84,6 @@ int main (void)
 	else
 	{
 		printf("-I- Created Control Loop Task"STRING_EOL);
-	}
-#endif
-
-#ifdef FREE_RTOS_SENDER_TASK
-	if (xTaskCreate(task_sender, "Sender Task", TASK_CONTROL_LOOP_STACK_SIZE, NULL, TASK_CONTROL_LOOP_PRIORITY, NULL) != pdPASS)
-	{
-		printf("-E- Failed to create Sender Task"STRING_EOL);
-	} 
-	else
-	{
-		printf("-I- Created Sender Task"STRING_EOL);
 	}
 #endif
 

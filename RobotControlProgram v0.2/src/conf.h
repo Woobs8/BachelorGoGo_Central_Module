@@ -6,6 +6,21 @@
 #define SETTING_ENABLED				(1)
 #define SETTING_DISABLED			(-1)
 
+// Control Queue index
+#define X_COORD						(0)
+#define Y_COORD						(1)
+#define POW							(0)
+#define ANG							(1)
+
+// Settings Queue index
+#define POWER_SAVE_MODE				(0)
+#define ASSISTED_DRIVE_MODE			(1)
+#define VIDEO_QUALITY				(2)
+
+// Name Queue index
+#define NAME_SIZE					(0)
+#define NAME						(1)
+
 // Default system settings
 #define DEFAULT_DEVICE_NAME			"RoboGoGo"
 #define DEFAULT_POWER_SAVE_MODE		SETTING_DISABLED

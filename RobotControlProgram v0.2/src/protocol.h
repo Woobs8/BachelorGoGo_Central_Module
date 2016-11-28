@@ -53,7 +53,7 @@
 int8_t network_message_handler(char *msg);
 
 /* Generate a status packet formatted according to the transfer protocol */
-int8_t network_generate_status_packet(char* packet,
+int8_t generate_status_packet(char* packet,
 									char* name, 
 									uint8_t battery, 
 									int8_t camera, 
@@ -66,5 +66,7 @@ int8_t generate_settings_packet(char* packet,
 								int8_t power_mode,
 								int8_t assisted_drive,
 								uint8_t video_quality);
+								
+int8_t apply_default_settings(void);
 
 #endif /* PROTOCOL_H_ */

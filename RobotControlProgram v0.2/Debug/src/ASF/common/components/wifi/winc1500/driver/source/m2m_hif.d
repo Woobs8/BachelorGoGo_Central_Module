@@ -193,7 +193,9 @@ src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
  ../src/ASF/sam/drivers/pio/pio_handler.h ../src/conf.h ../src/protocol.h \
  ../src/asf.h ../src/network_module/Networking.h \
  ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h \
- ../src/protocol.h
+ ../src/protocol.h ../src/nand_flash_storage/nand_flash_storage.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
 
 ../src/ASF/common/components/wifi/winc1500/common/include/nm_common.h:
 
@@ -602,3 +604,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h:
 
 ../src/protocol.h:
+
+../src/nand_flash_storage/nand_flash_storage.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:

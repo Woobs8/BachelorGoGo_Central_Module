@@ -1,11 +1,3 @@
-/*
- * freertos_hooks.h
- *
- * Created: 17-11-2016 11:00:23
- *  Author: MadsNKjaersgaard
- */ 
-
-
 #ifndef FREERTOS_HOOKS_H_
 #define FREERTOS_HOOKS_H_
 

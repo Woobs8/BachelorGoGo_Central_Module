@@ -41,7 +41,7 @@ int8_t network_message_handler(char *msg)
 					float x_coord = strtof(value,NULL);
 					printf("X: %s (%d)\r\n",value,(int)x_coord);
 					int8_t iX_coord = (int8_t)x_coord;
-					coords[0] = iX_coord;
+					coords[X_COORD] = iX_coord;
 					uValidCoords++;
 				}
 				/** Y coordinate */
@@ -50,7 +50,7 @@ int8_t network_message_handler(char *msg)
 					float y_coord = strtof(value,NULL);
 					printf("Y: %s (%d)\r\n",value,(int)y_coord);
 					int8_t iY_coord = (int8_t)y_coord;
-					coords[1] = iY_coord;
+					coords[Y_COORD] = iY_coord;
 					uValidCoords++;
 				}
 				/** Power */
@@ -59,7 +59,7 @@ int8_t network_message_handler(char *msg)
 					float power = strtof(value,NULL);
 					printf("Pwr: %s (%d)\r\n",value,(int)power);
 					int8_t iPow = (int8_t)power;
-					power_ang[0] = iPow;
+					power_ang[POW] = iPow;
 					uValidPowerAng++;
 				}
 				/** Angle */
@@ -68,7 +68,7 @@ int8_t network_message_handler(char *msg)
 					float angle = strtof(value,NULL);
 					printf("Ang: %s (%d)\r\n",value,(int)angle);
 					int8_t iAng = (int8_t)angle;
-					power_ang[1] = iAng;
+					power_ang[ANG] = iAng;
 					uValidPowerAng++;
 				}
 				
@@ -179,22 +179,68 @@ int8_t network_message_handler(char *msg)
 				printf("-I- Video Quality: %d\r\n",video_quality);
 			}
 			
-			if(error != SETTINGS_ERROR) {			
+			if(error != SETTINGS_ERROR) {
+				int8_t settings_buf[SETTINGS_MSG_QUEUE_ITEM_SIZE];
+				uint8 name_buf[NAME_QUEUE_ITEM_SIZE];
+				
 				/* Store settings in non-volatile memory */
 				nand_flash_storage_write(msg,PACKET_SIZE);
 				
 				/* Save current settings to RAM */
-				if(power_save_mode > 0)
+				if(power_save_mode > 0) {
 					iPower_save_mode = SETTING_ENABLED;
-				else
+					settings_buf[POWER_SAVE_MODE] = SETTING_ENABLED;
+				} else {
 					iPower_save_mode = SETTING_DISABLED;
+					settings_buf[POWER_SAVE_MODE] = SETTING_DISABLED;
+				}
 				
-				if(assisted_drive_mode > 0)
+				if(assisted_drive_mode > 0) {
 					iAssisted_drive_mode = SETTING_ENABLED;
-				else
-					iAssisted_drive_mode = SETTING_DISABLED;	
+					settings_buf[ASSISTED_DRIVE_MODE] = SETTING_ENABLED;
+				} else {
+					iAssisted_drive_mode = SETTING_DISABLED;
+					settings_buf[ASSISTED_DRIVE_MODE] = SETTING_DISABLED;
+
+				}
 
 				uiVideo_quality = video_quality;
+				settings_buf[VIDEO_QUALITY] = video_quality;
+				
+				/* Write name to queue */
+				portBASE_TYPE xStatus;
+				xStatus = xQueueReset(xName_Queue_handle);						// clear queue
+				if(xStatus == pdPASS || xStatus == errQUEUE_EMPTY) {			// Queue successfully cleared
+					name_buf[NAME_SIZE] = strlen(name)+1;
+					memcpy(name_buf+1,name,strlen(name)+1);
+					xStatus = xQueueSendToBack(xName_Queue_handle, name_buf, 0);
+					if ((xStatus == pdPASS)) {
+						printf("-I- Name written to queue\r\n");
+						error = PARSER_SUCCESS;
+					} else if((xStatus == errQUEUE_FULL)) {
+						printf("-E- Name queue is full\r\n");
+						error = PARSER_ERROR;
+					}
+				} else {
+					printf("-E- Queue could not be cleared\r\n");
+					error = PARSER_ERROR;
+				}
+						
+				/* Write settings to queue */
+				xStatus = xQueueReset(xSettings_Msg_Queue_handle);				// clear queue
+				if(xStatus == pdPASS) {											// Queue successfully cleared
+					xStatus = xQueueSendToBack(xSettings_Msg_Queue_handle, settings_buf, 0);
+					if ((xStatus == pdPASS)) {
+						printf("-I- Settings written to queue\r\n");
+						error = PARSER_SUCCESS;
+					} else if((xStatus == errQUEUE_FULL)) {
+						printf("-E- Settings queue is full\r\n");
+						error = PARSER_ERROR;
+					}
+				} else {
+					printf("-E- Queue could not be cleared\r\n");
+					error = PARSER_ERROR;
+				}
 			}
 		} else {
 			error = SETTINGS_ERROR;
@@ -218,7 +264,7 @@ int8_t network_message_handler(char *msg)
   *		- success:			Number of data bytes
   *		- failure:			-1
  */
-int8_t network_generate_status_packet(char* packet,
+int8_t generate_status_packet(char* packet,
 									char* name,
 									uint8_t battery,
 									int8_t camera,
@@ -597,4 +643,33 @@ int8_t generate_settings_packet(char* packet,
 		return ret;
 	else
 		return index;
+}
+
+int8_t apply_default_settings(void) 
+{
+	int8_t settings_buf[SETTINGS_MSG_QUEUE_ITEM_SIZE];
+	portBASE_TYPE xStatus;
+	int8_t error = PARSER_ERROR;
+
+	settings_buf[POWER_SAVE_MODE] = DEFAULT_POWER_SAVE_MODE;
+	settings_buf[ASSISTED_DRIVE_MODE] = DEFAULT_ASSISTED_DRIVE_MODE;
+	settings_buf[VIDEO_QUALITY] = DEFAULT_VIDEO_QUALITY;
+	
+	/* Write settings to queue */
+	xStatus = xQueueReset(xSettings_Msg_Queue_handle);		// clear queue
+	if(xStatus == pdPASS) {									// Queue successfully cleared
+		xStatus = xQueueSendToBack(xSettings_Msg_Queue_handle, settings_buf, 0);
+		if ((xStatus == pdPASS)) {
+			printf("-I- Settings written to queue\r\n");
+			error = PARSER_SUCCESS;
+		} else if((xStatus == errQUEUE_FULL)) {
+			printf("-E- Settings queue is full\r\n");
+			error = PARSER_ERROR;
+		}
+	} else {
+		printf("-E- Queue could not be cleared\r\n");
+		error = PARSER_ERROR;
+	}
+	
+	return error;
 }

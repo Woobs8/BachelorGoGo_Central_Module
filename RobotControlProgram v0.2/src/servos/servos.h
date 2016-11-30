@@ -31,10 +31,16 @@
 #define SMALL_SERVO_DC_MIN			0.05		// Left - 0 deg.
 #define SMALL_SERVO_DC_MAX			0.1			// Right - 180 deg.
 #define SMALL_SERVO_DEG_PER_PCT_DC	(SMALL_SERVO_DC_MAX-SMALL_SERVO_DC_MIN)/SMALL_SERVO_DEG
-#define LARGE_SERVO_DEG				90	
+#define LARGE_SERVO_DEG				180	
 #define LARGE_SERVO_DC_MIN			0.05		// Left - 0 deg.
-#define LARGE_SERVO_DC_MAX			0.093		// Right - 90 deg.
+#define LARGE_SERVO_DC_MAX			0.1			// Right - 90 deg.
 #define LARGE_SERVO_DEG_PER_PCT_DC	(LARGE_SERVO_DC_MAX-LARGE_SERVO_DC_MIN)/LARGE_SERVO_DEG
+#define INNER_SERVO_STARTING_DC		0.075
+#define OUTER_SERVO_STARTING_DC		0.075
+
+// Demo setup
+#define INNER_SERVO_OFFSET			90
+#define OUTER_SERVO_OFFSET			90
 
 /** Propeller 1 servos */
 void servos_propeller1_start(void);

@@ -771,6 +771,7 @@
     <Folder Include="src\config\" />
     <Folder Include="src\network_module" />
     <Folder Include="src\nand_flash_storage" />
+    <Folder Include="src\propeller_motors" />
     <Folder Include="src\servos" />
     <Folder Include="src\pwm_generator" />
     <Folder Include="src\pwm_generator\" />
@@ -886,6 +887,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\network_module\WiFi_P2P.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\propeller_motors\propeller_motors.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\propeller_motors\propeller_motors.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\protocol.c">

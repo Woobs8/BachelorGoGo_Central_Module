@@ -133,6 +133,7 @@ SUBDIRS :=  \
 ../src/config/ \
 ../src/network_module \
 ../src/nand_flash_storage \
+../src/propeller_motors \
 ../src/servos \
 ../src/pwm_generator \
 ../src/pwm_generator/ \
@@ -155,6 +156,7 @@ C_SRCS +=  \
 ../src/nand_flash_storage/nand_flash_storage.c \
 ../src/network_module/Networking.c \
 ../src/network_module/WiFi_P2P.c \
+../src/propeller_motors/propeller_motors.c \
 ../src/protocol.c \
 ../src/pwm_generator/pwm_generator.c \
 ../src/servos/servos.c \
@@ -225,6 +227,7 @@ src/ASF/sam/drivers/tc/tc.o \
 src/nand_flash_storage/nand_flash_storage.o \
 src/network_module/Networking.o \
 src/network_module/WiFi_P2P.o \
+src/propeller_motors/propeller_motors.o \
 src/protocol.o \
 src/pwm_generator/pwm_generator.o \
 src/servos/servos.o \
@@ -288,6 +291,7 @@ src/ASF/sam/drivers/tc/tc.o \
 src/nand_flash_storage/nand_flash_storage.o \
 src/network_module/Networking.o \
 src/network_module/WiFi_P2P.o \
+src/propeller_motors/propeller_motors.o \
 src/protocol.o \
 src/pwm_generator/pwm_generator.o \
 src/servos/servos.o \
@@ -351,6 +355,7 @@ src/ASF/sam/drivers/tc/tc.d \
 src/nand_flash_storage/nand_flash_storage.d \
 src/network_module/Networking.d \
 src/network_module/WiFi_P2P.d \
+src/propeller_motors/propeller_motors.d \
 src/protocol.d \
 src/pwm_generator/pwm_generator.d \
 src/servos/servos.d \
@@ -414,6 +419,7 @@ src/ASF/sam/drivers/tc/tc.d \
 src/nand_flash_storage/nand_flash_storage.d \
 src/network_module/Networking.d \
 src/network_module/WiFi_P2P.d \
+src/propeller_motors/propeller_motors.d \
 src/protocol.d \
 src/pwm_generator/pwm_generator.d \
 src/servos/servos.d \
@@ -569,6 +575,13 @@ src/network_module/Networking.o: ../src/network_module/Networking.c
 	
 
 src/network_module/WiFi_P2P.o: ../src/network_module/WiFi_P2P.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 5.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM4SD32C__ -DDEBUG -DBOARD=SAM4S_XPLAINED_PRO -D__SAM4SD32C__ -Dscanf=iscanf -DARM_MATH_CM4=true -Dprintf=iprintf -D__FREERTOS__  -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam/utils/cmsis/sam4s/include" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/clock" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/boards/sam4s_xplained_pro" -I"../src/ASF/sam/boards" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/common/services/gpio" -I"../src/ASF/sam/drivers/pio" -I"../src" -I"../src/config" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/serial/sam_uart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/utils/stdio/stdio_serial" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam" -I"../src/ASF/sam/drivers/pdc" -I"../src/ASF/sam/drivers/pdc/pdc_uart_example" -I"../src/ASF/common/components/wifi/winc1500" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/spi" -I"../src/ASF/common/services/storage/ctrl_access" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/pwm" -I"../src/ASF/sam/drivers/tc" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib" -I"../src/ASF/common/services/storage/ecc_hamming"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m4 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/propeller_motors/propeller_motors.o: ../src/propeller_motors/propeller_motors.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM4SD32C__ -DDEBUG -DBOARD=SAM4S_XPLAINED_PRO -D__SAM4SD32C__ -Dscanf=iscanf -DARM_MATH_CM4=true -Dprintf=iprintf -D__FREERTOS__  -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam/utils/cmsis/sam4s/include" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/clock" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/boards/sam4s_xplained_pro" -I"../src/ASF/sam/boards" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/common/services/gpio" -I"../src/ASF/sam/drivers/pio" -I"../src" -I"../src/config" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/serial/sam_uart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/utils/stdio/stdio_serial" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam" -I"../src/ASF/sam/drivers/pdc" -I"../src/ASF/sam/drivers/pdc/pdc_uart_example" -I"../src/ASF/common/components/wifi/winc1500" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/spi" -I"../src/ASF/common/services/storage/ctrl_access" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/pwm" -I"../src/ASF/sam/drivers/tc" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib" -I"../src/ASF/common/services/storage/ecc_hamming"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m4 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -969,6 +982,13 @@ src/nand_flash_storage/%.o: ../src/nand_flash_storage/%.c
 	
 
 src/network_module/%.o: ../src/network_module/%.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 5.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM4SD32C__ -DDEBUG -DBOARD=SAM4S_XPLAINED_PRO -D__SAM4SD32C__ -Dscanf=iscanf -DARM_MATH_CM4=true -Dprintf=iprintf -D__FREERTOS__  -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam/utils/cmsis/sam4s/include" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/clock" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/boards/sam4s_xplained_pro" -I"../src/ASF/sam/boards" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/common/services/gpio" -I"../src/ASF/sam/drivers/pio" -I"../src" -I"../src/config" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/serial/sam_uart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/utils/stdio/stdio_serial" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam" -I"../src/ASF/sam/drivers/pdc" -I"../src/ASF/sam/drivers/pdc/pdc_uart_example" -I"../src/ASF/common/components/wifi/winc1500" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/spi" -I"../src/ASF/common/services/storage/ctrl_access" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/pwm" -I"../src/ASF/sam/drivers/tc" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib" -I"../src/ASF/common/services/storage/ecc_hamming"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m4 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/propeller_motors/%.o: ../src/propeller_motors/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM4SD32C__ -DDEBUG -DBOARD=SAM4S_XPLAINED_PRO -D__SAM4SD32C__ -Dscanf=iscanf -DARM_MATH_CM4=true -Dprintf=iprintf -D__FREERTOS__  -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src/ASF/sam/utils/cmsis/sam4s/include" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/clock" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/boards/sam4s_xplained_pro" -I"../src/ASF/sam/boards" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/common/services/gpio" -I"../src/ASF/sam/drivers/pio" -I"../src" -I"../src/config" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/serial/sam_uart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/utils/stdio/stdio_serial" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include" -I"../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam" -I"../src/ASF/sam/drivers/pdc" -I"../src/ASF/sam/drivers/pdc/pdc_uart_example" -I"../src/ASF/common/components/wifi/winc1500" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/spi" -I"../src/ASF/common/services/storage/ctrl_access" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/pwm" -I"../src/ASF/sam/drivers/tc" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi" -I"../src/ASF/common/components/memory/nand_flash/nand_flash_ebi/ftl_lib" -I"../src/ASF/common/services/storage/ecc_hamming"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m4 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

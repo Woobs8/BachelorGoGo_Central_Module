@@ -191,6 +191,9 @@ src/network_module/Networking.d src/network_module/Networking.o: \
  ../src/freertos_tasks.h ../src/network_module/WiFi_P2P.h \
  ../src/network_module/Networking.h \
  ../src/nand_flash_storage/nand_flash_storage.h \
+ ../src/propeller_motors/propeller_motors.h \
+ ../src/pwm_generator/pwm_generator.h ../src/servos/servos.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h
 
 ../src/network_module/Networking.h:
@@ -600,5 +603,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/network_module/Networking.h:
 
 ../src/nand_flash_storage/nand_flash_storage.h:
+
+../src/propeller_motors/propeller_motors.h:
+
+../src/pwm_generator/pwm_generator.h:
+
+../src/servos/servos.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:

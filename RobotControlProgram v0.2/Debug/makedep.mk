@@ -30,6 +30,8 @@ src\network_module\Networking.c
 
 src\network_module\WiFi_P2P.c
 
+src\propeller_motors\propeller_motors.c
+
 src\protocol.c
 
 src\pwm_generator\pwm_generator.c

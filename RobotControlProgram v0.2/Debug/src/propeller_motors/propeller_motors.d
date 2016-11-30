@@ -1,12 +1,8 @@
-src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
- src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.o: \
- ../src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.c \
- ../src/ASF/common/components/wifi/winc1500/common/include/nm_common.h \
- ../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp.h \
- ../src/ASF/common/components/wifi/winc1500/common/include/nm_debug.h \
- ../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_internal.h \
- ../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_sam4s.h \
- ../src/config/conf_winc.h ../src/ASF/common/boards/board.h \
+src/propeller_motors/propeller_motors.d \
+ src/propeller_motors/propeller_motors.o: \
+ ../src/propeller_motors/propeller_motors.c \
+ ../src/propeller_motors/propeller_motors.h \
+ ../src/pwm_generator/pwm_generator.h ../src/asf.h \
  ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\5.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
@@ -117,35 +113,24 @@ src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/sam/boards/sam4s_xplained_pro/sam4s_xplained_pro.h \
- ../src/config/conf_board.h \
- ../src/ASF/common/components/wifi/winc1500/driver/source/nmbus.h \
- ../src/ASF/common/components/wifi/winc1500/bus_wrapper/include/nm_bus_wrapper.h \
- ../src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.h \
- ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_types.h \
- ../src/ASF/common/components/wifi/winc1500/driver/source/nmasic.h \
- ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_periph.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h \
- ../src/config/FreeRTOSConfig.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam/portmacro.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/mpu_wrappers.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/semphr.h \
- ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h \
- ../src/freertos_tasks.h \
- ../src/ASF/common/components/wifi/winc1500/driver/include/m2m_wifi.h \
- ../src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.h \
- ../src/network_module/WiFi_P2P.h ../src/asf.h \
  ../src/ASF/sam/utils/status_codes.h \
  ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
  ../src/ASF/common/services/clock/sam4s/sysclk.h \
  ../src/ASF/common/services/clock/osc.h \
  ../src/ASF/common/services/clock/sam4s/osc.h \
- ../src/ASF/sam/drivers/pmc/pmc.h ../src/ASF/common/services/clock/pll.h \
+ ../src/ASF/common/boards/board.h \
+ ../src/ASF/sam/boards/sam4s_xplained_pro/sam4s_xplained_pro.h \
+ ../src/config/conf_board.h ../src/ASF/sam/drivers/pmc/pmc.h \
+ ../src/ASF/common/services/clock/pll.h \
  ../src/ASF/common/services/clock/sam4s/pll.h \
  ../src/ASF/common/services/delay/sam/cycle_counter.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h \
+ ../src/config/FreeRTOSConfig.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam/portmacro.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/mpu_wrappers.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS_CLI.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/StackMacros.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/croutine.h \
@@ -154,6 +139,8 @@ src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/mpu_wrappers.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h \
+ ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/semphr.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/task.h \
  ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/timers.h \
@@ -190,29 +177,13 @@ src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.d \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/wdt/wdt.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h ../src/conf.h ../src/protocol.h \
- ../src/asf.h ../src/network_module/Networking.h \
- ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h \
- ../src/protocol.h ../src/nand_flash_storage/nand_flash_storage.h \
- ../src/propeller_motors/propeller_motors.h \
- ../src/pwm_generator/pwm_generator.h ../src/servos/servos.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
+ ../src/ASF/sam/drivers/pio/pio_handler.h
 
-../src/ASF/common/components/wifi/winc1500/common/include/nm_common.h:
+../src/propeller_motors/propeller_motors.h:
 
-../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp.h:
+../src/pwm_generator/pwm_generator.h:
 
-../src/ASF/common/components/wifi/winc1500/common/include/nm_debug.h:
-
-../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_internal.h:
-
-../src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_sam4s.h:
-
-../src/config/conf_winc.h:
-
-../src/ASF/common/boards/board.h:
+../src/asf.h:
 
 ../src/ASF/sam/utils/compiler.h:
 
@@ -434,48 +405,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
 
-../src/ASF/sam/boards/sam4s_xplained_pro/sam4s_xplained_pro.h:
-
-../src/config/conf_board.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/source/nmbus.h:
-
-../src/ASF/common/components/wifi/winc1500/bus_wrapper/include/nm_bus_wrapper.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/include/m2m_types.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/source/nmasic.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/include/m2m_periph.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h:
-
-../src/config/FreeRTOSConfig.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam/portmacro.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/mpu_wrappers.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/semphr.h:
-
-../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h:
-
-../src/freertos_tasks.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/include/m2m_wifi.h:
-
-../src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.h:
-
-../src/network_module/WiFi_P2P.h:
-
-../src/asf.h:
-
 ../src/ASF/sam/utils/status_codes.h:
 
 ../src/ASF/common/services/delay/delay.h:
@@ -490,6 +419,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/common/services/clock/sam4s/osc.h:
 
+../src/ASF/common/boards/board.h:
+
+../src/ASF/sam/boards/sam4s_xplained_pro/sam4s_xplained_pro.h:
+
+../src/config/conf_board.h:
+
 ../src/ASF/sam/drivers/pmc/pmc.h:
 
 ../src/ASF/common/services/clock/pll.h:
@@ -497,6 +432,18 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/common/services/clock/sam4s/pll.h:
 
 ../src/ASF/common/services/delay/sam/cycle_counter.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h:
+
+../src/config/FreeRTOSConfig.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/portable/gcc/sam/portmacro.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/mpu_wrappers.h:
 
 ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/FreeRTOS_CLI.h:
 
@@ -513,6 +460,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/portable.h:
 
 ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/projdefs.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h:
+
+../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/semphr.h:
 
 ../src/ASF/thirdparty/freertos/freertos-7.3.0/source/include/queue.h:
 
@@ -595,29 +546,3 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam/drivers/wdt/wdt.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
-
-../src/conf.h:
-
-../src/protocol.h:
-
-../src/asf.h:
-
-../src/network_module/Networking.h:
-
-../src/ASF/common/components/wifi/winc1500/socket/include/socket.h:
-
-../src/protocol.h:
-
-../src/nand_flash_storage/nand_flash_storage.h:
-
-../src/propeller_motors/propeller_motors.h:
-
-../src/pwm_generator/pwm_generator.h:
-
-../src/servos/servos.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:

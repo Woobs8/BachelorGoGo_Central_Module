@@ -190,6 +190,9 @@ src/protocol.d src/protocol.o: ../src/protocol.c ../src/protocol.h \
  ../src/network_module/Networking.h \
  ../src/ASF/common/components/wifi/winc1500/socket/include/socket.h \
  ../src/protocol.h ../src/nand_flash_storage/nand_flash_storage.h \
+ ../src/propeller_motors/propeller_motors.h \
+ ../src/pwm_generator/pwm_generator.h ../src/servos/servos.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h
 
 ../src/protocol.h:
@@ -597,5 +600,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/protocol.h:
 
 ../src/nand_flash_storage/nand_flash_storage.h:
+
+../src/propeller_motors/propeller_motors.h:
+
+../src/pwm_generator/pwm_generator.h:
+
+../src/servos/servos.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:

@@ -35,7 +35,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketConnectMsg *pstrConnect = (tstrSocketConnectMsg *)pvMsg;
 			if (pstrConnect && pstrConnect->s8Error >= 0) {
-				printf("-I- tcp_connection_est_socket: connect success!\r\n");
+				if(DEBUG) printf("-I- tcp_connection_est_socket: connect success!\r\n");
 				// Perform data exchange.
 				s_msg_port port_msg;
 				s_msg_settings settings_msg;
@@ -76,7 +76,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketRecvMsg *pstrRecv = (tstrSocketRecvMsg *)pvMsg;
 			if (pstrRecv && pstrRecv->s16BufferSize > 0) {
-				printf("-I- tcp_connection_est_socket: recv success!\r\n");
+				if(DEBUG) printf("-I- tcp_connection_est_socket: recv success!\r\n");
 				char *ptr;
 				host_udp_port = strtol(TCPConnectionEstRxBuffer,ptr,10);
 				printf("-I- Host port resolved to: (%d)\r\n",host_udp_port);
@@ -114,7 +114,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			tstrSocketRecvMsg *pstrRecvMsg = (tstrSocketRecvMsg*)pvMsg;
 			if((pstrRecvMsg->pu8Buffer != NULL) && (pstrRecvMsg->s16BufferSize > 0))
 			{
-				printf("-I- udp_command_socket: recvfrom success!\r\n");
+				if(DEBUG) printf("-I- udp_command_socket: recvfrom success!\r\n");
 				
 				if(pstrRecvMsg->s16BufferSize == UDP_COMMAND_BUFFER_SIZE)
 				{
@@ -149,7 +149,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		{
 			tstrSocketListenMsg *pstrListen = (tstrSocketListenMsg*)pvMsg;
 			if (pstrListen && pstrListen->status == 0) {
-				printf("-I- tcp_settings_listen_socket: listen success!\r\n");
+				if(DEBUG) printf("-I- tcp_settings_listen_socket: listen success!\r\n");
 				accept(tcp_settings_listen_socket, NULL, NULL);
 			}
 			else
@@ -167,7 +167,7 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 			tstrSocketAcceptMsg *pstrAccept = (tstrSocketAcceptMsg *)pvMsg;
 			if(pstrAccept)
 			{
-				printf("-I- tcp_settings_listen_socket: accept success!\r\n");
+				if(DEBUG) printf("-I- tcp_settings_listen_socket: accept success!\r\n");
 				accept(tcp_settings_listen_socket, NULL, NULL);
 				tcp_settings_data_socket = pstrAccept->sock;
 				recv(tcp_settings_data_socket, TCPSettingsRxBuffer, sizeof(TCPSettingsRxBuffer), 0);

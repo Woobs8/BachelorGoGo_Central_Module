@@ -9,7 +9,7 @@
  */
 void servos_propeller1_start(void)
 {
-	tc1_ch1_waveform_start(SERVO_PWM_FREQUENCY,0.05,0.05);
+	tc1_ch1_waveform_start(SERVO_PWM_FREQUENCY,INNER_SERVO_STARTING_DC,OUTER_SERVO_STARTING_DC);
 }
 
 /** Set servo position of the inner servo motor for propeller 1
@@ -29,14 +29,14 @@ void servos_propeller1_inner_set_position(uint8_t deg)
 
 /** Set servo position of the outer servo motor for propeller 1
   *
-  * Servo position is encoded in the PWM duty cycle. The servo have a position from 
-  * 0-90 deg, which is encoded as a duty cycle between 1-1.82ms or 5-9.1%.
+  * Servo position is encoded in the PWM duty cycle. The servo has a position from 
+  * 0-180 deg, which is encoded as a duty cycle between 1-2ms or 5-10%.
  */
 void servos_propeller1_outer_set_position(uint8_t deg)
 {
 	// Servo max rotation is 90 deg.
-	if(deg > 90)
-		deg = 90;
+	if(deg > 180)
+		deg = 180;
 		
 	float duty_cycle = LARGE_SERVO_DC_MIN + deg*LARGE_SERVO_DEG_PER_PCT_DC;
 	tc1_ch1b_set_duty_cycle(duty_cycle);
@@ -71,13 +71,13 @@ void servos_propeller2_inner_set_position(uint8_t deg)
 /** Set servo position of the inner servo motor for propeller 2
   *
   * Servo position is encoded in the PWM duty cycle. The servo have a position from 
-  * 0-90 deg, which is encoded as a duty cycle between 1-1.82ms or 5-9.1%.
+  * 0-180 deg, which is encoded as a duty cycle between 1-2ms or 5-10%.
  */
 void servos_propeller2_outer_set_position(uint8_t deg)
 {
 	// Servo max rotation is 90 deg.
-	if(deg > 90)
-		deg = 90;
+	if(deg > 180)
+		deg = 180;
 		
 	float duty_cycle = LARGE_SERVO_DC_MIN + deg*LARGE_SERVO_DEG_PER_PCT_DC;
 	tc1_ch2b_set_duty_cycle(duty_cycle);

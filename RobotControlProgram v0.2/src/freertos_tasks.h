@@ -11,6 +11,9 @@
 #include "network_module/Networking.h"
 #include "network_module/WiFi_P2P.h"
 #include "nand_flash_storage/nand_flash_storage.h"
+#include "propeller_motors/propeller_motors.h"
+#include "servos/servos.h"
+#include <math.h>
 #include <string.h>
 
 #define TASK_LED_STACK_SIZE					(1024/sizeof(portSTACK_TYPE))
@@ -20,13 +23,14 @@
 #define TASK_WINC_STACK_SIZE				(8192/sizeof(portSTACK_TYPE))
 #define TASK_WINC_STACK_PRIORITY			(tskIDLE_PRIORITY)
 
-#define TASK_SEND_STATUS_SIZE				(1024/sizeof(portSTACK_TYPE))
+#define TASK_SEND_STATUS_SIZE				(4096/sizeof(portSTACK_TYPE))
 #define TASK_SEND_STATUS_PRIORITY			(tskIDLE_PRIORITY)
 #define TASK_SEND_STATUS_DELAY				(20000)
 
-#define TASK_CONTROL_LOOP_STACK_SIZE		(1024/sizeof(portSTACK_TYPE))
+#define TASK_CONTROL_LOOP_STACK_SIZE		(4096/sizeof(portSTACK_TYPE))
 #define TASK_CONTROL_LOOP_PRIORITY			(tskIDLE_PRIORITY)
-#define TASK_CONTROL_INPUT_VALID_TIME_MS	(250)
+#define TASK_CONTROL_INPUT_VALID_TIME_MS	(750)
+#define TASK_CONTROL_NO_INPUT_TIME_MS		(0)
 #define TASK_CONTROL_CHECK_SETTINGS_TIME_MS	(10000)
 
 #define CONTROL_MSG_QUEUE_LENGTH			(1)
@@ -162,22 +166,29 @@ static void task_send_status(void *pvParameters)
 static void task_control_loop(void *pvParameters)
 {
 	UNUSED(pvParameters);
+	// Queue buffers
 	volatile int8_t control_buf[CONTROL_MSG_QUEUE_ITEM_SIZE] = {0, 0};
 	volatile int8_t settings_buf[SETTINGS_MSG_QUEUE_ITEM_SIZE];
 	portBASE_TYPE xStatus = pdFAIL;
 	
+	// Timeout handling
 	portTickType xInputValidTicks = TASK_CONTROL_INPUT_VALID_TIME_MS/portTICK_RATE_MS;
+	portTickType xNoInputTicks = TASK_CONTROL_NO_INPUT_TIME_MS/portTICK_RATE_MS;
 	portTickType xSettingsValidTicks = TASK_CONTROL_CHECK_SETTINGS_TIME_MS/portTICK_RATE_MS;
 	xTimeOutType xSettingsTime;
 	xTimeOutType xInputTIme;
 	portTickType xInputTimeToWait = xInputValidTicks;
 	portTickType xSettingsTImeToWait = xSettingsValidTicks;
-	
 	vTaskSetTimeOutState( &xSettingsTime );
 	vTaskSetTimeOutState( &xInputTIme );
 	
+	// Flags for input validation
 	int8_t check_for_settings = 1;
 	int8_t read_control_input = 1;
+	
+	// Motor initialization
+	propeller_motor1_start(0);
+	servos_propeller1_start();
 	for (;;)
 	{
 		/* Read settings */
@@ -201,15 +212,38 @@ static void task_control_loop(void *pvParameters)
 				read_control_input = -1;
 			} else {
 				// Could not read control input. Set input to zero.
-				control_buf[X_COORD] = 0;
-				control_buf[Y_COORD] = 0;
+				control_buf[POW] = 0;
+				control_buf[ANG] = 0;
 				vTaskSetTimeOutState( &xInputTIme );
-				xInputTimeToWait = xInputValidTicks;
+				xInputTimeToWait = xNoInputTicks;
 				read_control_input = -1;
 			}
 		}
 		
 		while(1) {
+#ifdef XY_COORDS_INPUT
+			// Calculate propeller speed as magnitude of input vector
+			uint8_t propeller_speed = sqrt(pow(control_buf[X_COORD],2) + pow(control_buf[Y_COORD],2));
+			propeller_motor1_set_speed(propeller_speed);
+			
+			// Determine rotor positions from X,Y-coordinates
+			int16_t inner_rotor_deg = INNER_SERVO_OFFSET + control_buf[X_COORD];
+			if(inner_rotor_deg < 0)
+				inner_rotor_deg = 0;
+				
+			int16_t outer_rotor_deg = OUTER_SERVO_OFFSET + control_buf[Y_COORD];
+			if(outer_rotor_deg < 0)
+				outer_rotor_deg = 0;
+			servos_propeller1_inner_set_position((uint8_t) inner_rotor_deg);
+			servos_propeller1_outer_set_position((uint8_t) outer_rotor_deg);							
+#elif POW_ANG_INPUT
+			// Propeller speed = input power
+			propeller_motor1_set_speed(control_buf[POW]);
+			
+			// Determine x,y from hypotenuse and angle
+			
+#endif
+			
 			// Check for settings validity
 			if( xTaskCheckForTimeOut( &xSettingsTime, &xSettingsTImeToWait ) != pdFALSE ) {
 				// Settings have become invalid and should be checked again
@@ -223,8 +257,6 @@ static void task_control_loop(void *pvParameters)
 				read_control_input = 1;
 				break;
 			}
-			
-			// Do control stuff
 		}
 	}	
 }

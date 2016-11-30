@@ -76,7 +76,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 	uint8_t ret = 0;
 	error = -1;
 	/* Prepare buffer in SRAM. */
-	printf("-I- Preparing buffer in SRAM ...\r\n");
+	if(DEBUG) printf("-I- Preparing buffer in SRAM ...\r\n");
 	write_buffer[0] = size;								//First byte is size of data block 
 	memcpy(write_buffer+1,buf,size);
 
@@ -92,7 +92,7 @@ int8_t nand_flash_storage_write(uint8_t* buf, uint8_t size)
 			ret = -1;
 		} else {
 			/* Write a page to the NAND Flash. */
-			printf("-I- Writing the buffer in page %d of block %d without ECC\r\n", page, i);
+			if(DEBUG) printf("-I- Writing the buffer in page %d of block %d without ECC\r\n", page, i);
 			error = nand_flash_raw_write_page(&nf_raw, i, page, write_buffer, 0);
 			if (!error) {
 				block = i;
@@ -115,7 +115,7 @@ int16_t nand_flash_storage_read(uint8_t* buf)
 	/* Iterate through blocks until a successful read is performed. Data is written to the first good block. */
 	for (i = block; i < BLOCK_USAGE; i++) {
 		/* Read a page from the NAND Flash. */
-		printf("-I- Reading page %d of block %d\r\n", page, i);
+		if(DEBUG) printf("-I- Reading page %d of block %d\r\n", page, i);
 		nand_flash_raw_read_page(&nf_raw, i, page, read_buffer, spare_area_buffer);
 		if(spare_area_buffer[0] == 0xFF) {
 			block = i;

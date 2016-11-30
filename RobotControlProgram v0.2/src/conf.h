@@ -2,9 +2,15 @@
 #ifndef CONF_H_
 #define CONF_H_
 
+#define DEBUG						(0)
+
 // System values
 #define SETTING_ENABLED				(1)
 #define SETTING_DISABLED			(-1)
+
+// Control method
+#define XY_COORDS_INPUT
+//#define POW_ANG_INPUT
 
 // Control Queue index
 #define X_COORD						(0)

@@ -39,7 +39,7 @@ int8_t network_message_handler(char *msg)
 				if(strstr(token, TAG_CONTROL_STEERING_X) != NULL)
 				{
 					float x_coord = strtof(value,NULL);
-					printf("X: %s (%d)\r\n",value,(int)x_coord);
+					if(DEBUG) printf("X: %s (%d)\r\n",value,(int)x_coord);
 					int8_t iX_coord = (int8_t)x_coord;
 					coords[X_COORD] = iX_coord;
 					uValidCoords++;
@@ -48,7 +48,7 @@ int8_t network_message_handler(char *msg)
 				else if(strstr(token, TAG_CONTROL_STEERING_Y) != NULL)
 				{
 					float y_coord = strtof(value,NULL);
-					printf("Y: %s (%d)\r\n",value,(int)y_coord);
+					if(DEBUG) printf("Y: %s (%d)\r\n",value,(int)y_coord);
 					int8_t iY_coord = (int8_t)y_coord;
 					coords[Y_COORD] = iY_coord;
 					uValidCoords++;
@@ -57,7 +57,7 @@ int8_t network_message_handler(char *msg)
 				else if(strstr(token, TAG_CONTROL_STEERING_POWER) != NULL)
 				{
 					float power = strtof(value,NULL);
-					printf("Pwr: %s (%d)\r\n",value,(int)power);
+					if(DEBUG) printf("Pwr: %s (%d)\r\n",value,(int)power);
 					int8_t iPow = (int8_t)power;
 					power_ang[POW] = iPow;
 					uValidPowerAng++;
@@ -66,36 +66,42 @@ int8_t network_message_handler(char *msg)
 				else if(strstr(token, TAG_CONTROL_STEERING_ANGLE) != NULL)
 				{
 					float angle = strtof(value,NULL);
-					printf("Ang: %s (%d)\r\n",value,(int)angle);
+					if(DEBUG) printf("Ang: %s (%d)\r\n",value,(int)angle);
 					int8_t iAng = (int8_t)angle;
 					power_ang[ANG] = iAng;
 					uValidPowerAng++;
 				}
 				
 				/* Write to queue */
-				if (uValidCoords == 2) {
-					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
-					if ((xStatus == pdPASS))
-					{
-						printf("-I- Coordinates written to queue\r\n");
-						error = PARSER_SUCCESS;
-					}
-					else if((xStatus == errQUEUE_FULL))
-					{
-						printf("-E- Queue is full\r\n");
-					}
-				}  else if (uValidPowerAng == 2) {
-					xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
-					if ((xStatus == pdPASS))
-					{
-						printf("-I- Power/Ang. written to queue\r\n");
-						error = PARSER_SUCCESS;
-					}
-					else if((xStatus == errQUEUE_FULL))
-					{
-						printf("-E- Queue is full\r\n");
-					}
+				xStatus = xQueueReset(xControl_Msg_Queue_handle);				// clear queue
+				if(xStatus == pdPASS || xStatus == errQUEUE_EMPTY) { // Queue successfully cleared
+					if (uValidCoords == 2) {
+						xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, coords, 0);
+						if ((xStatus == pdPASS))
+						{
+							if(DEBUG) printf("-I- Coordinates written to queue\r\n");
+							error = PARSER_SUCCESS;
+						}
+						else if((xStatus == errQUEUE_FULL))
+						{
+							printf("-E- Control queue is full\r\n");
+						}
+					}  else if (uValidPowerAng == 2) {
+						xStatus = xQueueSendToBack(xControl_Msg_Queue_handle, power_ang, 0);
+						if ((xStatus == pdPASS))
+						{
+							if(DEBUG) printf("-I- Power/Ang. written to queue\r\n");
+							error = PARSER_SUCCESS;
+						}
+						else if((xStatus == errQUEUE_FULL))
+						{
+							printf("-E- Control queue is full\r\n");
+						}
+					} else {
+						error = CONTROL_INPUT_ERROR;
+					}				
 				} else {
+					printf("-E- Queue could not be cleared\r\n");
 					error = CONTROL_INPUT_ERROR;
 				}
 			}	
@@ -160,23 +166,23 @@ int8_t network_message_handler(char *msg)
 				printf("-E- Could not set device name\r\n");
 				error = SETTINGS_ERROR;
 			} else {
-				printf("-I- Name: %s\r\n",name);
+				if(DEBUG) printf("-I- Name: %s\r\n",name);
 				error = PARSER_SUCCESS;
 			}
 			
 			if(error != SETTINGS_ERROR) {
 				/* Configure Assisted Drive Mode */
-				printf("-I- Assisted Drive Mode: %d\r\n",assisted_drive_mode);				
+				if(DEBUG) printf("-I- Assisted Drive Mode: %d\r\n",assisted_drive_mode);				
 			}
 			
 			if(error != SETTINGS_ERROR) {
 				/* Configure Power Save Mode */
-				printf("-I- Power Save Mode: %d\r\n",power_save_mode);
+				if(DEBUG) printf("-I- Power Save Mode: %d\r\n",power_save_mode);
 			}
 			
 			if(error != SETTINGS_ERROR) {
 				/* Configure Video Quality */
-				printf("-I- Video Quality: %d\r\n",video_quality);
+				if(DEBUG) printf("-I- Video Quality: %d\r\n",video_quality);
 			}
 			
 			if(error != SETTINGS_ERROR) {
@@ -215,7 +221,7 @@ int8_t network_message_handler(char *msg)
 					memcpy(name_buf+1,name,strlen(name)+1);
 					xStatus = xQueueSendToBack(xName_Queue_handle, name_buf, 0);
 					if ((xStatus == pdPASS)) {
-						printf("-I- Name written to queue\r\n");
+						if(DEBUG) printf("-I- Name written to queue\r\n");
 						error = PARSER_SUCCESS;
 					} else if((xStatus == errQUEUE_FULL)) {
 						printf("-E- Name queue is full\r\n");
@@ -231,7 +237,7 @@ int8_t network_message_handler(char *msg)
 				if(xStatus == pdPASS) {											// Queue successfully cleared
 					xStatus = xQueueSendToBack(xSettings_Msg_Queue_handle, settings_buf, 0);
 					if ((xStatus == pdPASS)) {
-						printf("-I- Settings written to queue\r\n");
+						if(DEBUG) printf("-I- Settings written to queue\r\n");
 						error = PARSER_SUCCESS;
 					} else if((xStatus == errQUEUE_FULL)) {
 						printf("-E- Settings queue is full\r\n");
@@ -660,7 +666,7 @@ int8_t apply_default_settings(void)
 	if(xStatus == pdPASS) {									// Queue successfully cleared
 		xStatus = xQueueSendToBack(xSettings_Msg_Queue_handle, settings_buf, 0);
 		if ((xStatus == pdPASS)) {
-			printf("-I- Settings written to queue\r\n");
+			if(DEBUG) printf("-I- Settings written to queue\r\n");
 			error = PARSER_SUCCESS;
 		} else if((xStatus == errQUEUE_FULL)) {
 			printf("-E- Settings queue is full\r\n");

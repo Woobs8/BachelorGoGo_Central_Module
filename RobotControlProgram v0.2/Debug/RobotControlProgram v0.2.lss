@@ -22616,7 +22616,7 @@ static void task_control_loop(void *pvParameters)
 	xTimeOutType xSettingsTime;
 	xTimeOutType xInputTIme;
 	portTickType xInputTimeToWait = xInputValidTicks;
-  406f18:	f240 23ee 	movw	r3, #750	; 0x2ee
+  406f18:	f44f 7396 	mov.w	r3, #300	; 0x12c
   406f1c:	9307      	str	r3, [sp, #28]
 	portTickType xSettingsTImeToWait = xSettingsValidTicks;
   406f1e:	f242 7310 	movw	r3, #10000	; 0x2710
@@ -22737,7 +22737,7 @@ static void task_control_loop(void *pvParameters)
   406f92:	4b32      	ldr	r3, [pc, #200]	; (40705c <task_control_loop+0x154>)
   406f94:	4798      	blx	r3
 				xInputTimeToWait = xInputValidTicks;
-  406f96:	f240 23ee 	movw	r3, #750	; 0x2ee
+  406f96:	f44f 7396 	mov.w	r3, #300	; 0x12c
   406f9a:	9307      	str	r3, [sp, #28]
 				read_control_input = -1;
   406f9c:	f04f 33ff 	mov.w	r3, #4294967295
@@ -38643,8 +38643,8 @@ static inline void usart_serial_init(usart_if p_usart,
   41273c:	6d61 2d20 0d2d 2d0a 202d 4153 344d 5f53     am --..-- SAM4S_
   41274c:	5058 414c 4e49 4445 505f 4f52 2d20 0d2d     XPLAINED_PRO --.
   41275c:	2d0a 202d 6f43 706d 6c69 6465 203a 6f4e     .-- Compiled: No
-  41276c:	2076 3033 3220 3130 2036 3131 343a 3a39     v 30 2016 11:49:
-  41277c:	3830 2d20 0d2d 000a 454c 2044 6154 6b73     08 --...LED Task
+  41276c:	2076 3033 3220 3130 2036 3231 323a 3a31     v 30 2016 12:21:
+  41277c:	3635 2d20 0d2d 000a 454c 2044 6154 6b73     56 --...LED Task
   41278c:	0000 0000 452d 202d 6146 6c69 6465 7420     ....-E- Failed t
   41279c:	206f 7263 6165 6574 4c20 4445 5420 7361     o create LED Tas
   4127ac:	0d6b 000a 492d 202d 7243 6165 6574 2064     k...-I- Created 

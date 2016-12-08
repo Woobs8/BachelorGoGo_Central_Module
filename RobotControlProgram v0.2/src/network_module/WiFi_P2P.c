@@ -50,6 +50,26 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 			network_establish_connection(peer_address);
 			break;
 		}
+		
+		case M2M_WIFI_REQ_WPS:
+		{
+			tstrM2MWPSInfo *pstrWPS = (tstrM2MWPSInfo*)pvMsg;
+			if(pstrWPS->u8AuthType != 0)
+			{
+				printf("-I- WPS SSID : %s\n",pstrWPS->au8SSID);
+				printf("-I- WPS PSK : %s\n",pstrWPS->au8PSK);
+				printf("-I- WPS SSID Auth Type : %s\n",
+				pstrWPS->u8AuthType == M2M_WIFI_SEC_OPEN ? "OPEN" : "WPA/WPA2");
+				printf("-I- WPS Channel : %d\n",pstrWPS->u8Ch + 1);
+				// Establish Wi-Fi connection
+				m2m_wifi_connect((char*)pstrWPS->au8SSID, (uint8)m2m_strlen(pstrWPS->au8SSID),
+				pstrWPS->u8AuthType, pstrWPS->au8PSK, pstrWPS->u8Ch);
+			}
+			else
+			{
+				printf("-E- WPS Is not enabled OR Timed out\n");
+			}
+		}
 
 		default:
 		{
@@ -77,6 +97,9 @@ void wifi_init(void)
 		printf("WiFi_P2P: m2m_wifi_init call error!(%d)\r\n", ret);
 		while (1) {
 		}
+	} else {
+		// Trigger WPS in Push button mode.
+		//m2m_wifi_wps(WPS_PBC_TRIGGER, NULL);
 	}
 }
 

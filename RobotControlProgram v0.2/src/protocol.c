@@ -654,8 +654,34 @@ int8_t generate_settings_packet(char* packet,
 int8_t apply_default_settings(void) 
 {
 	int8_t settings_buf[SETTINGS_MSG_QUEUE_ITEM_SIZE];
+	uint8 name_buf[NAME_QUEUE_ITEM_SIZE];
 	portBASE_TYPE xStatus;
 	int8_t error = PARSER_ERROR;
+
+	/* Configure device name */
+	uint8_t size = strlen(DEFAULT_WLAN_DEVICE_NAME);
+	int8_t ret = wifi_set_device_name(DEFAULT_WLAN_DEVICE_NAME, size+1);	// include NUL-terminator
+	if(ret) {
+		printf("-E- Could not set device name\r\n");
+		} else {
+		if(DEBUG) printf("-I- Name: %s\r\n",DEFAULT_WLAN_DEVICE_NAME);
+	}
+	
+	/* Write name to queue */
+	xStatus = xQueueReset(xName_Queue_handle);						// clear queue
+	if(xStatus == pdPASS || xStatus == errQUEUE_EMPTY) {			// Queue successfully cleared
+		name_buf[NAME_SIZE] = strlen(DEFAULT_WLAN_DEVICE_NAME)+1;
+		memcpy(name_buf+1,DEFAULT_WLAN_DEVICE_NAME,strlen(DEFAULT_WLAN_DEVICE_NAME)+1);
+		xStatus = xQueueSendToBack(xName_Queue_handle, name_buf, 0);
+		if ((xStatus == pdPASS)) {
+			if(DEBUG) printf("-I- Name written to queue\r\n");
+			} else if((xStatus == errQUEUE_FULL)) {
+			printf("-E- Name queue is full\r\n");
+		}
+		} else {
+		printf("-E- Queue could not be cleared\r\n");
+		error = PARSER_ERROR;
+	}
 
 	settings_buf[POWER_SAVE_MODE] = DEFAULT_POWER_SAVE_MODE;
 	settings_buf[ASSISTED_DRIVE_MODE] = DEFAULT_ASSISTED_DRIVE_MODE;

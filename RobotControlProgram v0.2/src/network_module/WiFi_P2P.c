@@ -47,7 +47,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 			// Convert IP address from uint8 array to uint32
 			peer_address = pu8IPAddress[4]<<24 | pu8IPAddress[5]<<16 | pu8IPAddress[6]<<8 | pu8IPAddress[7];
 			delay_ms(100);	// Delay necessary to allow app to open socket
-			network_establish_connection(peer_address);
+			network_establish_connection(peer_address);		// Exchange IP and network ports
 			break;
 		}
 		
@@ -99,7 +99,7 @@ void wifi_init(void)
 		}
 	} else {
 		// Trigger WPS in Push button mode.
-		//m2m_wifi_wps(WPS_PBC_TRIGGER, NULL);
+		m2m_wifi_wps(WPS_PBC_TRIGGER, NULL);
 	}
 }
 

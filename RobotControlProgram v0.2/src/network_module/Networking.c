@@ -119,7 +119,6 @@ static void socket_event_handler_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 				if(pstrRecvMsg->s16BufferSize == UDP_COMMAND_BUFFER_SIZE)
 				{
 					printf("-I- udp_command_socket: command received: %s\r\n",UDPCommandRxBuffer);
-					//xQueueSendToFront(xControl_Msg_Queue_handle, UDPCommandRxBuffer, 0);
 					network_message_handler(UDPCommandRxBuffer);
 				}
 			}
